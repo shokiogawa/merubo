@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:merubo/components/message_item_left.dart';
 import 'package:merubo/components/message_item_right.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
   runApp(const MyApp());
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -27,18 +32,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _screenSize = MediaQuery.of(context).size;
+    var screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text("app bar "),
-      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             //初めのメッセージ部分
             Container(
-              width: _screenSize.width,
-              height: _screenSize.height,
+              width: screenSize.width,
+              height: screenSize.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/images/chrisumasu.jpg'),
