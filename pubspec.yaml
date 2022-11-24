@@ -41,6 +41,7 @@ dependencies:
   state_notifier: ^0.7.2+1
   freezed_annotation: ^2.2.0
   go_router: ^5.2.0
+  cloud_firestore: ^4.1.0
 
 dev_dependencies:
   flutter_test:

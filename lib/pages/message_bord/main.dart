@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/pages/message_bord/message_bord_bottom.dart';
@@ -10,7 +11,10 @@ class MessageBordPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        await test()
+            .then((value) => print("成功"))
+            .catchError((error) => {print(error)});
         print("やあ");
       }),
       body: SingleChildScrollView(
@@ -26,4 +30,10 @@ class MessageBordPage extends ConsumerWidget {
       ),
     );
   }
+}
+
+Future<void> test() async {
+  CollectionReference users = FirebaseFirestore.instance.collection("users");
+  final user = await users.doc('JewDzzfttNl8algHI7j0').get();
+  print(user.data());
 }
