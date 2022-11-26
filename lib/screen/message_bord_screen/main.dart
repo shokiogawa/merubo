@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:merubo/model/provider/auth_provider.dart';
-import 'package:merubo/pages/message_bord/message_bord_bottom.dart';
-import 'package:merubo/pages/message_bord/message_bord_message_area.dart';
-import 'package:merubo/pages/message_bord/message_bord_top.dart';
+import 'message_bord_bottom.dart';
+import 'message_bord_message_area.dart';
+import 'message_bord_top.dart';
 
 class MessageBordPage extends ConsumerWidget {
   const MessageBordPage({Key? key}) : super(key: key);
