@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -23,7 +24,7 @@ class AuthProvider {
   }
 
   //ログインしているかどうか確認
-  Future<bool> isLogIn() async {
+  Future<bool> checkLogIn() async {
     try {
       final currentUser = ref.watch(firebaseAuthProvider).currentUser;
       if (currentUser != null) {
@@ -79,7 +80,7 @@ class AuthProvider {
   Future<void> logOut() async {
     try {
       final firebaseAuth = ref.read(firebaseAuthProvider);
-      await firebaseAuth.signOut();
+      await firebaseAuth.signOut().then((value) {});
     } on FirebaseAuthException catch (e) {
       throw Error();
     }

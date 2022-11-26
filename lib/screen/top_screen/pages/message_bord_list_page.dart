@@ -8,10 +8,9 @@ class MessageBordListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: ElevatedButton(
-          child: const Text("メッセージボードページに遷移"),
-        onPressed: (){
-            //親から子へ遷移する。
-          context.push('/message_bord');
+        child: const Text("メッセージボードページに遷移"),
+        onPressed: () {
+          Navigator.pushNamed(context, '/message_bord');
         },
       ),
     );

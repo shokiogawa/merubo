@@ -109,15 +109,16 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 
 class _$_User implements _User {
   const _$_User(
-      {required this.displayName,
-      required this.email,
-      required this.phoneNumber});
+      {this.displayName = "", this.email = "", this.phoneNumber = ""});
 
   @override
+  @JsonKey()
   final String displayName;
   @override
+  @JsonKey()
   final String email;
   @override
+  @JsonKey()
   final String phoneNumber;
 
   @override
@@ -149,9 +150,9 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String displayName,
-      required final String email,
-      required final String phoneNumber}) = _$_User;
+      {final String displayName,
+      final String email,
+      final String phoneNumber}) = _$_User;
 
   @override
   String get displayName;
