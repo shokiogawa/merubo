@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:merubo/model/provider/auth_provider.dart';
 import 'package:merubo/pages/message_bord/message_bord_bottom.dart';
 import 'package:merubo/pages/message_bord/message_bord_message_area.dart';
 import 'package:merubo/pages/message_bord/message_bord_top.dart';
@@ -11,12 +13,13 @@ class MessageBordPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        await test()
-            .then((value) => print("成功"))
-            .catchError((error) => {print(error)});
-        print("やあ");
-      }),
+      floatingActionButton: FloatingActionButton(
+          child: const Text("ログアウト"),
+          onPressed: () async {
+            await ref.read(authProvider).logOut().then((value) {
+              GoRouter.of(context).push('/login');
+            });
+          }),
       body: SingleChildScrollView(
         child: Column(
           children: const [

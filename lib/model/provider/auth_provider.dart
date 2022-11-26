@@ -4,10 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../common_provider/firebase_auth.dart';
 import '../common_provider/google_auth.dart';
 
-final authProvider = Provider<AuthRepository>((ref) => AuthRepository(ref));
+final authProvider = Provider<AuthProvider>((ref) => AuthProvider(ref));
 
-class AuthRepository {
-  AuthRepository(this.ref);
+class AuthProvider {
+  AuthProvider(this.ref);
 
   final Ref ref;
 
@@ -71,6 +71,15 @@ class AuthRepository {
       (await firebaseAuth.signInWithEmailAndPassword(
               email: email, password: password))
           .user;
+    } on FirebaseAuthException catch (e) {
+      throw Error();
+    }
+  }
+
+  Future<void> logOut() async {
+    try {
+      final firebaseAuth = ref.read(firebaseAuthProvider);
+      await firebaseAuth.signOut();
     } on FirebaseAuthException catch (e) {
       throw Error();
     }

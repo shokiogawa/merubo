@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/model/repository/auth_repository.dart';
+import 'package:go_router/go_router.dart';
+import 'package:merubo/model/provider/auth_provider.dart';
 
 class LoginPage extends ConsumerWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class LoginPage extends ConsumerWidget {
           await ref
               .read(authProvider)
               .logInWithGoogle()
-              .then((value) => print("成功"))
+              .then((value) => GoRouter.of(context).push('/'))
               .catchError((err) {
             print(err);
           });
