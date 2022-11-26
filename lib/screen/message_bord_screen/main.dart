@@ -13,13 +13,7 @@ class MessageBordScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-          child: const Text("ログアウト"),
-          onPressed: () async {
-            await ref.read(authProvider).logOut().then((value) {
-              GoRouter.of(context).push('/login');
-            });
-          }),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: const [

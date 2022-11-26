@@ -10,10 +10,10 @@ final routerProvider = Provider((ref) => GoRouter(
       routes: [
         GoRoute(
             path: '/',
-            builder: (context, state) => const TopScreen()),
+            builder: (context, state) => const TopScreen(),
+            ),
         GoRoute(
-            path: '/login',
-            builder: (context, state) => const LoginScreen()),
+            path: '/login', builder: (context, state) => const LoginScreen()),
         GoRoute(
             path: '/message_bord',
             builder: (context, state) => const MessageBordScreen()),
@@ -23,7 +23,8 @@ final routerProvider = Provider((ref) => GoRouter(
       ],
       redirect: (context, state) async {
         final isLoggedIn = await ref.read(authProvider).isLogIn();
-        if (!isLoggedIn) {
+        final isLogInLocation = state.location == '/login';
+        if (!isLoggedIn && !isLogInLocation) {
           return state.subloc == '/login' ? null : '/login';
         }
         return null;
