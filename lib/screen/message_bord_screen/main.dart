@@ -7,8 +7,8 @@ import 'message_bord_bottom.dart';
 import 'message_bord_message_area.dart';
 import 'message_bord_top.dart';
 
-class MessageBordPage extends ConsumerWidget {
-  const MessageBordPage({Key? key}) : super(key: key);
+class MessageBordScreen extends ConsumerWidget {
+  const MessageBordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

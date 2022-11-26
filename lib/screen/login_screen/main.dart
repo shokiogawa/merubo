@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:merubo/model/provider/auth_provider.dart';
 
-class LoginPage extends ConsumerWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class LoginScreen extends ConsumerWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

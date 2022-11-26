@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_create_page.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_list_page.dart';
 
-class TopPage extends StatefulWidget {
-  const TopPage({Key? key}) : super(key: key);
+class TopScreen extends StatefulWidget {
+  const TopScreen({Key? key}) : super(key: key);
 
   @override
-  State<TopPage> createState() => _TopPageState();
+  State<TopScreen> createState() => _TopScreenState();
 }
 
-class _TopPageState extends State<TopPage> {
+class _TopScreenState extends State<TopScreen> {
   static const _pages = [
     MessageBordCreatePage(),
     MessageBordListPage(),
