@@ -24,7 +24,6 @@ final routerProvider = Provider((ref) => GoRouter(
       redirect: (context, state) async {
         final isLoggedIn = await ref.read(authProvider).isLogIn();
         if (!isLoggedIn) {
-          print(state.subloc);
           return state.subloc == '/login' ? null : '/login';
         }
         return null;
