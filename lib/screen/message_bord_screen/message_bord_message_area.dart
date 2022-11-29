@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../model/entity/message.dart';
 import '../../widgets/message_item_left.dart';
 import '../../widgets/message_item_right.dart';
 
 class MessageBordMessageArea extends ConsumerWidget {
-  const MessageBordMessageArea({Key? key}) : super(key: key);
+  final List<Message> messages;
+  const MessageBordMessageArea({Key? key, required this.messages}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,12 +33,12 @@ class MessageBordMessageArea extends ConsumerWidget {
               padding: const EdgeInsets.only(top: 0),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: 40,
+              itemCount: messages.length,
               itemBuilder: (context, index) {
                 if (index % 2 == 1) {
-                  return const MessageItemLeft();
+                  return MessageItemLeft(message: messages[index],);
                 } else {
-                  return const MessageItemRight();
+                  return MessageItemRight(message: messages[index],);
                 }
               }),
         ],

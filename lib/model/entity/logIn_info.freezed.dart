@@ -114,13 +114,12 @@ class __$$_LoginInfoCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoginInfo implements _LoginInfo {
-  const _$_LoginInfo({this.isLogin = false, this.currentUser = const User()});
+  const _$_LoginInfo({this.isLogin = false, required this.currentUser});
 
   @override
   @JsonKey()
   final bool isLogin;
   @override
-  @JsonKey()
   final User currentUser;
 
   @override
@@ -149,8 +148,8 @@ class _$_LoginInfo implements _LoginInfo {
 }
 
 abstract class _LoginInfo implements LoginInfo {
-  const factory _LoginInfo({final bool isLogin, final User currentUser}) =
-      _$_LoginInfo;
+  const factory _LoginInfo(
+      {final bool isLogin, required final User currentUser}) = _$_LoginInfo;
 
   @override
   bool get isLogin;

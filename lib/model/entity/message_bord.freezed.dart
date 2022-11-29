@@ -20,9 +20,11 @@ MessageBord _$MessageBordFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MessageBord {
+  String get id => throw _privateConstructorUsedError;
   MessageBordType get type => throw _privateConstructorUsedError;
   String get receiverUserName => throw _privateConstructorUsedError;
   String get lastMessage => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   List<Message> get messages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,9 +40,11 @@ abstract class $MessageBordCopyWith<$Res> {
       _$MessageBordCopyWithImpl<$Res, MessageBord>;
   @useResult
   $Res call(
-      {MessageBordType type,
+      {String id,
+      MessageBordType type,
       String receiverUserName,
       String lastMessage,
+      String title,
       List<Message> messages});
 }
 
@@ -57,12 +61,18 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? type = null,
     Object? receiverUserName = null,
     Object? lastMessage = null,
+    Object? title = null,
     Object? messages = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -74,6 +84,10 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
       lastMessage: null == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       messages: null == messages
           ? _value.messages
@@ -92,9 +106,11 @@ abstract class _$$_MessageBordCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {MessageBordType type,
+      {String id,
+      MessageBordType type,
       String receiverUserName,
       String lastMessage,
+      String title,
       List<Message> messages});
 }
 
@@ -109,12 +125,18 @@ class __$$_MessageBordCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? type = null,
     Object? receiverUserName = null,
     Object? lastMessage = null,
+    Object? title = null,
     Object? messages = null,
   }) {
     return _then(_$_MessageBord(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -126,6 +148,10 @@ class __$$_MessageBordCopyWithImpl<$Res>
       lastMessage: null == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       messages: null == messages
           ? _value._messages
@@ -139,9 +165,11 @@ class __$$_MessageBordCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MessageBord implements _MessageBord {
   const _$_MessageBord(
-      {required this.type,
+      {required this.id,
+      required this.type,
       required this.receiverUserName,
       required this.lastMessage,
+      required this.title,
       final List<Message> messages = const []})
       : _messages = messages;
 
@@ -149,11 +177,15 @@ class _$_MessageBord implements _MessageBord {
       _$$_MessageBordFromJson(json);
 
   @override
+  final String id;
+  @override
   final MessageBordType type;
   @override
   final String receiverUserName;
   @override
   final String lastMessage;
+  @override
+  final String title;
   final List<Message> _messages;
   @override
   @JsonKey()
@@ -164,7 +196,7 @@ class _$_MessageBord implements _MessageBord {
 
   @override
   String toString() {
-    return 'MessageBord(type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, messages: $messages)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, messages: $messages)';
   }
 
   @override
@@ -172,18 +204,20 @@ class _$_MessageBord implements _MessageBord {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MessageBord &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.receiverUserName, receiverUserName) ||
                 other.receiverUserName == receiverUserName) &&
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
+            (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, type, receiverUserName,
-      lastMessage, const DeepCollectionEquality().hash(_messages));
+  int get hashCode => Object.hash(runtimeType, id, type, receiverUserName,
+      lastMessage, title, const DeepCollectionEquality().hash(_messages));
 
   @JsonKey(ignore: true)
   @override
@@ -201,20 +235,26 @@ class _$_MessageBord implements _MessageBord {
 
 abstract class _MessageBord implements MessageBord {
   const factory _MessageBord(
-      {required final MessageBordType type,
+      {required final String id,
+      required final MessageBordType type,
       required final String receiverUserName,
       required final String lastMessage,
+      required final String title,
       final List<Message> messages}) = _$_MessageBord;
 
   factory _MessageBord.fromJson(Map<String, dynamic> json) =
       _$_MessageBord.fromJson;
 
   @override
+  String get id;
+  @override
   MessageBordType get type;
   @override
   String get receiverUserName;
   @override
   String get lastMessage;
+  @override
+  String get title;
   @override
   List<Message> get messages;
   @override

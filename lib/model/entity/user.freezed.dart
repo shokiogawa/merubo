@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$User {
+  String get id => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   String get phoneNumber => throw _privateConstructorUsedError;
@@ -29,7 +30,7 @@ abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res, User>;
   @useResult
-  $Res call({String displayName, String email, String phoneNumber});
+  $Res call({String id, String displayName, String email, String phoneNumber});
 }
 
 /// @nodoc
@@ -45,11 +46,16 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? displayName = null,
     Object? email = null,
     Object? phoneNumber = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -72,7 +78,7 @@ abstract class _$$_UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       __$$_UserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String displayName, String email, String phoneNumber});
+  $Res call({String id, String displayName, String email, String phoneNumber});
 }
 
 /// @nodoc
@@ -84,11 +90,16 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? displayName = null,
     Object? email = null,
     Object? phoneNumber = null,
   }) {
     return _then(_$_User(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -109,8 +120,13 @@ class __$$_UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res, _$_User>
 
 class _$_User implements _User {
   const _$_User(
-      {this.displayName = "", this.email = "", this.phoneNumber = ""});
+      {required this.id,
+      this.displayName = "",
+      this.email = "",
+      this.phoneNumber = ""});
 
+  @override
+  final String id;
   @override
   @JsonKey()
   final String displayName;
@@ -123,7 +139,7 @@ class _$_User implements _User {
 
   @override
   String toString() {
-    return 'User(displayName: $displayName, email: $email, phoneNumber: $phoneNumber)';
+    return 'User(id: $id, displayName: $displayName, email: $email, phoneNumber: $phoneNumber)';
   }
 
   @override
@@ -131,6 +147,7 @@ class _$_User implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_User &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
             (identical(other.email, email) || other.email == email) &&
@@ -139,7 +156,8 @@ class _$_User implements _User {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, displayName, email, phoneNumber);
+  int get hashCode =>
+      Object.hash(runtimeType, id, displayName, email, phoneNumber);
 
   @JsonKey(ignore: true)
   @override
@@ -150,10 +168,13 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {final String displayName,
+      {required final String id,
+      final String displayName,
       final String email,
       final String phoneNumber}) = _$_User;
 
+  @override
+  String get id;
   @override
   String get displayName;
   @override

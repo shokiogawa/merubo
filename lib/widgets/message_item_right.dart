@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:merubo/model/entity/message.dart';
 
 class MessageItemRight extends StatelessWidget {
-  const MessageItemRight({Key? key}) : super(key: key);
+  final Message message;
+
+  const MessageItemRight({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +19,9 @@ class MessageItemRight extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 5),
-                  child: Text("浜辺美波"),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(message.userName),
                 ),
                 Container(
                   decoration: const BoxDecoration(
@@ -39,14 +42,12 @@ class MessageItemRight extends StatelessWidget {
                           1.0
                         ]),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "テストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテスト",
-                      style: TextStyle(
-                        color: Colors.white,
-                          overflow: TextOverflow.clip
-                      ),
+                      message.content,
+                      style: const TextStyle(
+                          color: Colors.white, overflow: TextOverflow.clip),
                     ),
                   ),
                 ),

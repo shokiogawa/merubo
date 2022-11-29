@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:merubo/model/entity/message.dart';
 
 class MessageItemLeft extends StatelessWidget {
-  const MessageItemLeft({Key? key}) : super(key: key);
+  final Message message;
+
+  const MessageItemLeft({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +27,16 @@ class MessageItemLeft extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 5),
-                  child: Text("小川翔生"),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 5),
+                  child: Text(message.userName),
                 ),
                 Container(
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(10),
                         bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)
-                    ),
+                        bottomRight: Radius.circular(10)),
                     gradient: LinearGradient(
                         begin: FractionalOffset.topRight,
                         end: FractionalOffset.bottomLeft,
@@ -47,22 +49,19 @@ class MessageItemLeft extends StatelessWidget {
                           1.0
                         ]),
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        "テストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテストテストだよテスト",
-                    style: TextStyle(
-                      color: Colors.white,
-                        overflow: TextOverflow.clip),),
+                      message.content,
+                      style: const TextStyle(
+                          color: Colors.white, overflow: TextOverflow.clip),
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          Flexible(
-              flex: 2,
-              child: Container(
-              )),
+          Flexible(flex: 2, child: Container()),
         ],
       ),
     );

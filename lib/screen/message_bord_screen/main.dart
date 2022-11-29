@@ -3,37 +3,121 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
-import 'message_bord_bottom.dart';
-import 'message_bord_message_area.dart';
-import 'message_bord_top.dart';
+import 'package:merubo/model/provider/message_bord_provider.dart';
+import 'package:merubo/widgets/message_item_left.dart';
+import 'package:merubo/widgets/message_item_right.dart';
 
 class MessageBordScreen extends ConsumerWidget {
   const MessageBordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final String args = ModalRoute.of(context)!.settings.arguments.toString();
+    print(args);
+    final screenSize = MediaQuery.of(context).size;
+    final asyncValue = ref.watch(messageBordProvider(args));
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        await test();
-      }),
-      appBar: AppBar(),
       body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            MessageBordTop(),
-            //寄せ書きを表示部分
-            MessageBordMessageArea(),
-            //最後のメッセージ部分(動画、画像)
-            MessageBordBottom()
-          ],
-        ),
-      ),
+          child: asyncValue.when(
+              data: (data) => Column(
+                    children: [
+                      // Message Bord Top
+                      Container(
+                        width: screenSize.width,
+                        height: screenSize.height,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/images/chrisumasu.jpg'),
+                              fit: BoxFit.cover),
+                        ),
+                        child: Center(
+                            child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              data.receiverUserName,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 15),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 15),
+                              child: Text(
+                                "Congraturation !!",
+                                style: TextStyle(
+                                    color: Colors.amberAccent, fontSize: 45),
+                              ),
+                            ),
+                            Text(
+                              data.title,
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 15),
+                            ),
+                          ],
+                        )),
+                      ),
+                      //寄せ書きを表示部分
+                      Container(
+                        padding: const EdgeInsets.only(top: 20, bottom: 50),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey, width: 5),
+                            color: Colors.white24),
+                        child: Column(
+                          children: [
+                            Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.white, width: 5),
+                                    color: Colors.white),
+                                child: const Text(
+                                  "Messaging Bord",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontStyle: FontStyle.italic,
+                                      decoration: TextDecoration.underline,
+                                      decorationStyle:
+                                          TextDecorationStyle.double),
+                                )),
+                            ListView.builder(
+                                padding: const EdgeInsets.only(top: 0),
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: data.messages.length,
+                                itemBuilder: (context, index) {
+                                  if (index % 2 == 1) {
+                                    return MessageItemLeft(
+                                      message: data.messages[index],
+                                    );
+                                  } else {
+                                    return MessageItemRight(
+                                      message: data.messages[index],
+                                    );
+                                  }
+                                }),
+                          ],
+                        ),
+                      ),
+                      //最後のメッセージ部分(動画、画像)
+                      SizedBox(
+                        height: 200,
+                        child: Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.amber),
+                                color: Colors.white30),
+                            child: Center(child: Text(data.lastMessage))),
+                      ),
+                    ],
+                  ),
+              error: (err, _) {
+                const Text("error has occured");
+              },
+              loading: () => const Center(
+                    child: CircularProgressIndicator(),
+                  ))),
     );
   }
 }
 
 Future<void> test() async {
-
   // 受け取ったメッセージボード一覧を取得
   // final messageBordRef = FirebaseFirestore.instance
   //     .collection("message_bords")

@@ -7,6 +7,6 @@ part 'logIn_info.freezed.dart';
 class LoginInfo with _$LoginInfo {
   const factory LoginInfo({
     @Default(false) bool isLogin,
-    @Default(User()) User currentUser
+    required User currentUser
   }) = _LoginInfo;
 }

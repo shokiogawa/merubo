@@ -20,6 +20,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Message {
+  String get id => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
   String? get thumbnail => throw _privateConstructorUsedError;
@@ -34,7 +35,7 @@ abstract class $MessageCopyWith<$Res> {
   factory $MessageCopyWith(Message value, $Res Function(Message) then) =
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
-  $Res call({String userName, String content, String? thumbnail});
+  $Res call({String id, String userName, String content, String? thumbnail});
 }
 
 /// @nodoc
@@ -50,11 +51,16 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? userName = null,
     Object? content = null,
     Object? thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -78,7 +84,7 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
       __$$_MessageCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String userName, String content, String? thumbnail});
+  $Res call({String id, String userName, String content, String? thumbnail});
 }
 
 /// @nodoc
@@ -91,11 +97,16 @@ class __$$_MessageCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? userName = null,
     Object? content = null,
     Object? thumbnail = freezed,
   }) {
     return _then(_$_Message(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       userName: null == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -116,11 +127,16 @@ class __$$_MessageCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Message implements _Message {
   const _$_Message(
-      {required this.userName, required this.content, this.thumbnail});
+      {required this.id,
+      required this.userName,
+      required this.content,
+      this.thumbnail});
 
   factory _$_Message.fromJson(Map<String, dynamic> json) =>
       _$$_MessageFromJson(json);
 
+  @override
+  final String id;
   @override
   final String userName;
   @override
@@ -130,7 +146,7 @@ class _$_Message implements _Message {
 
   @override
   String toString() {
-    return 'Message(userName: $userName, content: $content, thumbnail: $thumbnail)';
+    return 'Message(id: $id, userName: $userName, content: $content, thumbnail: $thumbnail)';
   }
 
   @override
@@ -138,6 +154,7 @@ class _$_Message implements _Message {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Message &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.content, content) || other.content == content) &&
@@ -147,7 +164,8 @@ class _$_Message implements _Message {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, userName, content, thumbnail);
+  int get hashCode =>
+      Object.hash(runtimeType, id, userName, content, thumbnail);
 
   @JsonKey(ignore: true)
   @override
@@ -165,12 +183,15 @@ class _$_Message implements _Message {
 
 abstract class _Message implements Message {
   const factory _Message(
-      {required final String userName,
+      {required final String id,
+      required final String userName,
       required final String content,
       final String? thumbnail}) = _$_Message;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
 
+  @override
+  String get id;
   @override
   String get userName;
   @override
