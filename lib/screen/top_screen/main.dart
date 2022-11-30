@@ -26,6 +26,7 @@ class _TopScreenState extends State<TopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Center(child: Text("Merubo", style: TextStyle(color: Colors.white),),),),
       body: _pages[_selectIndex],
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onChoosePage,

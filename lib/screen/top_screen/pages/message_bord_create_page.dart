@@ -12,12 +12,14 @@ class MessageBordCreatePage extends ConsumerWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(
-            child: const Text("メッセージ作成画面に遷移"),
-            onPressed: () {
-              //親から子へ遷移する。
-              Navigator.pushNamed(context, '/message_bord_create');
-            },
+          Card(
+            child: ElevatedButton(
+              child: const Text("メッセージ作成画面に遷移"),
+              onPressed: () {
+                //親から子へ遷移する。
+                Navigator.pushNamed(context, '/message_bord_create');
+              },
+            ),
           ),
           ElevatedButton(
             child: const Text("ログアウト"),

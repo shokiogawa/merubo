@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/provider/message_bord_list_provider.dart';
+import 'package:merubo/widgets/mesage_card.dart';
 
 class MessageBordListPage extends ConsumerWidget {
   const MessageBordListPage({Key? key}) : super(key: key);
@@ -9,30 +10,34 @@ class MessageBordListPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncValue = ref.watch(messageBordListProvider);
     return asyncValue.when(
-        data: (data) => GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2),
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              return Card(
-                child: ElevatedButton(
-                  onPressed: (){
-                    Navigator.of(context).pushNamed('/message_bord', arguments: data[index].id);
-                  },
-                    child: Text(data[index].receiverUserName)),
-              );
-            }),
+        data: (data) => SingleChildScrollView(
+          child: Column(
+            children: [
+              const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Text("寄せ書き一覧", style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),),
+              ),
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return MessageCard(messageBord: data[index]);
+                  }),
+            ],
+          ),
+        ),
+        // GridView.builder(
+        // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        //     // crossAxisSpacing: 10,
+        //     crossAxisCount: 1),
+        // itemCount: data.length,
+        // itemBuilder: (context, index) {
+        //   return MessageCard(messageBord: data[index]);
+        // }),
         error: (err, _) => const Text("エラーだよ"),
         loading: () => const Center(
               child: CircularProgressIndicator(),
             ));
-    //   Center(
-    //   child: ElevatedButton(
-    //     child: const Text("メッセージボードページに遷移"),
-    //     onPressed: () {
-    //       Navigator.pushNamed(context, '/message_bord');
-    //     },
-    //   ),
-    // );
   }
 }

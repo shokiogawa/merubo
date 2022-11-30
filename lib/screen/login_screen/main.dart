@@ -16,16 +16,16 @@ class LoginScreen extends ConsumerWidget {
       }),
       body: Center(
           child: ElevatedButton(
-        onPressed: () async {
-          await ref.read(authProvider).logInWithGoogle().then((value) {
-            Navigator.of(context)
+            onPressed: () async {
+              await ref.read(authProvider).logInWithGoogle().then((value) {
+                Navigator.of(context)
                 .pushNamedAndRemoveUntil('/top', (route) => false);
-          }).catchError((err) {
-            throw Exception(err);
-          });
-        },
-        child: const Text("google Log In"),
-      )),
+              }).catchError((err) {
+                throw Exception(err);
+              });
+              },
+            child: const Text("google Log In"),
+          )),
     );
   }
 }

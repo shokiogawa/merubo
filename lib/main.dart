@@ -21,6 +21,9 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: "Merubo",
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+      ),
       home: const InitPage(),
       routes: {
         '/top': (context) => const TopScreen(),
