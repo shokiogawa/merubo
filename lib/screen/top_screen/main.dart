@@ -16,7 +16,6 @@ class _TopScreenState extends State<TopScreen> {
     MessageBordCreatePage(),
     MessageBordListPage(),
   ];
-
   int _selectIndex = 0;
 
   void _onChoosePage(int index) {
@@ -58,8 +57,14 @@ class CheckCurrentUserWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //暗黙的にユーザーデータを取得
-    ref.watch(currentUserProvider.notifier).getCurrentUser();
-    return showWidget;
+    //ユーザー情報を取得
+    return ref.watch(futureCurrentUserProvider).when(
+        data: (data) => showWidget,
+        error: (err, _) => Center(
+              child: Text(err.toString()),
+            ),
+        loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ));
   }
 }

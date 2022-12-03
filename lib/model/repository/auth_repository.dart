@@ -14,6 +14,7 @@ class AuthRepository {
 
   //signUp
   Future<void> signUp(String email, String password) async {
+    print("signUp");
     try {
       final result = ref
           .read(firebaseAuthProvider)
@@ -25,6 +26,7 @@ class AuthRepository {
 
   //ログインしているかどうか確認
   Future<bool> checkLogIn() async {
+    print("checkLogIn");
     try {
       final currentUser = ref.watch(firebaseAuthProvider).currentUser;
       if (currentUser != null) {
@@ -38,6 +40,7 @@ class AuthRepository {
 
   //TODO: ドメインに変更
   Future<entity.User> getCurrentUser() async {
+    print("getCurrentUser");
     try {
       final firebaseUser = ref.watch(firebaseAuthProvider).currentUser;
       final currentUser = entity.User(
@@ -53,6 +56,7 @@ class AuthRepository {
 
   //googleログイン
   Future<void> logInWithGoogle() async {
+    print("loginWihGoogle");
     final googleSignIn = ref.read(googleAuthProvider);
     final firebaseAuth = ref.read(firebaseAuthProvider);
     //googleログインのリクエストを行い、認証情報を取得
@@ -72,6 +76,7 @@ class AuthRepository {
 
   //ログイン
   Future<void> logInWithPassword(String email, String password) async {
+    print("loginWithPassword");
     try {
       final firebaseAuth = ref.read(firebaseAuthProvider);
       (await firebaseAuth.signInWithEmailAndPassword(

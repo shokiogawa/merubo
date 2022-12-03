@@ -2,7 +2,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/user.dart';
 import 'package:merubo/model/repository/auth_repository.dart';
 
-final currentUserProvider = StateNotifierProvider<CurrentUserProvider, User>((ref) => CurrentUserProvider(ref));
+final currentUserProvider = StateNotifierProvider<CurrentUserProvider, User>(
+    (ref) => CurrentUserProvider(ref));
+
+final futureCurrentUserProvider = FutureProvider((ref) async {
+  await ref.watch(currentUserProvider.notifier).getCurrentUser();
+});
 
 // ユーザー情報を管理するprovider
 class CurrentUserProvider extends StateNotifier<User> {
@@ -11,7 +16,8 @@ class CurrentUserProvider extends StateNotifier<User> {
   final Ref ref;
 
   Future<void> getCurrentUser() async {
-    final currentUser = await ref.watch(authRepositoryProvider).getCurrentUser();
+    final currentUser =
+        await ref.watch(authRepositoryProvider).getCurrentUser();
     state = state.copyWith(
         id: currentUser.id,
         email: currentUser.email,
@@ -19,7 +25,7 @@ class CurrentUserProvider extends StateNotifier<User> {
         displayName: currentUser.displayName);
   }
 
-  test(){
+  test() {
     print(state.id);
   }
 }

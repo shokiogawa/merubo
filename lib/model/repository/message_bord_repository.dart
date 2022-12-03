@@ -13,6 +13,7 @@ class MessageBordRepository {
 
   //自分が管理また、メッセージしたメッセージボード一覧
   Future<List<MessageBord>> fetchOwnMessageBordList(String userId) async {
+    print("fetchOwnMessageBordList");
     try {
       final fireStore = ref.watch(firebaseFireStoreProvider);
       final messageBordIdListRefQuery = fireStore
@@ -28,8 +29,7 @@ class MessageBordRepository {
       await Future.forEach(messageBordListRef.docs, (messageBordRef) async {
         final ref = messageBordRef.data();
 
-        final messageBordRealRef = fireStore
-            .doc(ref.messageBordRef.path)
+        final messageBordRealRef = ref.messageBordRef
             .withConverter(
                 fromFirestore: (snapshot, _) =>
                     MessageBord.fromJson(snapshot.data()!),
@@ -48,6 +48,7 @@ class MessageBordRepository {
 
   //自分が受け取ったメッセージボード一覧
   Future<List<MessageBord>> fetchReceiveMessageBordList(String userId) async {
+    print("fetchReceiveMessageBordList");
     final List<MessageBord> messageBordList = [];
     return messageBordList;
   }
