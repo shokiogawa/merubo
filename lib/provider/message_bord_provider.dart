@@ -12,6 +12,7 @@ final ownMessageBordListProvider = FutureProvider((ref) async {
   return messageBordList;
 });
 
+// 上にスクロールすると更新されるようにする。
 final messageBordDetailProvider = FutureProvider.family((ref, messageBordId) async {
   final messageBordDetail = await ref
       .watch(messageBordRepositoryProvider)

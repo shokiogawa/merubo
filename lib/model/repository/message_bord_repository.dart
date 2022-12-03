@@ -14,6 +14,8 @@ class MessageBordRepository {
 
   //自分が管理また、メッセージしたメッセージボード一覧
   Future<List<MessageBord>> fetchOwnMessageBordList(String userId) async {
+    // ページによって変更させる。
+    final List<String> whereIn = [];
     print("fetchOwnMessageBordList");
     try {
       final fireStore = ref.watch(firebaseFireStoreProvider);
