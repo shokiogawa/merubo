@@ -39,7 +39,7 @@ class MessageCard extends ConsumerWidget {
                         Text("${messageBord.receiverUserName}への寄せ書き"),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text(messageBord.title),
+                          child: Text(messageBord.title ?? ""),
                         ),
                         Container(
                           alignment: Alignment.bottomRight,

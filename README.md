@@ -1,17 +1,14 @@
-# merubo
+# Merubo設計
 
-A new Flutter application.
+- 寄せ書きを作成できる
+- 送った寄せ書きを一覧表示できる
+- 受け取った寄せ書きを一覧表示できる
+- 寄せ書きを作成できる
+- 寄せ書きを特定のユーザーに遅れる
+- 寄せ書きにメッセージを残せる
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# merubo
+# TODO
+- アーキテクチャーを正しくする。
+View → Provider → Repository → firestore
+- firesoreのルールを確定させる。
+- ユーザー情報の取得方法を確定させる。

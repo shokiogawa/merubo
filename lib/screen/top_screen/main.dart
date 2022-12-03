@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/provider/current_user_provider.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_create_page.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_list_page.dart';
 
@@ -26,8 +28,15 @@ class _TopScreenState extends State<TopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Center(child: Text("Merubo", style: TextStyle(color: Colors.white),),),),
-      body: _pages[_selectIndex],
+      appBar: AppBar(
+        title: const Center(
+          child: Text(
+            "Merubo",
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      body: CheckCurrentUserWidget(showWidget: _pages[_selectIndex]),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onChoosePage,
         currentIndex: _selectIndex,
@@ -38,5 +47,19 @@ class _TopScreenState extends State<TopScreen> {
         type: BottomNavigationBarType.fixed,
       ),
     );
+  }
+}
+
+// 現在のユーザーを取得するためだけのwidget
+class CheckCurrentUserWidget extends ConsumerWidget {
+  const CheckCurrentUserWidget({Key? key, required this.showWidget})
+      : super(key: key);
+  final Widget showWidget;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    //暗黙的にユーザーデータを取得
+    ref.watch(currentUserProvider.notifier).getCurrentUser();
+    return showWidget;
   }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:merubo/model/provider/auth_provider.dart';
+import 'package:merubo/provider/auth_provider.dart';
 import 'package:merubo/screen/login_screen/main.dart';
 import 'package:merubo/screen/message_bord_create_screen/main.dart';
 import 'package:merubo/screen/message_bord_screen/main.dart';
@@ -41,7 +41,7 @@ class InitPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return FutureBuilder(
-        future: ref.read(authProvider).checkLogIn(),
+        future: ref.read(authProvider).checkLogin(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.connectionState != ConnectionState.done) {
             return const CircularProgressIndicator();

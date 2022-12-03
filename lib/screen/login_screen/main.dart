@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/model/provider/auth_provider.dart';
+import 'package:merubo/provider/auth_provider.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -8,12 +8,6 @@ class LoginScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        await ref
-            .read(authProvider)
-            .currentUser()
-            .then((value) => print(value));
-      }),
       body: Center(
           child: ElevatedButton(
             onPressed: () async {

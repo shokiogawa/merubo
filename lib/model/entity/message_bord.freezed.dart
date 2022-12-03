@@ -20,11 +20,12 @@ MessageBord _$MessageBordFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MessageBord {
-  String get id => throw _privateConstructorUsedError;
-  MessageBordType get type => throw _privateConstructorUsedError;
-  String get receiverUserName => throw _privateConstructorUsedError;
-  String get lastMessage => throw _privateConstructorUsedError;
-  String get title => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  MessageBordType? get type => throw _privateConstructorUsedError;
+  String? get receiverUserName => throw _privateConstructorUsedError;
+  String? get lastMessage => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  Status? get status => throw _privateConstructorUsedError;
   List<Message> get messages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,11 +41,12 @@ abstract class $MessageBordCopyWith<$Res> {
       _$MessageBordCopyWithImpl<$Res, MessageBord>;
   @useResult
   $Res call(
-      {String id,
-      MessageBordType type,
-      String receiverUserName,
-      String lastMessage,
-      String title,
+      {String? id,
+      MessageBordType? type,
+      String? receiverUserName,
+      String? lastMessage,
+      String? title,
+      Status? status,
       List<Message> messages});
 }
 
@@ -61,34 +63,39 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? type = null,
-    Object? receiverUserName = null,
-    Object? lastMessage = null,
-    Object? title = null,
+    Object? id = freezed,
+    Object? type = freezed,
+    Object? receiverUserName = freezed,
+    Object? lastMessage = freezed,
+    Object? title = freezed,
+    Object? status = freezed,
     Object? messages = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as MessageBordType,
-      receiverUserName: null == receiverUserName
+              as MessageBordType?,
+      receiverUserName: freezed == receiverUserName
           ? _value.receiverUserName
           : receiverUserName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastMessage: null == lastMessage
+              as String?,
+      lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
+              as String?,
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status?,
       messages: null == messages
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -106,11 +113,12 @@ abstract class _$$_MessageBordCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
-      MessageBordType type,
-      String receiverUserName,
-      String lastMessage,
-      String title,
+      {String? id,
+      MessageBordType? type,
+      String? receiverUserName,
+      String? lastMessage,
+      String? title,
+      Status? status,
       List<Message> messages});
 }
 
@@ -125,34 +133,39 @@ class __$$_MessageBordCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? type = null,
-    Object? receiverUserName = null,
-    Object? lastMessage = null,
-    Object? title = null,
+    Object? id = freezed,
+    Object? type = freezed,
+    Object? receiverUserName = freezed,
+    Object? lastMessage = freezed,
+    Object? title = freezed,
+    Object? status = freezed,
     Object? messages = null,
   }) {
     return _then(_$_MessageBord(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as MessageBordType,
-      receiverUserName: null == receiverUserName
+              as MessageBordType?,
+      receiverUserName: freezed == receiverUserName
           ? _value.receiverUserName
           : receiverUserName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastMessage: null == lastMessage
+              as String?,
+      lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
-              as String,
-      title: null == title
+              as String?,
+      title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as Status?,
       messages: null == messages
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -165,11 +178,12 @@ class __$$_MessageBordCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MessageBord implements _MessageBord {
   const _$_MessageBord(
-      {required this.id,
-      required this.type,
-      required this.receiverUserName,
-      required this.lastMessage,
-      required this.title,
+      {this.id,
+      this.type,
+      this.receiverUserName,
+      this.lastMessage,
+      this.title,
+      this.status,
       final List<Message> messages = const []})
       : _messages = messages;
 
@@ -177,15 +191,17 @@ class _$_MessageBord implements _MessageBord {
       _$$_MessageBordFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final MessageBordType type;
+  final MessageBordType? type;
   @override
-  final String receiverUserName;
+  final String? receiverUserName;
   @override
-  final String lastMessage;
+  final String? lastMessage;
   @override
-  final String title;
+  final String? title;
+  @override
+  final Status? status;
   final List<Message> _messages;
   @override
   @JsonKey()
@@ -196,7 +212,7 @@ class _$_MessageBord implements _MessageBord {
 
   @override
   String toString() {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, messages: $messages)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, status: $status, messages: $messages)';
   }
 
   @override
@@ -211,13 +227,21 @@ class _$_MessageBord implements _MessageBord {
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, type, receiverUserName,
-      lastMessage, title, const DeepCollectionEquality().hash(_messages));
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      type,
+      receiverUserName,
+      lastMessage,
+      title,
+      status,
+      const DeepCollectionEquality().hash(_messages));
 
   @JsonKey(ignore: true)
   @override
@@ -235,26 +259,29 @@ class _$_MessageBord implements _MessageBord {
 
 abstract class _MessageBord implements MessageBord {
   const factory _MessageBord(
-      {required final String id,
-      required final MessageBordType type,
-      required final String receiverUserName,
-      required final String lastMessage,
-      required final String title,
+      {final String? id,
+      final MessageBordType? type,
+      final String? receiverUserName,
+      final String? lastMessage,
+      final String? title,
+      final Status? status,
       final List<Message> messages}) = _$_MessageBord;
 
   factory _MessageBord.fromJson(Map<String, dynamic> json) =
       _$_MessageBord.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
-  MessageBordType get type;
+  MessageBordType? get type;
   @override
-  String get receiverUserName;
+  String? get receiverUserName;
   @override
-  String get lastMessage;
+  String? get lastMessage;
   @override
-  String get title;
+  String? get title;
+  @override
+  Status? get status;
   @override
   List<Message> get messages;
   @override

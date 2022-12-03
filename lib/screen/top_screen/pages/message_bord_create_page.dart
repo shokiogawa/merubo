@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/model/provider/auth_provider.dart';
-import 'package:merubo/screen/login_screen/main.dart';
+import 'package:merubo/provider/auth_provider.dart';
 
 class MessageBordCreatePage extends ConsumerWidget {
   const MessageBordCreatePage({Key? key}) : super(key: key);

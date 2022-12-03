@@ -1,6 +1,6 @@
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:go_router/go_router.dart';
-// import 'package:merubo/model/provider/auth_provider.dart';
+// import 'package:merubo/model/provider/auth_repository.dart';
 // import 'package:merubo/screen/message_bord_create_screen/main.dart';
 // import 'package:merubo/screen/message_bord_screen/main.dart';
 // import 'screen/login_screen/main.dart';

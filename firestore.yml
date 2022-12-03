@@ -1,0 +1,32 @@
+//firestoreデータ設計
+users:
+  documentId: authId
+  name: String
+  thumnail: String?
+  createdAt: DateTime
+
+  own_message_bords:
+    documentId: messageBordId
+    messageBordRef: references
+    role: Owner | Receiver | Sender
+
+message_bords:
+  documentId: randam
+  title: String
+  receiverUserName: String
+  templateType: Type1 | Type2 | Type3 | Type4 ...
+  lastMessage: String
+  lastImage: String //URL
+  movieMessage: string //URL
+  createdAt: DateTime
+  status: EDITED | SENDED
+
+
+  messages:
+    documentId: randam
+    name: String
+    thumnail: string //URL
+    content: string
+    voiceMessage: string //URL
+
+

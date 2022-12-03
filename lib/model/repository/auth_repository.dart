@@ -1,14 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:merubo/model/entity/user.dart' as entity;
 import '../common_provider/firebase_auth.dart';
 import '../common_provider/google_auth.dart';
 
-final authProvider = Provider<AuthProvider>((ref) => AuthProvider(ref));
+final authRepositoryProvider = Provider<AuthRepository>((ref) => AuthRepository(ref));
 
-class AuthProvider {
-  AuthProvider(this.ref);
+class AuthRepository {
+  AuthRepository(this.ref);
 
   final Ref ref;
 
@@ -37,9 +37,14 @@ class AuthProvider {
   }
 
   //TODO: ドメインに変更
-  Future<User?> currentUser() async {
+  Future<entity.User> getCurrentUser() async {
     try {
-      final currentUser = ref.watch(firebaseAuthProvider).currentUser;
+      final firebaseUser = ref.watch(firebaseAuthProvider).currentUser;
+      final currentUser = entity.User(
+          id: firebaseUser!.uid,
+          email: firebaseUser.email,
+          phoneNumber: firebaseUser.phoneNumber,
+          displayName: firebaseUser.displayName);
       return currentUser;
     } on FirebaseAuthException catch (e) {
       throw Error();

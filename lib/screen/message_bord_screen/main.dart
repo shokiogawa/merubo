@@ -35,7 +35,7 @@ class MessageBordScreen extends ConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              data.receiverUserName,
+                              data.receiverUserName ?? "unnown",
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 15),
                             ),
@@ -48,7 +48,7 @@ class MessageBordScreen extends ConsumerWidget {
                               ),
                             ),
                             Text(
-                              data.title,
+                              data.title ?? "unnown",
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 15),
                             ),
@@ -103,7 +103,7 @@ class MessageBordScreen extends ConsumerWidget {
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.amber),
                                 color: Colors.white30),
-                            child: Center(child: Text(data.lastMessage))),
+                            child: Center(child: Text(data.lastMessage ?? "unnown"))),
                       ),
                     ],
                   ),

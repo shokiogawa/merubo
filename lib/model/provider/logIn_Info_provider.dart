@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/model/entity/user.dart';
+import 'package:merubo/model/repository/auth_repository.dart';
 
-final logInInfoProvider = Provider((ref) => LogInInfo());
 
-class LogInInfo extends ChangeNotifier {
-  bool _isLoggedIn = false;
-
-  bool get isLoggedIn => _isLoggedIn;
-
-  set isLoggedIn(bool value) {
-    _isLoggedIn = value;
-    notifyListeners();
-  }
-}
+// class LogInInfoProvider extends StateNotifier<User> {
+//   final Ref ref;
+//
+//   LogInInfoProvider(this.ref) : super(const User(id: ""))
+//
+//   void manageCurrentUserState(){
+//     final currentUser = ref.read(authProvider).currentUser();
+//   }
+//
+// }
