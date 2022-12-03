@@ -9,13 +9,14 @@ class PreviewMessageBordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final type = ModalRoute.of(context)!.settings.arguments as MessageBordType;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            PreviewMessageBordTop(type: MessageBordType.type1),
-            PreviewMessageBordMessageArea(type: MessageBordType.type1),
-            PreviewMessageBordBottom(type: MessageBordType.type1)
+          children: [
+            PreviewMessageBordTop(type: type),
+            PreviewMessageBordMessageArea(type: type),
+            PreviewMessageBordBottom(type: type)
           ],
         ),
       ),

@@ -1,5 +1,8 @@
 // テンプレートのジャンル
-final Map<String, List<String>> mapTemplate = {
+import 'package:merubo/model/entity/message_bord.dart';
+import 'package:merubo/model/entity/template.dart';
+
+final Map<String, List<Template>> mapTemplate = {
   "結婚祝い": templateList1,
   "お誕生日祝い": templateList2,
   "おめでとう": templateList3,
@@ -7,25 +10,13 @@ final Map<String, List<String>> mapTemplate = {
   "クリスマス": templateList5,
 };
 
-// テンプレート一覧
-const List<String> templateList1 = [
-  'assets/images/oiwai.jpg',
-  'assets/images/chrisumasu.jpg'
-];
-const List<String> templateList2 = [
-  'assets/images/oiwai.jpg',
-  'assets/images/chrisumasu.jpg'
-];
-const List<String> templateList3 = [
-  'assets/images/oiwai.jpg',
-  'assets/images/chrisumasu.jpg'
-];
-const List<String> templateList4 = [
-  'assets/images/oiwai.jpg',
-  'assets/images/chrisumasu.jpg'
-];
-const List<String> templateList5 = [
-  'assets/images/oiwai.jpg',
-  'assets/images/chrisumasu.jpg'
-];
+const template1 = Template(MessageBordType.type1, "assets/images/oiwai.jpg");
+const template2 =
+    Template(MessageBordType.type2, "assets/images/chrisumasu.jpg");
 
+// テンプレート一覧
+const List<Template> templateList1 = [template1, template2];
+const List<Template> templateList2 = [template1, template2];
+const List<Template> templateList3 = [template1, template2];
+const List<Template> templateList4 = [template1, template2];
+const List<Template> templateList5 = [template1, template2];
