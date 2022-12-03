@@ -5,10 +5,6 @@ import 'package:merubo/model/repository/auth_repository.dart';
 final currentUserProvider = StateNotifierProvider<CurrentUserProvider, User>(
     (ref) => CurrentUserProvider(ref));
 
-final futureCurrentUserProvider = FutureProvider((ref) async {
-  await ref.watch(currentUserProvider.notifier).getCurrentUser();
-});
-
 // ユーザー情報を管理するprovider
 class CurrentUserProvider extends StateNotifier<User> {
   CurrentUserProvider(this.ref) : super(const User(id: ""));

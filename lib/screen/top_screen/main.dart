@@ -4,19 +4,27 @@ import 'package:merubo/provider/current_user_provider.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_create_page.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_list_page.dart';
 
-class TopScreen extends StatefulWidget {
+class TopScreen extends ConsumerStatefulWidget {
   const TopScreen({Key? key}) : super(key: key);
 
   @override
-  State<TopScreen> createState() => _TopScreenState();
+  TopScreenState createState() => TopScreenState();
 }
 
-class _TopScreenState extends State<TopScreen> {
+class TopScreenState extends ConsumerState<TopScreen> {
+  int _selectIndex = 0;
+  late Future<void> _future;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _future = ref.read(currentUserProvider.notifier).getCurrentUser();
+    super.initState();
+  }
+
   static const _pages = [
     MessageBordCreatePage(),
     MessageBordListPage(),
   ];
-  int _selectIndex = 0;
 
   void _onChoosePage(int index) {
     setState(() {
@@ -35,7 +43,21 @@ class _TopScreenState extends State<TopScreen> {
           ),
         ),
       ),
-      body: CheckCurrentUserWidget(showWidget: _pages[_selectIndex]),
+      //トップページ表示前に、ユーザー情報を取得する。
+      body: FutureBuilder(
+        future: _future,
+          builder: (context, snapshot){
+            if (snapshot.connectionState != ConnectionState.done) {
+              return const CircularProgressIndicator();
+            }
+            if (snapshot.hasError) {
+              return const Center(
+                child: Text("Error has occured"),
+              );
+            } else {
+              return _pages[_selectIndex];
+            }
+      }),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onChoosePage,
         currentIndex: _selectIndex,
@@ -46,25 +68,5 @@ class _TopScreenState extends State<TopScreen> {
         type: BottomNavigationBarType.fixed,
       ),
     );
-  }
-}
-
-// 現在のユーザーを取得するためだけのwidget
-class CheckCurrentUserWidget extends ConsumerWidget {
-  const CheckCurrentUserWidget({Key? key, required this.showWidget})
-      : super(key: key);
-  final Widget showWidget;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    //ユーザー情報を取得
-    return ref.watch(futureCurrentUserProvider).when(
-        data: (data) => showWidget,
-        error: (err, _) => Center(
-              child: Text(err.toString()),
-            ),
-        loading: () => const Center(
-              child: CircularProgressIndicator(),
-            ));
   }
 }
