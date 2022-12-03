@@ -14,6 +14,7 @@ _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
       lastMessage: json['lastMessage'] as String?,
       title: json['title'] as String?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']),
+      role: $enumDecodeNullable(_$RoleEnumMap, json['role']),
       messages: (json['messages'] as List<dynamic>?)
               ?.map((e) => Message.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -28,6 +29,7 @@ Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>
       'lastMessage': instance.lastMessage,
       'title': instance.title,
       'status': _$StatusEnumMap[instance.status],
+      'role': _$RoleEnumMap[instance.role],
       'messages': instance.messages,
     };
 
@@ -39,6 +41,12 @@ const _$MessageBordTypeEnumMap = {
 };
 
 const _$StatusEnumMap = {
-  Status.edited: 'edited',
+  Status.edit: 'edit',
   Status.send: 'send',
+};
+
+const _$RoleEnumMap = {
+  Role.receiver: 'receiver',
+  Role.owner: 'owner',
+  Role.participant: 'participant',
 };

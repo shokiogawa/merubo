@@ -18,4 +18,8 @@ class CurrentUserProvider extends StateNotifier<User> {
         phoneNumber: currentUser.phoneNumber,
         displayName: currentUser.displayName);
   }
+
+  test(){
+    print(state.id);
+  }
 }

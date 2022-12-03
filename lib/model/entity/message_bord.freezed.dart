@@ -26,6 +26,7 @@ mixin _$MessageBord {
   String? get lastMessage => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   Status? get status => throw _privateConstructorUsedError;
+  Role? get role => throw _privateConstructorUsedError;
   List<Message> get messages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -47,6 +48,7 @@ abstract class $MessageBordCopyWith<$Res> {
       String? lastMessage,
       String? title,
       Status? status,
+      Role? role,
       List<Message> messages});
 }
 
@@ -69,6 +71,7 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? lastMessage = freezed,
     Object? title = freezed,
     Object? status = freezed,
+    Object? role = freezed,
     Object? messages = null,
   }) {
     return _then(_value.copyWith(
@@ -96,6 +99,10 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status?,
+      role: freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as Role?,
       messages: null == messages
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -119,6 +126,7 @@ abstract class _$$_MessageBordCopyWith<$Res>
       String? lastMessage,
       String? title,
       Status? status,
+      Role? role,
       List<Message> messages});
 }
 
@@ -139,6 +147,7 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? lastMessage = freezed,
     Object? title = freezed,
     Object? status = freezed,
+    Object? role = freezed,
     Object? messages = null,
   }) {
     return _then(_$_MessageBord(
@@ -166,6 +175,10 @@ class __$$_MessageBordCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status?,
+      role: freezed == role
+          ? _value.role
+          : role // ignore: cast_nullable_to_non_nullable
+              as Role?,
       messages: null == messages
           ? _value._messages
           : messages // ignore: cast_nullable_to_non_nullable
@@ -184,6 +197,7 @@ class _$_MessageBord implements _MessageBord {
       this.lastMessage,
       this.title,
       this.status,
+      this.role,
       final List<Message> messages = const []})
       : _messages = messages;
 
@@ -202,6 +216,8 @@ class _$_MessageBord implements _MessageBord {
   final String? title;
   @override
   final Status? status;
+  @override
+  final Role? role;
   final List<Message> _messages;
   @override
   @JsonKey()
@@ -212,7 +228,7 @@ class _$_MessageBord implements _MessageBord {
 
   @override
   String toString() {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, status: $status, messages: $messages)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, status: $status, role: $role, messages: $messages)';
   }
 
   @override
@@ -228,6 +244,7 @@ class _$_MessageBord implements _MessageBord {
                 other.lastMessage == lastMessage) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.status, status) || other.status == status) &&
+            (identical(other.role, role) || other.role == role) &&
             const DeepCollectionEquality().equals(other._messages, _messages));
   }
 
@@ -241,6 +258,7 @@ class _$_MessageBord implements _MessageBord {
       lastMessage,
       title,
       status,
+      role,
       const DeepCollectionEquality().hash(_messages));
 
   @JsonKey(ignore: true)
@@ -265,6 +283,7 @@ abstract class _MessageBord implements MessageBord {
       final String? lastMessage,
       final String? title,
       final Status? status,
+      final Role? role,
       final List<Message> messages}) = _$_MessageBord;
 
   factory _MessageBord.fromJson(Map<String, dynamic> json) =
@@ -282,6 +301,8 @@ abstract class _MessageBord implements MessageBord {
   String? get title;
   @override
   Status? get status;
+  @override
+  Role? get role;
   @override
   List<Message> get messages;
   @override

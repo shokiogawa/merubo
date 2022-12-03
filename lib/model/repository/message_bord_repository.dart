@@ -1,5 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/model/common_provider/firebase_fire_store.dart';
 import 'package:merubo/model/entity/message_bord.dart';
+import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
+
+final messageBordRepositoryProvider =
+    Provider((ref) => MessageBordRepository(ref));
 
 class MessageBordRepository {
   MessageBordRepository(this.ref);
@@ -7,13 +12,42 @@ class MessageBordRepository {
   final Ref ref;
 
   //自分が管理また、メッセージしたメッセージボード一覧
-  Future<List<MessageBord>> fetchOwnMessageBordList() async {
-    final List<MessageBord> messageBordList = [];
-    return messageBordList;
+  Future<List<MessageBord>> fetchOwnMessageBordList(String userId) async {
+    try {
+      final fireStore = ref.watch(firebaseFireStoreProvider);
+      final messageBordIdListRefQuery = fireStore
+          .collection("users")
+          .doc(userId)
+          .collection("own_message_bords")
+          .where("role", whereIn: ["owner", "receiver"]).withConverter(
+              fromFirestore: (snapshot, _) =>
+                  OwnMessageBordRef.fromJson(snapshot.data()!),
+              toFirestore: (messageBordRef, _) => messageBordRef.toJson());
+      final messageBordListRef = await messageBordIdListRefQuery.get();
+      final List<MessageBord> messageBordRealList = [];
+      await Future.forEach(messageBordListRef.docs, (messageBordRef) async {
+        final ref = messageBordRef.data();
+
+        final messageBordRealRef = fireStore
+            .doc(ref.messageBordRef.path)
+            .withConverter(
+                fromFirestore: (snapshot, _) =>
+                    MessageBord.fromJson(snapshot.data()!),
+                toFirestore: (messageBord, _) => messageBord.toJson());
+        final messageBordRealDoc = await messageBordRealRef.get();
+        final messageBordReal =
+            messageBordRealDoc.data()!.copyWith(role: ref.role);
+        messageBordRealList.add(messageBordReal);
+      });
+      return messageBordRealList;
+    } catch (err) {
+      print(err);
+      throw Error();
+    }
   }
 
   //自分が受け取ったメッセージボード一覧
-  Future<List<MessageBord>> fetchReceiveMessageBordList() async {
+  Future<List<MessageBord>> fetchReceiveMessageBordList(String userId) async {
     final List<MessageBord> messageBordList = [];
     return messageBordList;
   }

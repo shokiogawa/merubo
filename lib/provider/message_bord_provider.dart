@@ -1,0 +1,11 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/model/repository/message_bord_repository.dart';
+import 'package:merubo/provider/current_user_provider.dart';
+
+final ownMessageBordListProvider = FutureProvider((ref) async {
+  final userId = ref.watch(currentUserProvider).id;
+  final messageBordList = await ref
+      .watch(messageBordRepositoryProvider)
+      .fetchOwnMessageBordList(userId);
+  return messageBordList;
+});
