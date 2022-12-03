@@ -29,11 +29,10 @@ class MessageBordRepository {
       await Future.forEach(messageBordListRef.docs, (messageBordRef) async {
         final ref = messageBordRef.data();
 
-        final messageBordRealRef = ref.messageBordRef
-            .withConverter(
-                fromFirestore: (snapshot, _) =>
-                    MessageBord.fromJson(snapshot.data()!),
-                toFirestore: (messageBord, _) => messageBord.toJson());
+        final messageBordRealRef = ref.messageBordRef.withConverter(
+            fromFirestore: (snapshot, _) =>
+                MessageBord.fromJson(snapshot.data()!),
+            toFirestore: (messageBord, _) => messageBord.toJson());
         final messageBordRealDoc = await messageBordRealRef.get();
         final messageBordReal =
             messageBordRealDoc.data()!.copyWith(role: ref.role);
@@ -54,7 +53,25 @@ class MessageBordRepository {
   }
 
   //メッセージボード詳細
-  Future<void> fetchMessageBordDetail() async {}
+  Future<MessageBord> fetchMessageBordDetail(String messageBordId) async {
+    print("fetchMessageBordDetail");
+    try {
+      final filePath = "/message_bords/$messageBordId";
+      final fireStore = ref.watch(firebaseFireStoreProvider);
+      final messageBordRef = fireStore.doc(filePath).withConverter(
+          fromFirestore: (snapshot, _) =>
+              MessageBord.fromJson(snapshot.data()!),
+          toFirestore: (messageBord, _) => messageBord.toJson());
+      print(messageBordRef.path);
+      final messageBorSnapshot = await messageBordRef.get();
+      final MessageBord messageBord = messageBorSnapshot.data()!;
+      print(messageBord);
+      return messageBord;
+    } catch (err) {
+      print(err);
+      throw Error();
+    }
+  }
 
   //メッセージボード作成
   Future<void> createMessageBord() async {}

@@ -8,6 +8,7 @@ class Message with _$Message {
     required String id,
     required String userName,
     required String content,
+    String? voiceMessage,
     String? thumbnail
   }) = _Message;
 

@@ -21,9 +21,11 @@ OwnMessageBordRef _$OwnMessageBordRefFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$OwnMessageBordRef {
   DocumentReference<Map<String, dynamic>> get messageBordRef => throw _privateConstructorUsedError;
+
   Role get role => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $OwnMessageBordRefCopyWith<OwnMessageBordRef> get copyWith =>
       throw _privateConstructorUsedError;
@@ -34,8 +36,9 @@ abstract class $OwnMessageBordRefCopyWith<$Res> {
   factory $OwnMessageBordRefCopyWith(
           OwnMessageBordRef value, $Res Function(OwnMessageBordRef) then) =
       _$OwnMessageBordRefCopyWithImpl<$Res, OwnMessageBordRef>;
+
   @useResult
-  $Res call({dynamic messageBordRef, Role role});
+  $Res call({DocumentReference<Map<String, dynamic>> messageBordRef, Role role});
 }
 
 /// @nodoc
@@ -45,6 +48,7 @@ class _$OwnMessageBordRefCopyWithImpl<$Res, $Val extends OwnMessageBordRef>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -58,7 +62,7 @@ class _$OwnMessageBordRefCopyWithImpl<$Res, $Val extends OwnMessageBordRef>
       messageBordRef: null == messageBordRef
           ? _value.messageBordRef
           : messageBordRef // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as DocumentReference<Map<String, dynamic>>,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -73,9 +77,10 @@ abstract class _$$_OwnMessageBordRefCopyWith<$Res>
   factory _$$_OwnMessageBordRefCopyWith(_$_OwnMessageBordRef value,
           $Res Function(_$_OwnMessageBordRef) then) =
       __$$_OwnMessageBordRefCopyWithImpl<$Res>;
+
   @override
   @useResult
-  $Res call({dynamic messageBordRef, Role role});
+  $Res call({DocumentReference<Map<String, dynamic>> messageBordRef, Role role});
 }
 
 /// @nodoc
@@ -96,7 +101,7 @@ class __$$_OwnMessageBordRefCopyWithImpl<$Res>
       messageBordRef: null == messageBordRef
           ? _value.messageBordRef
           : messageBordRef // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as DocumentReference<Map<String, dynamic>>,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -164,8 +169,10 @@ abstract class _OwnMessageBordRef implements OwnMessageBordRef {
 
   @override
   DocumentReference<Map<String, dynamic>> get messageBordRef;
+
   @override
   Role get role;
+
   @override
   @JsonKey(ignore: true)
   _$$_OwnMessageBordRefCopyWith<_$_OwnMessageBordRef> get copyWith =>

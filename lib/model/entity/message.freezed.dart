@@ -23,6 +23,8 @@ mixin _$Message {
   String get id => throw _privateConstructorUsedError;
   String get userName => throw _privateConstructorUsedError;
   String get content => throw _privateConstructorUsedError;
+  String? get thumnail => throw _privateConstructorUsedError;
+  String? get voiceMessage => throw _privateConstructorUsedError;
   String? get thumbnail => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -35,7 +37,13 @@ abstract class $MessageCopyWith<$Res> {
   factory $MessageCopyWith(Message value, $Res Function(Message) then) =
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
-  $Res call({String id, String userName, String content, String? thumbnail});
+  $Res call(
+      {String id,
+      String userName,
+      String content,
+      String? thumnail,
+      String? voiceMessage,
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -54,6 +62,8 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? id = null,
     Object? userName = null,
     Object? content = null,
+    Object? thumnail = freezed,
+    Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
@@ -69,6 +79,14 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
+      thumnail: freezed == thumnail
+          ? _value.thumnail
+          : thumnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      voiceMessage: freezed == voiceMessage
+          ? _value.voiceMessage
+          : voiceMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       thumbnail: freezed == thumbnail
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
@@ -84,7 +102,13 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
       __$$_MessageCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String userName, String content, String? thumbnail});
+  $Res call(
+      {String id,
+      String userName,
+      String content,
+      String? thumnail,
+      String? voiceMessage,
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -100,6 +124,8 @@ class __$$_MessageCopyWithImpl<$Res>
     Object? id = null,
     Object? userName = null,
     Object? content = null,
+    Object? thumnail = freezed,
+    Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
   }) {
     return _then(_$_Message(
@@ -115,6 +141,14 @@ class __$$_MessageCopyWithImpl<$Res>
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String,
+      thumnail: freezed == thumnail
+          ? _value.thumnail
+          : thumnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      voiceMessage: freezed == voiceMessage
+          ? _value.voiceMessage
+          : voiceMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
       thumbnail: freezed == thumbnail
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
@@ -130,6 +164,8 @@ class _$_Message implements _Message {
       {required this.id,
       required this.userName,
       required this.content,
+      this.thumnail,
+      this.voiceMessage,
       this.thumbnail});
 
   factory _$_Message.fromJson(Map<String, dynamic> json) =>
@@ -142,11 +178,15 @@ class _$_Message implements _Message {
   @override
   final String content;
   @override
+  final String? thumnail;
+  @override
+  final String? voiceMessage;
+  @override
   final String? thumbnail;
 
   @override
   String toString() {
-    return 'Message(id: $id, userName: $userName, content: $content, thumbnail: $thumbnail)';
+    return 'Message(id: $id, userName: $userName, content: $content, thumnail: $thumnail, voiceMessage: $voiceMessage, thumbnail: $thumbnail)';
   }
 
   @override
@@ -158,14 +198,18 @@ class _$_Message implements _Message {
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.content, content) || other.content == content) &&
+            (identical(other.thumnail, thumnail) ||
+                other.thumnail == thumnail) &&
+            (identical(other.voiceMessage, voiceMessage) ||
+                other.voiceMessage == voiceMessage) &&
             (identical(other.thumbnail, thumbnail) ||
                 other.thumbnail == thumbnail));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, userName, content, thumbnail);
+  int get hashCode => Object.hash(
+      runtimeType, id, userName, content, thumnail, voiceMessage, thumbnail);
 
   @JsonKey(ignore: true)
   @override
@@ -186,6 +230,8 @@ abstract class _Message implements Message {
       {required final String id,
       required final String userName,
       required final String content,
+      final String? thumnail,
+      final String? voiceMessage,
       final String? thumbnail}) = _$_Message;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
@@ -196,6 +242,10 @@ abstract class _Message implements Message {
   String get userName;
   @override
   String get content;
+  @override
+  String? get thumnail;
+  @override
+  String? get voiceMessage;
   @override
   String? get thumbnail;
   @override

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
-import 'package:merubo/model/provider/message_bord_provider.dart';
+import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/widgets/message_item_left.dart';
 import 'package:merubo/widgets/message_item_right.dart';
 
@@ -13,9 +13,8 @@ class MessageBordScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final String args = ModalRoute.of(context)!.settings.arguments.toString();
-    print(args);
     final screenSize = MediaQuery.of(context).size;
-    final asyncValue = ref.watch(messageBordProvider(args));
+    final asyncValue = ref.watch(messageBordDetailProvider(args));
     return Scaffold(
       body: SingleChildScrollView(
           child: asyncValue.when(
@@ -103,7 +102,8 @@ class MessageBordScreen extends ConsumerWidget {
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.amber),
                                 color: Colors.white30),
-                            child: Center(child: Text(data.lastMessage ?? "unnown"))),
+                            child: Center(
+                                child: Text(data.lastMessage ?? "unnown"))),
                       ),
                     ],
                   ),

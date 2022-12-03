@@ -11,3 +11,10 @@ final ownMessageBordListProvider = FutureProvider((ref) async {
       .fetchOwnMessageBordList(userId);
   return messageBordList;
 });
+
+final messageBordDetailProvider = FutureProvider.family((ref, messageBordId) async {
+  final messageBordDetail = await ref
+      .watch(messageBordRepositoryProvider)
+      .fetchMessageBordDetail(messageBordId.toString());
+  return messageBordDetail;
+});
