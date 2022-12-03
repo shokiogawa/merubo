@@ -29,7 +29,7 @@ class MessageItemLeft extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(bottom: 5),
-                  child: Text(message.userName),
+                  child: Text(message.userName ?? "unnown"),
                 ),
                 Container(
                   decoration: const BoxDecoration(
@@ -52,7 +52,7 @@ class MessageItemLeft extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      message.content,
+                      message.content ?? "unnown",
                       style: const TextStyle(
                           color: Colors.white, overflow: TextOverflow.clip),
                     ),

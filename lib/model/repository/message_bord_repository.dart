@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
+import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
 
@@ -58,15 +60,26 @@ class MessageBordRepository {
     try {
       final filePath = "/message_bords/$messageBordId";
       final fireStore = ref.watch(firebaseFireStoreProvider);
+
+      //メッセージボード取得
       final messageBordRef = fireStore.doc(filePath).withConverter(
           fromFirestore: (snapshot, _) =>
               MessageBord.fromJson(snapshot.data()!),
           toFirestore: (messageBord, _) => messageBord.toJson());
-      print(messageBordRef.path);
       final messageBorSnapshot = await messageBordRef.get();
       final MessageBord messageBord = messageBorSnapshot.data()!;
-      print(messageBord);
-      return messageBord;
+
+      // メッセージ取得
+      final messageRef = fireStore.doc(filePath).collection("messages").withConverter(
+          fromFirestore: (snapshot, _) => Message.fromJson(snapshot.data()!),
+          toFirestore: (message, _) => message.toJson());
+      final messageQuery = await messageRef.get();
+      final messages = messageQuery.docs.map((message){
+        return message.data();
+      }).toList();
+
+      final messageBordWithMessage = messageBord.copyWith(messages: messages);
+      return messageBordWithMessage;
     } catch (err) {
       print(err);
       throw Error();

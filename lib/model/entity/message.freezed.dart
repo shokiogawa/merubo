@@ -20,10 +20,9 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Message {
-  String get id => throw _privateConstructorUsedError;
-  String get userName => throw _privateConstructorUsedError;
-  String get content => throw _privateConstructorUsedError;
-  String? get thumnail => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  String? get userName => throw _privateConstructorUsedError;
+  String? get content => throw _privateConstructorUsedError;
   String? get voiceMessage => throw _privateConstructorUsedError;
   String? get thumbnail => throw _privateConstructorUsedError;
 
@@ -38,10 +37,9 @@ abstract class $MessageCopyWith<$Res> {
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
   $Res call(
-      {String id,
-      String userName,
-      String content,
-      String? thumnail,
+      {String? id,
+      String? userName,
+      String? content,
       String? voiceMessage,
       String? thumbnail});
 }
@@ -59,29 +57,24 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userName = null,
-    Object? content = null,
-    Object? thumnail = freezed,
+    Object? id = freezed,
+    Object? userName = freezed,
+    Object? content = freezed,
     Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: null == userName
+              as String?,
+      userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
+              as String?,
+      content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      thumnail: freezed == thumnail
-          ? _value.thumnail
-          : thumnail // ignore: cast_nullable_to_non_nullable
               as String?,
       voiceMessage: freezed == voiceMessage
           ? _value.voiceMessage
@@ -103,10 +96,9 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
-      String userName,
-      String content,
-      String? thumnail,
+      {String? id,
+      String? userName,
+      String? content,
       String? voiceMessage,
       String? thumbnail});
 }
@@ -121,29 +113,24 @@ class __$$_MessageCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? userName = null,
-    Object? content = null,
-    Object? thumnail = freezed,
+    Object? id = freezed,
+    Object? userName = freezed,
+    Object? content = freezed,
     Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
   }) {
     return _then(_$_Message(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      userName: null == userName
+              as String?,
+      userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
-              as String,
-      content: null == content
+              as String?,
+      content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as String,
-      thumnail: freezed == thumnail
-          ? _value.thumnail
-          : thumnail // ignore: cast_nullable_to_non_nullable
               as String?,
       voiceMessage: freezed == voiceMessage
           ? _value.voiceMessage
@@ -161,10 +148,9 @@ class __$$_MessageCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Message implements _Message {
   const _$_Message(
-      {required this.id,
-      required this.userName,
-      required this.content,
-      this.thumnail,
+      {this.id,
+      this.userName,
+      this.content,
       this.voiceMessage,
       this.thumbnail});
 
@@ -172,13 +158,11 @@ class _$_Message implements _Message {
       _$$_MessageFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final String userName;
+  final String? userName;
   @override
-  final String content;
-  @override
-  final String? thumnail;
+  final String? content;
   @override
   final String? voiceMessage;
   @override
@@ -186,7 +170,7 @@ class _$_Message implements _Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, userName: $userName, content: $content, thumnail: $thumnail, voiceMessage: $voiceMessage, thumbnail: $thumbnail)';
+    return 'Message(id: $id, userName: $userName, content: $content, voiceMessage: $voiceMessage, thumbnail: $thumbnail)';
   }
 
   @override
@@ -198,8 +182,6 @@ class _$_Message implements _Message {
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.content, content) || other.content == content) &&
-            (identical(other.thumnail, thumnail) ||
-                other.thumnail == thumnail) &&
             (identical(other.voiceMessage, voiceMessage) ||
                 other.voiceMessage == voiceMessage) &&
             (identical(other.thumbnail, thumbnail) ||
@@ -208,8 +190,8 @@ class _$_Message implements _Message {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, userName, content, thumnail, voiceMessage, thumbnail);
+  int get hashCode =>
+      Object.hash(runtimeType, id, userName, content, voiceMessage, thumbnail);
 
   @JsonKey(ignore: true)
   @override
@@ -227,23 +209,20 @@ class _$_Message implements _Message {
 
 abstract class _Message implements Message {
   const factory _Message(
-      {required final String id,
-      required final String userName,
-      required final String content,
-      final String? thumnail,
+      {final String? id,
+      final String? userName,
+      final String? content,
       final String? voiceMessage,
       final String? thumbnail}) = _$_Message;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
 
   @override
-  String get id;
+  String? get id;
   @override
-  String get userName;
+  String? get userName;
   @override
-  String get content;
-  @override
-  String? get thumnail;
+  String? get content;
   @override
   String? get voiceMessage;
   @override
