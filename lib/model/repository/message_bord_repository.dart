@@ -59,6 +59,7 @@ class MessageBordRepository {
   Future<MessageBord> fetchMessageBordDetail(String messageBordId) async {
     print("fetchMessageBordDetail");
     try {
+      print(messageBordId);
       final filePath = "/message_bords/$messageBordId";
       final fireStore = ref.watch(firebaseFireStoreProvider);
 

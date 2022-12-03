@@ -43,6 +43,7 @@ const _$MessageBordTypeEnumMap = {
 const _$StatusEnumMap = {
   Status.edit: 'edit',
   Status.send: 'send',
+  Status.preview: 'preview',
 };
 
 const _$RoleEnumMap = {

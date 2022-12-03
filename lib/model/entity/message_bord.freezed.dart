@@ -189,7 +189,7 @@ class __$$_MessageBordCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_MessageBord implements _MessageBord {
+class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   const _$_MessageBord(
       {this.id,
       this.type,
@@ -227,8 +227,23 @@ class _$_MessageBord implements _MessageBord {
   }
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, status: $status, role: $role, messages: $messages)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'MessageBord'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('receiverUserName', receiverUserName))
+      ..add(DiagnosticsProperty('lastMessage', lastMessage))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('role', role))
+      ..add(DiagnosticsProperty('messages', messages));
   }
 
   @override

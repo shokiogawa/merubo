@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/contatn.dart';
@@ -22,10 +23,7 @@ class ChooseTemplatePage extends ConsumerWidget {
             Container(
               padding: const EdgeInsets.only(top: 20),
               decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(width: 2.0)
-                )
-              ),
+                  border: Border(bottom: BorderSide(width: 2.0))),
               child: const Text(
                 "寄せ書きテンプレートを選択",
                 style: TextStyle(fontSize: 18),
@@ -37,9 +35,8 @@ class ChooseTemplatePage extends ConsumerWidget {
               child: TabBar(
                   isScrollable: true,
                   indicator: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(25.0)
-                  ),
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(25.0)),
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.black,
                   tabs: tabList),
@@ -66,15 +63,17 @@ class GridTemplate extends ConsumerWidget {
         itemCount: templateList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: (){
+            onTap: () {
+              // preview画面から渡ってきて、typeを指定。
               Navigator.of(context)
-                  .pushNamed('/preview_message_bord', arguments: templateList[index].type);
+                  .pushNamed('/message_bord', arguments: describeEnum(templateList[index].type));
             },
             child: Card(
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(templateList[index].image), fit: BoxFit.fill),
+                      image: AssetImage(templateList[index].image),
+                      fit: BoxFit.fill),
                 ),
               ),
             ),

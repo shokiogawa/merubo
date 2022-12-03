@@ -12,101 +12,103 @@ class MessageBordScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String args = ModalRoute.of(context)!.settings.arguments.toString();
+    final args = ModalRoute.of(context)!.settings.arguments as String;
     final screenSize = MediaQuery.of(context).size;
     final asyncValue = ref.watch(messageBordDetailProvider(args));
     return Scaffold(
       body: SingleChildScrollView(
           child: asyncValue.when(
-              data: (data) => Column(
-                    children: [
-                      // Message Bord Top
-                      Container(
-                        width: screenSize.width,
-                        height: screenSize.height,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/chrisumasu.jpg'),
-                              fit: BoxFit.cover),
-                        ),
-                        child: Center(
-                            child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              data.receiverUserName ?? "unnown",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 15),
+              data: (data) {
+                return Column(
+                  children: [
+                    // Message Bord Top
+                    Container(
+                      width: screenSize.width,
+                      height: screenSize.height,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(getImageByType(data.type!)),
+                            fit: BoxFit.cover),
+                      ),
+                      child: Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            data.receiverUserName ?? "unnown",
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 15),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Text(
+                              "Congraturation !!",
+                              style: TextStyle(
+                                  color: Colors.amberAccent, fontSize: 45),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 15),
-                              child: Text(
-                                "Congraturation !!",
+                          ),
+                          Text(
+                            data.title ?? "unnown",
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 15),
+                          ),
+                        ],
+                      )),
+                    ),
+                    //寄せ書きを表示部分
+                    Container(
+                      padding: const EdgeInsets.only(top: 20, bottom: 50),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 5),
+                          color: Colors.white24),
+                      child: Column(
+                        children: [
+                          Container(
+                              decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.white, width: 5),
+                                  color: Colors.white),
+                              child: const Text(
+                                "Messaging Bord",
                                 style: TextStyle(
-                                    color: Colors.amberAccent, fontSize: 45),
-                              ),
-                            ),
-                            Text(
-                              data.title ?? "unnown",
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 15),
-                            ),
-                          ],
-                        )),
+                                    fontSize: 20,
+                                    fontStyle: FontStyle.italic,
+                                    decoration: TextDecoration.underline,
+                                    decorationStyle:
+                                        TextDecorationStyle.double),
+                              )),
+                          ListView.builder(
+                              padding: const EdgeInsets.only(top: 0),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: data.messages.length,
+                              itemBuilder: (context, index) {
+                                if (index % 2 == 1) {
+                                  return MessageItemLeft(
+                                    message: data.messages[index],
+                                  );
+                                } else {
+                                  return MessageItemRight(
+                                    message: data.messages[index],
+                                  );
+                                }
+                              }),
+                        ],
                       ),
-                      //寄せ書きを表示部分
-                      Container(
-                        padding: const EdgeInsets.only(top: 20, bottom: 50),
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey, width: 5),
-                            color: Colors.white24),
-                        child: Column(
-                          children: [
-                            Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.white, width: 5),
-                                    color: Colors.white),
-                                child: const Text(
-                                  "Messaging Bord",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontStyle: FontStyle.italic,
-                                      decoration: TextDecoration.underline,
-                                      decorationStyle:
-                                          TextDecorationStyle.double),
-                                )),
-                            ListView.builder(
-                                padding: const EdgeInsets.only(top: 0),
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: data.messages.length,
-                                itemBuilder: (context, index) {
-                                  if (index % 2 == 1) {
-                                    return MessageItemLeft(
-                                      message: data.messages[index],
-                                    );
-                                  } else {
-                                    return MessageItemRight(
-                                      message: data.messages[index],
-                                    );
-                                  }
-                                }),
-                          ],
-                        ),
-                      ),
-                      //最後のメッセージ部分(動画、画像)
-                      SizedBox(
-                        height: 200,
-                        child: Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.amber),
-                                color: Colors.white30),
-                            child: Center(
-                                child: Text(data.lastMessage ?? "unnown"))),
-                      ),
-                    ],
-                  ),
+                    ),
+                    //最後のメッセージ部分(動画、画像)
+                    SizedBox(
+                      height: 200,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.amber),
+                              color: Colors.white30),
+                          child: Center(
+                              child: Text(data.lastMessage ?? "unnown"))),
+                    ),
+                  ],
+                );
+              },
               error: (err, _) {
                 const Text("error has occured");
               },
@@ -114,6 +116,17 @@ class MessageBordScreen extends ConsumerWidget {
                     child: CircularProgressIndicator(),
                   ))),
     );
+  }
+}
+
+String getImageByType(MessageBordType type) {
+  switch (type) {
+    case MessageBordType.type1:
+      return 'assets/images/chrisumasu.jpg';
+    case MessageBordType.type2:
+      return 'assets/images/oiwai.jpg';
+    default:
+      return "";
   }
 }
 

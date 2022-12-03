@@ -5,7 +5,7 @@ import 'package:merubo/provider/auth_provider.dart';
 import 'package:merubo/screen/login_screen/main.dart';
 import 'package:merubo/screen/message_bord_create_screen/main.dart';
 import 'package:merubo/screen/message_bord_screen/main.dart';
-import 'package:merubo/screen/message_bord_preview_screen/main.dart';
+import 'package:merubo/screen/message_bord_preview_screen_test/main.dart';
 import 'package:merubo/screen/top_screen/main.dart';
 import 'firebase_options.dart';
 

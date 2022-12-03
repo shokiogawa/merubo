@@ -10,9 +10,9 @@ final Map<String, List<Template>> mapTemplate = {
   "クリスマス": templateList5,
 };
 
-const template1 = Template(MessageBordType.type1, "assets/images/oiwai.jpg");
+const template1 = Template(MessageBordType.type1, "assets/images/chrisumasu.jpg");
 const template2 =
-    Template(MessageBordType.type2, "assets/images/chrisumasu.jpg");
+    Template(MessageBordType.type2, "assets/images/oiwai.jpg");
 
 // テンプレート一覧
 const List<Template> templateList1 = [template1, template2];
