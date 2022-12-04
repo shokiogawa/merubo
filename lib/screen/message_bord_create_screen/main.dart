@@ -6,7 +6,7 @@ import 'package:merubo/screen/message_bord_create_screen/pages/create_bottom_mes
 import 'package:merubo/screen/message_bord_create_screen/pages/create_message_page.dart';
 import 'package:merubo/screen/message_bord_create_screen/pages/create_top_message_page.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/bottom_button.dart';
-import 'package:merubo/widgets/progress_create_message_bord.dart';
+import 'package:merubo/screen/message_bord_create_screen/widget/progress_create_message_bord.dart';
 
 class MessageBordCreateScreen extends ConsumerWidget {
   const MessageBordCreateScreen({Key? key}) : super(key: key);
@@ -22,16 +22,16 @@ class MessageBordCreateScreen extends ConsumerWidget {
     ];
     return Scaffold(
       appBar: AppBar(
-        bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(12),
+        bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(12),
             child: Padding(
-              padding: EdgeInsets.only(right: 40, left: 40, bottom: 5),
-              child: ProgressCreateMessageBord()
-            )),
+                padding: const EdgeInsets.only(right: 40, left: 40, bottom: 5),
+                child: ProgressCreateMessageBord(
+                    totalPages: messageBordCreatePageList.length))),
         automaticallyImplyLeading: currentIndex == 0 ? true : false,
       ),
       body: messageBordCreatePageList[currentIndex],
-      bottomNavigationBar: currentIndex == 0  ? null : const BottomButton(),
+      bottomNavigationBar: currentIndex == 0 ? null : const BottomButton(),
     );
   }
 }

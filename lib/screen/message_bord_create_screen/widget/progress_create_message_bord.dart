@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../provider/create_message_bord_provider.dart';
+
+class ProgressCreateMessageBord extends ConsumerWidget {
+  final int totalPages;
+
+  const ProgressCreateMessageBord({Key? key, required this.totalPages})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final List<Widget> progress = [];
+    for (int i = 0; i < totalPages; i++) {
+      progress.add(CircleWidget(index: i));
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [...progress],
+    );
+  }
+}
+
+class CircleWidget extends StatelessWidget {
+  const CircleWidget({Key? key, required this.index}) : super(key: key);
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: index == 0
+          ? [ProgressCircle(index: index)]
+          : [const ProgressBar(), ProgressCircle(index: index)],
+    );
+  }
+}
+
+class ProgressCircle extends ConsumerWidget {
+  final int index;
+
+  const ProgressCircle({Key? key, required this.index}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(currentIndexProviderForCreate);
+    return CircleAvatar(
+      radius: 18,
+      backgroundColor: Colors.white,
+      child: currentIndex > index ? const Icon(Icons.check) : null,
+    );
+  }
+}
+
+class ProgressBar extends StatelessWidget {
+  const ProgressBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 5,
+      width: 20,
+      color: Colors.white,
+    );
+  }
+}
