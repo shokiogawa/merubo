@@ -100,6 +100,7 @@ class MessageBordScreen extends ConsumerWidget {
                     SizedBox(
                       height: 200,
                       child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.amber),
                               color: Colors.white30),

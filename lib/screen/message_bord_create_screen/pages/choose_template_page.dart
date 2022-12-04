@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/contatn.dart';
 import 'package:merubo/model/entity/template.dart';
+import 'package:merubo/widgets/button.dart';
 
 class ChooseTemplatePage extends ConsumerWidget {
   const ChooseTemplatePage({Key? key}) : super(key: key);
@@ -58,24 +59,51 @@ class GridTemplate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GridView.builder(
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, childAspectRatio: 0.58),
         itemCount: templateList.length,
         itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              // preview画面から渡ってきて、typeを指定。
-              Navigator.of(context)
-                  .pushNamed('/message_bord', arguments: describeEnum(templateList[index].type));
-            },
-            child: Card(
-              child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(templateList[index].image),
-                      fit: BoxFit.fill),
+          return Card(
+            child: Column(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(4.0),
+                          topLeft: Radius.circular(4.0)),
+                      image: DecorationImage(
+                          image: AssetImage(templateList[index].image),
+                          fit: BoxFit.fill),
+                    ),
+                  ),
                 ),
-              ),
+                Expanded(
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Column(
+                        children: [
+                          Button(
+                            text: "プレビュー",
+                            buttonColor: Colors.green.withOpacity(0.6),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/message_bord',
+                                  arguments:
+                                  describeEnum(templateList[index].type));
+                            },
+                          ),
+                          Button(
+                              text: "決定",
+                              buttonColor: Colors.orange,
+                              onPressed: () {
+                                print("決定");
+                              }),
+                        ],
+                      ),
+                    ))
+              ],
             ),
           );
         });
