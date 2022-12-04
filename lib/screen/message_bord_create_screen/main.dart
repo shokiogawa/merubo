@@ -5,7 +5,6 @@ import 'package:merubo/screen/message_bord_create_screen/pages/choose_template_p
 import 'package:merubo/screen/message_bord_create_screen/pages/create_bottom_message_page.dart';
 import 'package:merubo/screen/message_bord_create_screen/pages/create_message_page.dart';
 import 'package:merubo/screen/message_bord_create_screen/pages/create_top_message_page.dart';
-import 'package:merubo/screen/message_bord_create_screen/widget/bottom_button.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_create_message_bord.dart';
 
 class MessageBordCreateScreen extends ConsumerWidget {
@@ -31,7 +30,6 @@ class MessageBordCreateScreen extends ConsumerWidget {
         automaticallyImplyLeading: currentIndex == 0 ? true : false,
       ),
       body: messageBordCreatePageList[currentIndex],
-      bottomNavigationBar: currentIndex == 0 ? null : const BottomButton(),
     );
   }
 }

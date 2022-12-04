@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../provider/create_message_bord_provider.dart';
 
+//ページ数に応じて線と円のwidgetを作成する。
 class ProgressCreateMessageBord extends ConsumerWidget {
   final int totalPages;
-
   const ProgressCreateMessageBord({Key? key, required this.totalPages})
       : super(key: key);
 
@@ -21,6 +21,7 @@ class ProgressCreateMessageBord extends ConsumerWidget {
   }
 }
 
+//線と円を組み合わせたWidget
 class CircleWidget extends StatelessWidget {
   const CircleWidget({Key? key, required this.index}) : super(key: key);
   final int index;
@@ -35,6 +36,7 @@ class CircleWidget extends StatelessWidget {
   }
 }
 
+//円の部分
 class ProgressCircle extends ConsumerWidget {
   final int index;
 
@@ -51,9 +53,9 @@ class ProgressCircle extends ConsumerWidget {
   }
 }
 
+//線の部分
 class ProgressBar extends StatelessWidget {
   const ProgressBar({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
