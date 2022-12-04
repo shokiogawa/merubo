@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/contatn.dart';
 import 'package:merubo/model/entity/template.dart';
+import 'package:merubo/provider/create_message_bord_provider.dart';
 import 'package:merubo/widgets/button.dart';
 
 class ChooseTemplatePage extends ConsumerWidget {
@@ -98,6 +99,7 @@ class GridTemplate extends ConsumerWidget {
                               text: "決定",
                               buttonColor: Colors.orange,
                               onPressed: () {
+                                ref.read(currentIndexProviderForCreate.notifier).state = 1;
                                 print("決定");
                               }),
                         ],

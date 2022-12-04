@@ -8,6 +8,7 @@ class MessageBordCreatePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print("MessageBordCreatePage");
     final auth = ref.watch(authProvider);
     return Center(
       child: Column(

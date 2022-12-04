@@ -8,6 +8,7 @@ class MessageBordListPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    print("MessageBordListPage");
     final asyncValue = ref.watch(ownMessageBordListProvider);
     return asyncValue.when(
         data: (data) => SingleChildScrollView(
