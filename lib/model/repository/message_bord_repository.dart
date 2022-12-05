@@ -2,7 +2,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
+import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
+import 'package:uuid/uuid.dart';
 
 final messageBordRepositoryProvider =
     Provider((ref) => MessageBordRepository(ref));
@@ -56,7 +58,8 @@ class MessageBordRepository {
   }
 
   //メッセージボード詳細
-  Future<MessageBord> fetchMessageBordDetail(String messageBordId) async {
+  Future<MessageBordWithMessages> fetchMessageBordDetail(
+      String messageBordId) async {
     print("fetchMessageBordDetail");
     try {
       print(messageBordId);
@@ -72,15 +75,20 @@ class MessageBordRepository {
       final MessageBord messageBord = messageBorSnapshot.data()!;
 
       // メッセージ取得
-      final messageRef = fireStore.doc(filePath).collection("messages").withConverter(
-          fromFirestore: (snapshot, _) => Message.fromJson(snapshot.data()!),
-          toFirestore: (message, _) => message.toJson());
+      final messageRef = fireStore
+          .doc(filePath)
+          .collection("messages")
+          .withConverter(
+              fromFirestore: (snapshot, _) =>
+                  Message.fromJson(snapshot.data()!),
+              toFirestore: (message, _) => message.toJson());
       final messageQuery = await messageRef.get();
-      final messages = messageQuery.docs.map((message){
+      final messages = messageQuery.docs.map((message) {
         return message.data();
       }).toList();
 
-      final messageBordWithMessage = messageBord.copyWith(messages: messages);
+      final messageBordWithMessage =
+          MessageBordWithMessages(messageBord: messageBord, messages: messages);
       return messageBordWithMessage;
     } catch (err) {
       print(err);
@@ -89,7 +97,36 @@ class MessageBordRepository {
   }
 
   //メッセージボード作成
-  Future<void> createMessageBord() async {}
+  Future<void> createMessageBord(MessageBordWithMessages value) async {
+    //TODO: uuidはproviderで入れたい
+    // id付与
+
+    final messageBordUuid = const Uuid().v4();
+    final messageUuid = const Uuid().v4();
+    // objectに挿入
+    final messageBord = value.messageBord.copyWith(id: messageBordUuid);
+    final message = value.messages[0].copyWith(id: messageUuid);
+    print(value.messages[0].toJson());
+    print(value.messageBord.toJson());
+
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    //batch start
+    final batch = fireStore.batch();
+    // 保存場所指定
+    final messageBordRef =
+        fireStore.collection("message_bords").doc(messageBord.id);
+    final messageRef = messageBordRef.collection("messages").doc(message.id);
+    //保存
+    batch.set(messageBordRef, messageBord.toJson());
+    batch.set(messageRef, message.toJson());
+    batch.commit().then((value) {
+      print("succeed commit");
+    }).catchError((err) {
+      print(err);
+      print("failed set data");
+      throw Exception(err);
+    });
+  }
 
   //メッセージボード更新
   Future<void> updateMessageBord() async {}

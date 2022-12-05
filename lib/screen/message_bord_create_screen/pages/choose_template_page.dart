@@ -100,6 +100,7 @@ class GridTemplate extends ConsumerWidget {
                               buttonColor: Colors.orange,
                               onPressed: () {
                                 ref.read(currentIndexProviderForCreate.notifier).state = 1;
+                                ref.read(createMessageBord.notifier).setType(templateList[index].type);
                                 print("決定");
                               }),
                         ],

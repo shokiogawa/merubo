@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/model/repository/message_bord_repository.dart';
+import 'package:merubo/provider/create_message_bord_provider.dart';
 import '../widget/bottom_button.dart';
 
 class CreateBottomMessagePage extends ConsumerWidget {
@@ -7,6 +9,8 @@ class CreateBottomMessagePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final createTopMessageProvider = ref.read(createMessageBord.notifier);
+    final lastMessageController = TextEditingController();
     return Column(
       children: [
         Expanded(
@@ -24,14 +28,15 @@ class CreateBottomMessagePage extends ConsumerWidget {
                   //最後のメッセージ
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Padding(
+                    children: [
+                      const Padding(
                         padding: EdgeInsets.only(bottom: 8),
                         child: Text("まとめメッセージ"),
                       ),
                       TextField(
+                        controller: lastMessageController,
                         maxLines: 8,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                             contentPadding: EdgeInsets.all(0),
                             hintStyle: TextStyle(fontSize: 12),
                             border: OutlineInputBorder()),
@@ -43,7 +48,11 @@ class CreateBottomMessagePage extends ConsumerWidget {
             ),
           ),
         ),
-        const BottomButton()
+        BottomButton(onPressed: () {
+          print("こんにちは");
+          createTopMessageProvider.setLastMessage(lastMessageController.text);
+          createTopMessageProvider.createMessageBordWithMessage();
+        })
       ],
     );
   }

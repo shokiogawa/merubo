@@ -27,7 +27,8 @@ class MessageBordScreen extends ConsumerWidget {
                       height: screenSize.height,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage(getImageByType(data.type!)),
+                            image: AssetImage(
+                                getImageByType(data.messageBord?.type)),
                             fit: BoxFit.cover),
                       ),
                       child: Center(
@@ -35,7 +36,7 @@ class MessageBordScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            data.receiverUserName ?? "unnown",
+                            data.messageBord?.receiverUserName ?? "unnown",
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 15),
                           ),
@@ -48,7 +49,7 @@ class MessageBordScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            data.title ?? "unnown",
+                            data.messageBord?.title ?? "unnown",
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 15),
                           ),
@@ -100,12 +101,13 @@ class MessageBordScreen extends ConsumerWidget {
                     SizedBox(
                       height: 200,
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                          padding: const EdgeInsets.symmetric(horizontal: 30),
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.amber),
                               color: Colors.white30),
                           child: Center(
-                              child: Text(data.lastMessage ?? "unnown"))),
+                              child: Text(
+                                  data.messageBord?.lastMessage ?? "unnown"))),
                     ),
                   ],
                 );
@@ -120,7 +122,7 @@ class MessageBordScreen extends ConsumerWidget {
   }
 }
 
-String getImageByType(MessageBordType type) {
+String getImageByType(MessageBordType? type) {
   switch (type) {
     case MessageBordType.type1:
       return 'assets/images/chrisumasu.jpg';

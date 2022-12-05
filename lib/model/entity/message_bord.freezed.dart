@@ -25,9 +25,8 @@ mixin _$MessageBord {
   String? get receiverUserName => throw _privateConstructorUsedError;
   String? get lastMessage => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
-  Status? get status => throw _privateConstructorUsedError;
+  Status get status => throw _privateConstructorUsedError;
   Role? get role => throw _privateConstructorUsedError;
-  List<Message> get messages => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,9 +46,8 @@ abstract class $MessageBordCopyWith<$Res> {
       String? receiverUserName,
       String? lastMessage,
       String? title,
-      Status? status,
-      Role? role,
-      List<Message> messages});
+      Status status,
+      Role? role});
 }
 
 /// @nodoc
@@ -70,9 +68,8 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? receiverUserName = freezed,
     Object? lastMessage = freezed,
     Object? title = freezed,
-    Object? status = freezed,
+    Object? status = null,
     Object? role = freezed,
-    Object? messages = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -95,18 +92,14 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as Status?,
+              as Status,
       role: freezed == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as Role?,
-      messages: null == messages
-          ? _value.messages
-          : messages // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
     ) as $Val);
   }
 }
@@ -125,9 +118,8 @@ abstract class _$$_MessageBordCopyWith<$Res>
       String? receiverUserName,
       String? lastMessage,
       String? title,
-      Status? status,
-      Role? role,
-      List<Message> messages});
+      Status status,
+      Role? role});
 }
 
 /// @nodoc
@@ -146,9 +138,8 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? receiverUserName = freezed,
     Object? lastMessage = freezed,
     Object? title = freezed,
-    Object? status = freezed,
+    Object? status = null,
     Object? role = freezed,
-    Object? messages = null,
   }) {
     return _then(_$_MessageBord(
       id: freezed == id
@@ -171,18 +162,14 @@ class __$$_MessageBordCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: freezed == status
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as Status?,
+              as Status,
       role: freezed == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as Role?,
-      messages: null == messages
-          ? _value._messages
-          : messages // ignore: cast_nullable_to_non_nullable
-              as List<Message>,
     ));
   }
 }
@@ -196,10 +183,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       this.receiverUserName,
       this.lastMessage,
       this.title,
-      this.status,
-      this.role,
-      final List<Message> messages = const []})
-      : _messages = messages;
+      this.status = Status.edit,
+      this.role});
 
   factory _$_MessageBord.fromJson(Map<String, dynamic> json) =>
       _$$_MessageBordFromJson(json);
@@ -215,20 +200,14 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @override
   final String? title;
   @override
-  final Status? status;
+  @JsonKey()
+  final Status status;
   @override
   final Role? role;
-  final List<Message> _messages;
-  @override
-  @JsonKey()
-  List<Message> get messages {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_messages);
-  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, status: $status, role: $role, messages: $messages)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, status: $status, role: $role)';
   }
 
   @override
@@ -242,8 +221,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       ..add(DiagnosticsProperty('lastMessage', lastMessage))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('role', role))
-      ..add(DiagnosticsProperty('messages', messages));
+      ..add(DiagnosticsProperty('role', role));
   }
 
   @override
@@ -259,22 +237,13 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
                 other.lastMessage == lastMessage) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.role, role) || other.role == role) &&
-            const DeepCollectionEquality().equals(other._messages, _messages));
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      type,
-      receiverUserName,
-      lastMessage,
-      title,
-      status,
-      role,
-      const DeepCollectionEquality().hash(_messages));
+  int get hashCode => Object.hash(runtimeType, id, type, receiverUserName,
+      lastMessage, title, status, role);
 
   @JsonKey(ignore: true)
   @override
@@ -297,9 +266,8 @@ abstract class _MessageBord implements MessageBord {
       final String? receiverUserName,
       final String? lastMessage,
       final String? title,
-      final Status? status,
-      final Role? role,
-      final List<Message> messages}) = _$_MessageBord;
+      final Status status,
+      final Role? role}) = _$_MessageBord;
 
   factory _MessageBord.fromJson(Map<String, dynamic> json) =
       _$_MessageBord.fromJson;
@@ -315,11 +283,9 @@ abstract class _MessageBord implements MessageBord {
   @override
   String? get title;
   @override
-  Status? get status;
+  Status get status;
   @override
   Role? get role;
-  @override
-  List<Message> get messages;
   @override
   @JsonKey(ignore: true)
   _$$_MessageBordCopyWith<_$_MessageBord> get copyWith =>

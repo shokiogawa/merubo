@@ -3,7 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../provider/create_message_bord_provider.dart';
 
 class BottomButton extends ConsumerWidget {
-  const BottomButton({Key? key}) : super(key: key);
+  const BottomButton({Key? key, required this.onPressed}) : super(key: key);
+  final Function onPressed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,6 +30,7 @@ class BottomButton extends ConsumerWidget {
                       ref.read(currentIndexProviderForCreate.notifier).state =
                           currentIndex + 1;
                     }
+                    onPressed();
                   },
                   child: const Text("次へ")))
         ],
