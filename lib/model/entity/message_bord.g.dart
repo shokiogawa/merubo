@@ -15,7 +15,7 @@ _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String?,
       status:
           $enumDecodeNullable(_$StatusEnumMap, json['status']) ?? Status.edit,
-      role: $enumDecodeNullable(_$RoleEnumMap, json['role']),
+      role: $enumDecodeNullable(_$RoleEnumMap, json['role']) ?? Role.owner,
     );
 
 Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>

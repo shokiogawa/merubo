@@ -184,7 +184,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       this.lastMessage,
       this.title,
       this.status = Status.edit,
-      this.role});
+      this.role = Role.owner});
 
   factory _$_MessageBord.fromJson(Map<String, dynamic> json) =>
       _$$_MessageBordFromJson(json);
@@ -203,6 +203,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @JsonKey()
   final Status status;
   @override
+  @JsonKey()
   final Role? role;
 
   @override

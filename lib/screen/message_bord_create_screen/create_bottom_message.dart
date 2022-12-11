@@ -9,8 +9,8 @@ class CreateBottomMessageScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createTopMessageProvider = ref.read(createMessageBord.notifier);
-    final lastMessageController = TextEditingController();
+    final createMessageProvider = ref.read(createMessageBord.notifier);
+    final lastMessageController = createMessageProvider.lastMessageController;
     return Scaffold(
       appBar: const ProgressAppBar(),
       body: Column(
@@ -36,10 +36,10 @@ class CreateBottomMessageScreen extends ConsumerWidget {
                           child: Text("まとめメッセージ"),
                         ),
                         TextField(
-                          controller: lastMessageController,
+                          controller:lastMessageController,
                           maxLines: 8,
                           decoration: const InputDecoration(
-                              contentPadding: EdgeInsets.all(0),
+                              contentPadding: EdgeInsets.all(20),
                               hintStyle: TextStyle(fontSize: 12),
                               border: OutlineInputBorder()),
                         ),
@@ -52,7 +52,6 @@ class CreateBottomMessageScreen extends ConsumerWidget {
           ),
           BottomButton(onPressed: () {
             ref.read(currentIndexProviderForCreate.notifier).state = 4;
-            createTopMessageProvider.setLastMessage(lastMessageController.text);
             // TODO: firestoreのルールを作成するまでコメントアウトしておく。
             // createTopMessageProvider.createMessageBordWithMessage();
             Navigator.of(context).pushNamedAndRemoveUntil('/message_bord_complete_message_bord_screen', (route) => false);
