@@ -58,5 +58,12 @@
     		</array>
     	</dict>
     </array>
+    <!-- image_picker Section -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>your photo library is required</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Camera is required</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Microphone is required</string>
 </dict>
 </plist>

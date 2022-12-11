@@ -1,4 +1,5 @@
 // テンプレートのジャンル
+import 'package:flutter/cupertino.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/template.dart';
 
@@ -20,3 +21,8 @@ const List<Template> templateList2 = [template1, template2];
 const List<Template> templateList3 = [template1, template2];
 const List<Template> templateList4 = [template1, template2];
 const List<Template> templateList5 = [template1, template2];
+
+class Utility{
+  static GlobalKey<NavigatorState> createMessageBordNav = GlobalKey();
+  static GlobalKey<NavigatorState> mainNav = GlobalKey();
+}

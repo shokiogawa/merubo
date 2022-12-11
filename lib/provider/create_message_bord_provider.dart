@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
-import 'package:merubo/model/entity/message_bord_with_messages.dart';
+import 'package:merubo/model/entity/message_bord_with_message.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
 import 'package:uuid/uuid.dart';
 
@@ -11,12 +12,16 @@ final currentIndexProviderForCreate = StateProvider<int>((ref) {
 });
 
 final createMessageBord =
-    StateNotifierProvider<CreateMessageBord, MessageBordWithMessages>(
-        (ref) => CreateMessageBord(ref));
+    StateNotifierProvider<CreateMessageBord, MessageBordWithMessage>(
+        (ref){
+          return CreateMessageBord(ref);
+        });
 
-class CreateMessageBord extends StateNotifier<MessageBordWithMessages> {
+class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
   CreateMessageBord(this.ref)
-      : super(const MessageBordWithMessages(messageBord: MessageBord()));
+      : super(MessageBordWithMessage(
+            messageBord: MessageBord(id: const Uuid().v4()),
+            messages: Message(id: const Uuid().v4())));
   final Ref ref;
 
   void setType(MessageBordType type) {
@@ -33,14 +38,24 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessages> {
 
   void setMessage(
       String userName, String thumbnail, String content, String voidMessage) {
-    final message = Message(
+    final message = state.messages.copyWith(
         userName: userName,
         thumbnail: thumbnail,
         content: content,
         voiceMessage: voidMessage);
-    final List<Message> messages = [];
-    messages.add(message);
-    state = state.copyWith(messages: messages);
+    state = state.copyWith(messages: message);
+  }
+
+  void setMessageUserName(String userName){
+    final message = state.messages.copyWith(userName: userName);
+    state = state.copyWith(messages: message);
+    print(state.messages.userName);
+  }
+
+  void setMessageContent(String content){
+    final message = state.messages.copyWith(content: content);
+    state = state.copyWith(messages: message);
+    print(state.messages.content);
   }
 
   void setLastMessage(String lastMessage) {
@@ -51,5 +66,15 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessages> {
   // 保存メソッド
   Future<void> createMessageBordWithMessage() async {
     await ref.watch(messageBordRepositoryProvider).createMessageBord(state);
+  }
+
+  bool checkCanCreateMessage() {
+    print(state.messages.userName);
+    print(state.messages.content);
+    if (state.messages.userName != null ||
+        state.messages.content != null) {
+      return true;
+    }
+    return false;
   }
 }

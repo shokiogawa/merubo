@@ -4,49 +4,55 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/contatn.dart';
 import 'package:merubo/model/entity/template.dart';
 import 'package:merubo/provider/create_message_bord_provider.dart';
+import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
+import 'package:merubo/screen/message_bord_create_screen/widget/progress_create_message_bord.dart';
 import 'package:merubo/widgets/button.dart';
 
-class ChooseTemplatePage extends ConsumerWidget {
-  const ChooseTemplatePage({Key? key}) : super(key: key);
-
+class ChooseTemplateScreen extends ConsumerWidget {
+  const ChooseTemplateScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final tabList = mapTemplate.keys.toList().map((e) => Tab(text: e)).toList();
     final tabViewList = mapTemplate.values
         .toList()
         .map((e) => GridTemplate(templateList: e))
         .toList();
-    return DefaultTabController(
-      length: mapTemplate.length,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.only(top: 20),
-              decoration: const BoxDecoration(
-                  border: Border(bottom: BorderSide(width: 2.0))),
-              child: const Text(
-                "寄せ書きテンプレートを選択",
-                style: TextStyle(fontSize: 18),
+    return Scaffold(
+      appBar: const ProgressAppBar(),
+      // appBar: AppBar(title: const Text("choosetemplate"),),
+      body: DefaultTabController(
+        length: mapTemplate.length,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                decoration: const BoxDecoration(
+                    border: Border(bottom: BorderSide(width: 2.0))),
+                child: const Text(
+                  "寄せ書きテンプレートを選択",
+                  style: TextStyle(fontSize: 18),
+                ),
               ),
-            ),
-            Container(
-              height: 40,
-              margin: const EdgeInsets.symmetric(vertical: 20),
-              child: TabBar(
-                  isScrollable: true,
-                  indicator: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(25.0)),
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.black,
-                  tabs: tabList),
-            ),
-            Expanded(
-              child: TabBarView(children: tabViewList),
-            )
-          ],
+              Container(
+                height: 40,
+                margin: const EdgeInsets.symmetric(vertical: 20),
+                child: TabBar(
+                    isScrollable: true,
+                    indicator: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(25.0)),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.black,
+                    tabs: tabList),
+              ),
+              Expanded(
+                child: TabBarView(children: tabViewList),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -101,7 +107,7 @@ class GridTemplate extends ConsumerWidget {
                               onPressed: () {
                                 ref.read(currentIndexProviderForCreate.notifier).state = 1;
                                 ref.read(createMessageBord.notifier).setType(templateList[index].type);
-                                print("決定");
+                                Navigator.of(context).pushNamed('/message_bord_create_top_message_screen');
                               }),
                         ],
                       ),

@@ -8,7 +8,7 @@ part of 'message_bord.dart';
 
 _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
     _$_MessageBord(
-      id: json['id'] as String?,
+      id: json['id'] as String,
       type: $enumDecodeNullable(_$MessageBordTypeEnumMap, json['type']),
       receiverUserName: json['receiverUserName'] as String?,
       lastMessage: json['lastMessage'] as String?,

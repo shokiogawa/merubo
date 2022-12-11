@@ -16,7 +16,7 @@ enum Role { receiver, owner, participant }
 class MessageBord with _$MessageBord {
 
   const factory MessageBord({
-    String? id,
+    required String id,
     MessageBordType? type,
     String? receiverUserName,
     String? lastMessage,

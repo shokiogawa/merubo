@@ -20,7 +20,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Message {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   String? get voiceMessage => throw _privateConstructorUsedError;
@@ -37,7 +37,7 @@ abstract class $MessageCopyWith<$Res> {
       _$MessageCopyWithImpl<$Res, Message>;
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       String? userName,
       String? content,
       String? voiceMessage,
@@ -57,17 +57,17 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? userName = freezed,
     Object? content = freezed,
     Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -96,7 +96,7 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       String? userName,
       String? content,
       String? voiceMessage,
@@ -113,17 +113,17 @@ class __$$_MessageCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? userName = freezed,
     Object? content = freezed,
     Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
   }) {
     return _then(_$_Message(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -148,7 +148,7 @@ class __$$_MessageCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Message implements _Message {
   const _$_Message(
-      {this.id,
+      {required this.id,
       this.userName,
       this.content,
       this.voiceMessage,
@@ -158,7 +158,7 @@ class _$_Message implements _Message {
       _$$_MessageFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
   final String? userName;
   @override
@@ -209,7 +209,7 @@ class _$_Message implements _Message {
 
 abstract class _Message implements Message {
   const factory _Message(
-      {final String? id,
+      {required final String id,
       final String? userName,
       final String? content,
       final String? voiceMessage,
@@ -218,7 +218,7 @@ abstract class _Message implements Message {
   factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
   String? get userName;
   @override

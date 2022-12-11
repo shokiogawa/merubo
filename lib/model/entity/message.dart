@@ -5,7 +5,7 @@ part 'message.g.dart';
 @freezed
 class Message with _$Message {
   const factory Message({
-    String? id,
+    required String id,
     String? userName,
     String? content,
     String? voiceMessage,

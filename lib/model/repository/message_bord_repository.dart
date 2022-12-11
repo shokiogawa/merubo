@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/model/common_provider/firebase_fire_storage.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
+import 'package:merubo/model/entity/message_bord_with_message.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
 import 'package:uuid/uuid.dart';
@@ -97,17 +102,13 @@ class MessageBordRepository {
   }
 
   //メッセージボード作成
-  Future<void> createMessageBord(MessageBordWithMessages value) async {
-    //TODO: uuidはproviderで入れたい
-    // id付与
-
-    final messageBordUuid = const Uuid().v4();
-    final messageUuid = const Uuid().v4();
+  Future<void> createMessageBord(MessageBordWithMessage value) async {
+    // final thumbnail = await uploadImageToStorage(imageFile, 'message_bords/$messageBordUuid/thumbnail');
     // objectに挿入
-    final messageBord = value.messageBord.copyWith(id: messageBordUuid);
-    final message = value.messages[0].copyWith(id: messageUuid);
-    print(value.messages[0].toJson());
+    print(value.messages.toJson());
     print(value.messageBord.toJson());
+    final messageBord = value.messageBord;
+    final message = value.messages;
 
     final fireStore = ref.watch(firebaseFireStoreProvider);
     //batch start
@@ -126,6 +127,16 @@ class MessageBordRepository {
       print("failed set data");
       throw Exception(err);
     });
+  }
+
+  Future<String> uploadImageToStorage(File imageFile, String path) async {
+    // message_bords/{message_bord_id}/thumbnail
+    final uuid = const Uuid().v4();
+    final storagePath = '$path/$uuid';
+    final storageRef =
+        ref.watch(fireBaseFireStorageProvider).child(storagePath);
+    final uploadTask = storageRef.putFile(imageFile);
+    return await uploadTask.snapshot.ref.getDownloadURL();
   }
 
   //メッセージボード更新

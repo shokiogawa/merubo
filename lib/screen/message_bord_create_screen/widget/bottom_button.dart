@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/contatn.dart';
 import '../../../provider/create_message_bord_provider.dart';
 
 class BottomButton extends ConsumerWidget {
@@ -15,21 +16,20 @@ class BottomButton extends ConsumerWidget {
           Expanded(
               child: ElevatedButton(
                   onPressed: () {
-                    ref.read(currentIndexProviderForCreate.notifier).state =
-                        ref.read(currentIndexProviderForCreate.notifier).state -
-                            1;
+                    final currentIndex =
+                        ref.read(currentIndexProviderForCreate.notifier).state;
+                    if (currentIndex != 0) {
+                      ref.read(currentIndexProviderForCreate.notifier).state =
+                          currentIndex - 1;
+                    }
+                    Navigator.of(context).pop();
                   },
                   child: const Text("戻る"))),
           const SizedBox(width: 30),
           Expanded(
               child: ElevatedButton(
                   onPressed: () {
-                    final currentIndex =
-                        ref.read(currentIndexProviderForCreate.notifier).state;
-                    if (currentIndex != 3) {
-                      ref.read(currentIndexProviderForCreate.notifier).state =
-                          currentIndex + 1;
-                    }
+
                     onPressed();
                   },
                   child: const Text("次へ")))

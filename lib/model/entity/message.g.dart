@@ -7,7 +7,7 @@ part of 'message.dart';
 // **************************************************************************
 
 _$_Message _$$_MessageFromJson(Map<String, dynamic> json) => _$_Message(
-      id: json['id'] as String?,
+      id: json['id'] as String,
       userName: json['userName'] as String?,
       content: json['content'] as String?,
       voiceMessage: json['voiceMessage'] as String?,

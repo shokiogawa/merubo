@@ -20,7 +20,7 @@ MessageBord _$MessageBordFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$MessageBord {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   MessageBordType? get type => throw _privateConstructorUsedError;
   String? get receiverUserName => throw _privateConstructorUsedError;
   String? get lastMessage => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $MessageBordCopyWith<$Res> {
       _$MessageBordCopyWithImpl<$Res, MessageBord>;
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       MessageBordType? type,
       String? receiverUserName,
       String? lastMessage,
@@ -63,7 +63,7 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? type = freezed,
     Object? receiverUserName = freezed,
     Object? lastMessage = freezed,
@@ -72,10 +72,10 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? role = freezed,
   }) {
     return _then(_value.copyWith(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -113,7 +113,7 @@ abstract class _$$_MessageBordCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id,
+      {String id,
       MessageBordType? type,
       String? receiverUserName,
       String? lastMessage,
@@ -133,7 +133,7 @@ class __$$_MessageBordCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? type = freezed,
     Object? receiverUserName = freezed,
     Object? lastMessage = freezed,
@@ -142,10 +142,10 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? role = freezed,
   }) {
     return _then(_$_MessageBord(
-      id: freezed == id
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -178,7 +178,7 @@ class __$$_MessageBordCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   const _$_MessageBord(
-      {this.id,
+      {required this.id,
       this.type,
       this.receiverUserName,
       this.lastMessage,
@@ -190,7 +190,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       _$$_MessageBordFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
   final MessageBordType? type;
   @override
@@ -261,7 +261,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
 
 abstract class _MessageBord implements MessageBord {
   const factory _MessageBord(
-      {final String? id,
+      {required final String id,
       final MessageBordType? type,
       final String? receiverUserName,
       final String? lastMessage,
@@ -273,7 +273,7 @@ abstract class _MessageBord implements MessageBord {
       _$_MessageBord.fromJson;
 
   @override
-  String? get id;
+  String get id;
   @override
   MessageBordType? get type;
   @override
