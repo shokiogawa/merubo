@@ -25,6 +25,7 @@ mixin _$Message {
   String? get content => throw _privateConstructorUsedError;
   String? get voiceMessage => throw _privateConstructorUsedError;
   String? get thumbnail => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +42,8 @@ abstract class $MessageCopyWith<$Res> {
       String? userName,
       String? content,
       String? voiceMessage,
-      String? thumbnail});
+      String? thumbnail,
+      String? image});
 }
 
 /// @nodoc
@@ -62,6 +64,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
     Object? content = freezed,
     Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
+    Object? image = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -84,6 +87,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -100,7 +107,8 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
       String? userName,
       String? content,
       String? voiceMessage,
-      String? thumbnail});
+      String? thumbnail,
+      String? image});
 }
 
 /// @nodoc
@@ -118,6 +126,7 @@ class __$$_MessageCopyWithImpl<$Res>
     Object? content = freezed,
     Object? voiceMessage = freezed,
     Object? thumbnail = freezed,
+    Object? image = freezed,
   }) {
     return _then(_$_Message(
       id: null == id
@@ -140,6 +149,10 @@ class __$$_MessageCopyWithImpl<$Res>
           ? _value.thumbnail
           : thumbnail // ignore: cast_nullable_to_non_nullable
               as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -152,7 +165,8 @@ class _$_Message implements _Message {
       this.userName,
       this.content,
       this.voiceMessage,
-      this.thumbnail});
+      this.thumbnail,
+      this.image});
 
   factory _$_Message.fromJson(Map<String, dynamic> json) =>
       _$$_MessageFromJson(json);
@@ -167,10 +181,12 @@ class _$_Message implements _Message {
   final String? voiceMessage;
   @override
   final String? thumbnail;
+  @override
+  final String? image;
 
   @override
   String toString() {
-    return 'Message(id: $id, userName: $userName, content: $content, voiceMessage: $voiceMessage, thumbnail: $thumbnail)';
+    return 'Message(id: $id, userName: $userName, content: $content, voiceMessage: $voiceMessage, thumbnail: $thumbnail, image: $image)';
   }
 
   @override
@@ -185,13 +201,14 @@ class _$_Message implements _Message {
             (identical(other.voiceMessage, voiceMessage) ||
                 other.voiceMessage == voiceMessage) &&
             (identical(other.thumbnail, thumbnail) ||
-                other.thumbnail == thumbnail));
+                other.thumbnail == thumbnail) &&
+            (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, userName, content, voiceMessage, thumbnail);
+  int get hashCode => Object.hash(
+      runtimeType, id, userName, content, voiceMessage, thumbnail, image);
 
   @JsonKey(ignore: true)
   @override
@@ -213,7 +230,8 @@ abstract class _Message implements Message {
       final String? userName,
       final String? content,
       final String? voiceMessage,
-      final String? thumbnail}) = _$_Message;
+      final String? thumbnail,
+      final String? image}) = _$_Message;
 
   factory _Message.fromJson(Map<String, dynamic> json) = _$_Message.fromJson;
 
@@ -227,6 +245,8 @@ abstract class _Message implements Message {
   String? get voiceMessage;
   @override
   String? get thumbnail;
+  @override
+  String? get image;
   @override
   @JsonKey(ignore: true)
   _$$_MessageCopyWith<_$_Message> get copyWith =>

@@ -9,7 +9,7 @@ class CreateBottomMessageScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createMessageProvider = ref.read(createMessageBord.notifier);
+    final createMessageProvider = ref.read(createMessageBordProvider.notifier);
     final lastMessageController = createMessageProvider.lastMessageController;
     return Scaffold(
       appBar: const ProgressAppBar(),

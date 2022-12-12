@@ -13,7 +13,7 @@ class CreateTopMessageScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createTopMessageProvider = ref.watch(createMessageBord.notifier);
+    final createTopMessageProvider = ref.watch(createMessageBordProvider.notifier);
     final receiveUserController = createTopMessageProvider.receiverUserNameController;
     final titleMessageController = createTopMessageProvider.titleMessageController;
     return Scaffold(

@@ -19,7 +19,7 @@ class BottomButton extends ConsumerWidget {
                   onPressed: () {
                     //クリーンアップ
                     if(currentIndex == 1){
-                      ref.read(createMessageBord.notifier).cleanUp();
+                      ref.read(createMessageBordProvider.notifier).cleanUp();
                     }
                     if (currentIndex != 0) {
                       ref.read(currentIndexProviderForCreate.notifier).state =

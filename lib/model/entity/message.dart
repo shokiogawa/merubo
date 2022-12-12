@@ -9,7 +9,8 @@ class Message with _$Message {
     String? userName,
     String? content,
     String? voiceMessage,
-    String? thumbnail
+    String? thumbnail,
+    String? image
   }) = _Message;
 
   factory Message.fromJson(Map<String, dynamic> json) =>

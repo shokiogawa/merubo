@@ -11,7 +11,7 @@ final currentIndexProviderForCreate = StateProvider<int>((ref) {
   return 0;
 });
 
-final createMessageBord =
+final createMessageBordProvider =
     StateNotifierProvider<CreateMessageBord, MessageBordWithMessage>(
         (ref){
           return CreateMessageBord(ref);
@@ -35,14 +35,29 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
     state = state.copyWith(messageBord: messageBord);
   }
 
-  void setThumbnail(String thumbnailPath){
+  void setMessageImage(String imagePath){
+    final newMessage = state.messages.copyWith(image: imagePath);
+    state = state.copyWith(messages: newMessage);
+  }
+
+  void setMessageThumbnail(String thumbnailPath){
     final newMessage = state.messages.copyWith(thumbnail: thumbnailPath);
     state = state.copyWith(messages: newMessage);
   }
 
-  void setVoiceMessage(String voiceMessage){
+  void setMessageVoiceMessage(String voiceMessage){
     final newMessage = state.messages.copyWith(voiceMessage: voiceMessage);
     state = state.copyWith(messages: newMessage);
+  }
+
+  void setMessageBordLastPicture(String lastPicture){
+    final messageBord = state.messageBord.copyWith(lastPicture: lastPicture);
+    state = state.copyWith(messageBord: messageBord);
+  }
+
+  void setMessageBordLastVideo(String lastMovie){
+    final messageBord = state.messageBord.copyWith(lastMovie: lastMovie);
+    state = state.copyWith(messageBord: messageBord);
   }
 
   // 保存メソッド
@@ -59,6 +74,7 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
     await ref.watch(messageBordRepositoryProvider).createMessageBord(state);
   }
 
+  //値を空に戻す
   void cleanUp(){
     final newMessage = state.messages.copyWith(thumbnail: "", voiceMessage: "");
     final newMessageBord = state.messageBord.copyWith();

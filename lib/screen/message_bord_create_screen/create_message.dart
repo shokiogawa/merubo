@@ -11,7 +11,7 @@ class CreateMessageScreen extends ConsumerWidget {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createTopMessageProvider = ref.watch(createMessageBord.notifier);
+    final createTopMessageProvider = ref.watch(createMessageBordProvider.notifier);
     final yourNameController = createTopMessageProvider.yourNameController;
     final messageContentController = createTopMessageProvider.messageContentController;
     return Scaffold(

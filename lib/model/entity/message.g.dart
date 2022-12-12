@@ -12,6 +12,7 @@ _$_Message _$$_MessageFromJson(Map<String, dynamic> json) => _$_Message(
       content: json['content'] as String?,
       voiceMessage: json['voiceMessage'] as String?,
       thumbnail: json['thumbnail'] as String?,
+      image: json['image'] as String?,
     );
 
 Map<String, dynamic> _$$_MessageToJson(_$_Message instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$$_MessageToJson(_$_Message instance) =>
       'content': instance.content,
       'voiceMessage': instance.voiceMessage,
       'thumbnail': instance.thumbnail,
+      'image': instance.image,
     };

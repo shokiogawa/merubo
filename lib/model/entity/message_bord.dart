@@ -20,6 +20,8 @@ class MessageBord with _$MessageBord {
     MessageBordType? type,
     String? receiverUserName,
     String? lastMessage,
+    String? lastMovie,
+    String? lastPicture,
     String? title,
     @Default(Status.edit) Status status,
     @Default(Role.owner) Role? role,

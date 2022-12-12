@@ -105,7 +105,7 @@ class GridTemplate extends ConsumerWidget {
                               buttonColor: Colors.orange,
                               onPressed: () {
                                 ref.read(currentIndexProviderForCreate.notifier).state = 1;
-                                ref.read(createMessageBord.notifier).setType(templateList[index].type);
+                                ref.read(createMessageBordProvider.notifier).setType(templateList[index].type);
                                 Navigator.of(context).pushNamed('/message_bord_create_top_message_screen');
                               }),
                         ],

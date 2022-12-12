@@ -24,6 +24,8 @@ mixin _$MessageBord {
   MessageBordType? get type => throw _privateConstructorUsedError;
   String? get receiverUserName => throw _privateConstructorUsedError;
   String? get lastMessage => throw _privateConstructorUsedError;
+  String? get lastMovie => throw _privateConstructorUsedError;
+  String? get lastPicture => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
   Role? get role => throw _privateConstructorUsedError;
@@ -45,6 +47,8 @@ abstract class $MessageBordCopyWith<$Res> {
       MessageBordType? type,
       String? receiverUserName,
       String? lastMessage,
+      String? lastMovie,
+      String? lastPicture,
       String? title,
       Status status,
       Role? role});
@@ -67,6 +71,8 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? type = freezed,
     Object? receiverUserName = freezed,
     Object? lastMessage = freezed,
+    Object? lastMovie = freezed,
+    Object? lastPicture = freezed,
     Object? title = freezed,
     Object? status = null,
     Object? role = freezed,
@@ -87,6 +93,14 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
       lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastMovie: freezed == lastMovie
+          ? _value.lastMovie
+          : lastMovie // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastPicture: freezed == lastPicture
+          ? _value.lastPicture
+          : lastPicture // ignore: cast_nullable_to_non_nullable
               as String?,
       title: freezed == title
           ? _value.title
@@ -117,6 +131,8 @@ abstract class _$$_MessageBordCopyWith<$Res>
       MessageBordType? type,
       String? receiverUserName,
       String? lastMessage,
+      String? lastMovie,
+      String? lastPicture,
       String? title,
       Status status,
       Role? role});
@@ -137,6 +153,8 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? type = freezed,
     Object? receiverUserName = freezed,
     Object? lastMessage = freezed,
+    Object? lastMovie = freezed,
+    Object? lastPicture = freezed,
     Object? title = freezed,
     Object? status = null,
     Object? role = freezed,
@@ -157,6 +175,14 @@ class __$$_MessageBordCopyWithImpl<$Res>
       lastMessage: freezed == lastMessage
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastMovie: freezed == lastMovie
+          ? _value.lastMovie
+          : lastMovie // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastPicture: freezed == lastPicture
+          ? _value.lastPicture
+          : lastPicture // ignore: cast_nullable_to_non_nullable
               as String?,
       title: freezed == title
           ? _value.title
@@ -182,6 +208,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       this.type,
       this.receiverUserName,
       this.lastMessage,
+      this.lastMovie,
+      this.lastPicture,
       this.title,
       this.status = Status.edit,
       this.role = Role.owner});
@@ -198,6 +226,10 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @override
   final String? lastMessage;
   @override
+  final String? lastMovie;
+  @override
+  final String? lastPicture;
+  @override
   final String? title;
   @override
   @JsonKey()
@@ -208,7 +240,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, title: $title, status: $status, role: $role)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, status: $status, role: $role)';
   }
 
   @override
@@ -220,6 +252,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       ..add(DiagnosticsProperty('type', type))
       ..add(DiagnosticsProperty('receiverUserName', receiverUserName))
       ..add(DiagnosticsProperty('lastMessage', lastMessage))
+      ..add(DiagnosticsProperty('lastMovie', lastMovie))
+      ..add(DiagnosticsProperty('lastPicture', lastPicture))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('status', status))
       ..add(DiagnosticsProperty('role', role));
@@ -236,6 +270,10 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
                 other.receiverUserName == receiverUserName) &&
             (identical(other.lastMessage, lastMessage) ||
                 other.lastMessage == lastMessage) &&
+            (identical(other.lastMovie, lastMovie) ||
+                other.lastMovie == lastMovie) &&
+            (identical(other.lastPicture, lastPicture) ||
+                other.lastPicture == lastPicture) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.role, role) || other.role == role));
@@ -244,7 +282,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, type, receiverUserName,
-      lastMessage, title, status, role);
+      lastMessage, lastMovie, lastPicture, title, status, role);
 
   @JsonKey(ignore: true)
   @override
@@ -266,6 +304,8 @@ abstract class _MessageBord implements MessageBord {
       final MessageBordType? type,
       final String? receiverUserName,
       final String? lastMessage,
+      final String? lastMovie,
+      final String? lastPicture,
       final String? title,
       final Status status,
       final Role? role}) = _$_MessageBord;
@@ -281,6 +321,10 @@ abstract class _MessageBord implements MessageBord {
   String? get receiverUserName;
   @override
   String? get lastMessage;
+  @override
+  String? get lastMovie;
+  @override
+  String? get lastPicture;
   @override
   String? get title;
   @override

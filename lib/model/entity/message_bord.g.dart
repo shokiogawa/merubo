@@ -12,6 +12,8 @@ _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
       type: $enumDecodeNullable(_$MessageBordTypeEnumMap, json['type']),
       receiverUserName: json['receiverUserName'] as String?,
       lastMessage: json['lastMessage'] as String?,
+      lastMovie: json['lastMovie'] as String?,
+      lastPicture: json['lastPicture'] as String?,
       title: json['title'] as String?,
       status:
           $enumDecodeNullable(_$StatusEnumMap, json['status']) ?? Status.edit,
@@ -24,6 +26,8 @@ Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>
       'type': _$MessageBordTypeEnumMap[instance.type],
       'receiverUserName': instance.receiverUserName,
       'lastMessage': instance.lastMessage,
+      'lastMovie': instance.lastMovie,
+      'lastPicture': instance.lastPicture,
       'title': instance.title,
       'status': _$StatusEnumMap[instance.status]!,
       'role': _$RoleEnumMap[instance.role],
