@@ -5,7 +5,6 @@ import 'package:merubo/contatn.dart';
 import 'package:merubo/model/entity/template.dart';
 import 'package:merubo/provider/create_message_bord_provider.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
-import 'package:merubo/screen/message_bord_create_screen/widget/progress_create_message_bord.dart';
 import 'package:merubo/widgets/button.dart';
 
 class ChooseTemplateScreen extends ConsumerWidget {
