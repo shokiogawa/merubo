@@ -50,11 +50,15 @@ class CreateBottomMessageScreen extends ConsumerWidget {
               ),
             ),
           ),
-          BottomButton(onPressed: () {
+          BottomButton(onPressed: () async{
             ref.read(currentIndexProviderForCreate.notifier).state = 4;
             // TODO: firestoreのルールを作成するまでコメントアウトしておく。
-            // createTopMessageProvider.createMessageBordWithMessage();
-            Navigator.of(context).pushNamedAndRemoveUntil('/message_bord_complete_message_bord_screen', (route) => false);
+            await createMessageProvider.createMessageBordWithMessage().then((value){
+              print("作成成功！！");
+              Navigator.of(context).pushNamedAndRemoveUntil('/message_bord_complete_message_bord_screen', (route) => false);
+            }).catchError((err){
+              print(err);
+            });
           })
         ],
       ),

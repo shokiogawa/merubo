@@ -9,6 +9,7 @@ import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/message_bord_with_message.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
+import 'package:merubo/provider/current_user_provider.dart';
 import 'package:uuid/uuid.dart';
 
 final messageBordRepositoryProvider =
@@ -103,10 +104,83 @@ class MessageBordRepository {
 
   //メッセージボード作成
   Future<void> createMessageBord(MessageBordWithMessage value) async {
-    // final thumbnail = await uploadImageToStorage(imageFile, 'message_bords/$messageBordUuid/thumbnail');
-    // objectに挿入
-    print(value.messages.toJson());
-    print(value.messageBord.toJson());
+    final messageBordId = value.messageBord.id;
+    final messageId = value.messages.id;
+
+    //TODO: cloud functionでfire storeとcloud storageを同期すべき。
+    if (value.messages.thumbnail != null) {
+      print("thumbnail作成開始");
+      await uploadImageToStorage(File(value.messages.thumbnail!),
+              'message_bords/$messageBordId/messages/$messageId/thumbnail')
+          .then((thumbnail) {
+        final newMessage = value.messages.copyWith(thumbnail: thumbnail);
+        value = value.copyWith(messages: newMessage);
+        print("thumbnail作成完了");
+      }).catchError((err) {
+        print("thumbnail作成失敗");
+        print(err);
+      });
+    }
+
+    if (value.messages.image != null) {
+      print("image作成開始");
+      await uploadImageToStorage(File(value.messages.image!),
+              'message_bords/$messageBordId/messages/$messageId/image')
+          .then((image) {
+        final newMessage = value.messages.copyWith(image: image);
+        value = value.copyWith(messages: newMessage);
+        print("image作成完了");
+      }).catchError((err) {
+        print("image作成失敗");
+        print(err);
+      });
+    }
+
+    if (value.messages.voiceMessage != null) {
+      print("voiceMessage作成開始");
+      await uploadImageToStorage(File(value.messages.voiceMessage!),
+              'message_bords/$messageBordId/messages/$messageId/voiceMessage')
+          .then((voiceMessage) {
+        final newMessage = value.messages.copyWith(voiceMessage: voiceMessage);
+        value = value.copyWith(messages: newMessage);
+        print("voiceMessage作成完了");
+      }).catchError((err) {
+        print("voiceMessage作成失敗");
+        print(err);
+      });
+    }
+
+    if (value.messageBord.lastPicture != null) {
+      print("lastPicture作成開始");
+      await uploadImageToStorage(
+          File(value.messageBord.lastPicture!),
+          'message_bords/$messageBordId/lastPicture').then((lastPicture){
+        final newMessageBord =
+        value.messageBord.copyWith(lastPicture: lastPicture);
+        value = value.copyWith(messageBord: newMessageBord);
+        print("lastPicture作成完了");
+      }).catchError((err){
+        print("lastPicture作成失敗");
+        print(err);
+      });
+
+    }
+
+    if (value.messageBord.lastMovie != null) {
+      print("lastMovie作成開始");
+      await uploadImageToStorage(
+          File(value.messageBord.lastMovie!),
+          'message_bords/$messageBordId/lastMovie').then((lastMovie){
+        print("lastMovie作成完了");
+        final newMessageBord = value.messageBord.copyWith(lastMovie: lastMovie);
+         value = value.copyWith(messageBord: newMessageBord);
+       }).catchError((err){
+        print("lastMovie作成失敗");
+        print(err);
+       });
+
+    }
+
     final messageBord = value.messageBord;
     final message = value.messages;
 
@@ -115,9 +189,16 @@ class MessageBordRepository {
     final batch = fireStore.batch();
     // 保存場所指定
     final messageBordRef =
-        fireStore.collection("message_bords").doc(messageBord.id);
-    final messageRef = messageBordRef.collection("messages").doc(message.id);
+        fireStore.collection("message_bords").doc(messageBordId);
+    final messageRef = messageBordRef.collection("messages").doc(messageId);
+    final userRef = fireStore
+        .collection("users")
+        .doc(ref.watch(currentUserProvider).id)
+        .collection("own_message_bords")
+        .doc(messageBordId);
     //保存
+    batch.set(userRef,
+        {"messageBordRef": "/message_bords/$messageBordId", "role": "owner"});
     batch.set(messageBordRef, messageBord.toJson());
     batch.set(messageRef, message.toJson());
     batch.commit().then((value) {
@@ -130,13 +211,19 @@ class MessageBordRepository {
   }
 
   Future<String> uploadImageToStorage(File imageFile, String path) async {
-    // message_bords/{message_bord_id}/thumbnail
-    final uuid = const Uuid().v4();
-    final storagePath = '$path/$uuid';
-    final storageRef =
-        ref.watch(fireBaseFireStorageProvider).child(storagePath);
-    final uploadTask = storageRef.putFile(imageFile);
-    return await uploadTask.snapshot.ref.getDownloadURL();
+    try {
+      // message_bords/{message_bord_id}/thumbnail
+      final uuid = const Uuid().v4();
+      final storagePath = '$path/$uuid';
+      final storageRef =
+          ref.watch(fireBaseFireStorageProvider).child(storagePath);
+      final uploadTask = await storageRef.putFile(imageFile);
+      final url = await uploadTask.ref.getDownloadURL();
+      return url;
+    } catch (err) {
+      print(err);
+      throw Exception(err);
+    }
   }
 
   //メッセージボード更新

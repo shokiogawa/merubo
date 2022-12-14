@@ -41,6 +41,7 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
   }
 
   void setMessageThumbnail(String thumbnailPath){
+    print(thumbnailPath);
     final newMessage = state.messages.copyWith(thumbnail: thumbnailPath);
     state = state.copyWith(messages: newMessage);
   }
@@ -76,8 +77,8 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
 
   //値を空に戻す
   void cleanUp(){
-    final newMessage = state.messages.copyWith(thumbnail: "", voiceMessage: "");
-    final newMessageBord = state.messageBord.copyWith();
+    final newMessage = state.messages.copyWith(thumbnail: null, voiceMessage: null, image: null);
+    final newMessageBord = state.messageBord.copyWith(lastMovie: null, lastPicture: null);
     receiverUserNameController.clear();
     titleMessageController.clear();
     yourNameController.clear();
