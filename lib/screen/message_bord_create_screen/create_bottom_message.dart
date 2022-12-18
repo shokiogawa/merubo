@@ -36,7 +36,7 @@ class CreateBottomMessageScreen extends ConsumerWidget {
                           child: Text("まとめメッセージ"),
                         ),
                         TextField(
-                          controller:lastMessageController,
+                          controller: lastMessageController,
                           maxLines: 8,
                           decoration: const InputDecoration(
                               contentPadding: EdgeInsets.all(20),
@@ -50,13 +50,16 @@ class CreateBottomMessageScreen extends ConsumerWidget {
               ),
             ),
           ),
-          BottomButton(onPressed: () async{
+          BottomButton(onPressed: () async {
+            showProgressDialog(context, ref);
             ref.read(currentIndexProviderForCreate.notifier).state = 4;
-            // TODO: firestoreのルールを作成するまでコメントアウトしておく。
-            await createMessageProvider.createMessageBordWithMessage().then((value){
+            // メッセージボード作成メソッド
+            await createMessageProvider
+                .createMessageBordWithMessage()
+                .then((value) {
+              ref.read(progressIndicatorProvider.notifier).state = false;
               print("作成成功！！");
-              Navigator.of(context).pushNamedAndRemoveUntil('/message_bord_complete_message_bord_screen', (route) => false);
-            }).catchError((err){
+            }).catchError((err) {
               print(err);
             });
           })
@@ -64,4 +67,54 @@ class CreateBottomMessageScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+void showProgressDialog(BuildContext context, WidgetRef ref) {
+  final isInProgress = ref.watch(progressIndicatorProvider.notifier).state;
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: isInProgress
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  children: [
+                    const Text("成功しました"),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/message_bord_complete_message_bord_screen',
+                              (route) => false);
+                        },
+                        child: const Text("次へ"))
+                  ],
+                ),
+        );
+      });
+  // showGeneralDialog(
+  //   barrierColor: Colors.black.withOpacity(0.3),
+  //   transitionDuration: const Duration(milliseconds: 100),
+  //   barrierDismissible: false,
+  //   barrierLabel: '',
+  //   context: context,
+  //   pageBuilder: (context, animation1, animation2) {
+  //     return Center(
+  //       child: isInProgress ?
+  //       const CircularProgressIndicator()
+  //           : Column(
+  //             children: [
+  //               const Text("作成に成功しました！！"),
+  //               ElevatedButton(
+  //               onPressed: (){
+  //                 Navigator.of(context).pushNamedAndRemoveUntil('/message_bord_complete_message_bord_screen', (route) => false);
+  //               },
+  //               child: const Text("次へ")),
+  //             ],
+  //           ),
+  //     );
+  //   },
+  // );
 }

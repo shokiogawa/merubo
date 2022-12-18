@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/common_provider/firebase_fire_storage.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
@@ -102,88 +100,96 @@ class MessageBordRepository {
     }
   }
 
-  //メッセージボード作成
+  /*
+    *メッセージボード作成メソッド。
+   */
   Future<void> createMessageBord(MessageBordWithMessage value) async {
     final messageBordId = value.messageBord.id;
     final messageId = value.messages.id;
 
-    //TODO: cloud functionでfire storeとcloud storageを同期すべき。
-    if (value.messages.thumbnail != null) {
-      print("thumbnail作成開始");
-      await uploadImageToStorage(File(value.messages.thumbnail!),
-              'message_bords/$messageBordId/messages/$messageId/thumbnail')
-          .then((thumbnail) {
-        final newMessage = value.messages.copyWith(thumbnail: thumbnail);
-        value = value.copyWith(messages: newMessage);
-        print("thumbnail作成完了");
-      }).catchError((err) {
-        print("thumbnail作成失敗");
-        print(err);
-      });
+    //firestorageに画像を保存
+    try{
+      if (value.messages.thumbnail != null) {
+        print("thumbnail作成開始");
+        await uploadImageToStorage(File(value.messages.thumbnail!),
+            'message_bords/$messageBordId/messages/$messageId/thumbnail')
+            .then((thumbnail) {
+          final newMessage = value.messages.copyWith(thumbnail: thumbnail);
+          value = value.copyWith(messages: newMessage);
+          print("thumbnail作成完了");
+        }).catchError((err) {
+          print("thumbnail作成失敗");
+          print(err);
+        });
+      }
+
+      if (value.messages.image != null) {
+        print("image作成開始");
+        await uploadImageToStorage(File(value.messages.image!),
+            'message_bords/$messageBordId/messages/$messageId/image')
+            .then((image) {
+          final newMessage = value.messages.copyWith(image: image);
+          value = value.copyWith(messages: newMessage);
+          print("image作成完了");
+        }).catchError((err) {
+          print("image作成失敗");
+          print(err);
+        });
+      }
+
+      if (value.messages.voiceMessage != null) {
+        print("voiceMessage作成開始");
+        await uploadImageToStorage(File(value.messages.voiceMessage!),
+            'message_bords/$messageBordId/messages/$messageId/voiceMessage')
+            .then((voiceMessage) {
+          final newMessage = value.messages.copyWith(voiceMessage: voiceMessage);
+          value = value.copyWith(messages: newMessage);
+          print("voiceMessage作成完了");
+        }).catchError((err) {
+          print("voiceMessage作成失敗");
+          print(err);
+        });
+      }
+
+      if (value.messageBord.lastPicture != null) {
+        print("lastPicture作成開始");
+        await uploadImageToStorage(
+            File(value.messageBord.lastPicture!),
+            'message_bords/$messageBordId/lastPicture').then((lastPicture){
+          final newMessageBord =
+          value.messageBord.copyWith(lastPicture: lastPicture);
+          value = value.copyWith(messageBord: newMessageBord);
+          print("lastPicture作成完了");
+        }).catchError((err){
+          print("lastPicture作成失敗");
+          print(err);
+        });
+
+      }
+
+      if (value.messageBord.lastMovie != null) {
+        print("lastMovie作成開始");
+        await uploadImageToStorage(
+            File(value.messageBord.lastMovie!),
+            'message_bords/$messageBordId/lastMovie').then((lastMovie){
+          print("lastMovie作成完了");
+          final newMessageBord = value.messageBord.copyWith(lastMovie: lastMovie);
+          value = value.copyWith(messageBord: newMessageBord);
+        }).catchError((err){
+          print("lastMovie作成失敗");
+          print(err);
+        });
+
+      }
+    }catch(error){
+      throw Exception("画像送信で失敗しました。");
     }
 
-    if (value.messages.image != null) {
-      print("image作成開始");
-      await uploadImageToStorage(File(value.messages.image!),
-              'message_bords/$messageBordId/messages/$messageId/image')
-          .then((image) {
-        final newMessage = value.messages.copyWith(image: image);
-        value = value.copyWith(messages: newMessage);
-        print("image作成完了");
-      }).catchError((err) {
-        print("image作成失敗");
-        print(err);
-      });
-    }
-
-    if (value.messages.voiceMessage != null) {
-      print("voiceMessage作成開始");
-      await uploadImageToStorage(File(value.messages.voiceMessage!),
-              'message_bords/$messageBordId/messages/$messageId/voiceMessage')
-          .then((voiceMessage) {
-        final newMessage = value.messages.copyWith(voiceMessage: voiceMessage);
-        value = value.copyWith(messages: newMessage);
-        print("voiceMessage作成完了");
-      }).catchError((err) {
-        print("voiceMessage作成失敗");
-        print(err);
-      });
-    }
-
-    if (value.messageBord.lastPicture != null) {
-      print("lastPicture作成開始");
-      await uploadImageToStorage(
-          File(value.messageBord.lastPicture!),
-          'message_bords/$messageBordId/lastPicture').then((lastPicture){
-        final newMessageBord =
-        value.messageBord.copyWith(lastPicture: lastPicture);
-        value = value.copyWith(messageBord: newMessageBord);
-        print("lastPicture作成完了");
-      }).catchError((err){
-        print("lastPicture作成失敗");
-        print(err);
-      });
-
-    }
-
-    if (value.messageBord.lastMovie != null) {
-      print("lastMovie作成開始");
-      await uploadImageToStorage(
-          File(value.messageBord.lastMovie!),
-          'message_bords/$messageBordId/lastMovie').then((lastMovie){
-        print("lastMovie作成完了");
-        final newMessageBord = value.messageBord.copyWith(lastMovie: lastMovie);
-         value = value.copyWith(messageBord: newMessageBord);
-       }).catchError((err){
-        print("lastMovie作成失敗");
-        print(err);
-       });
-
-    }
 
     final messageBord = value.messageBord;
     final message = value.messages;
 
+    //firestoreにデータを保存。
     final fireStore = ref.watch(firebaseFireStoreProvider);
     //batch start
     final batch = fireStore.batch();
@@ -197,8 +203,7 @@ class MessageBordRepository {
         .collection("own_message_bords")
         .doc(messageBordId);
     //保存
-    batch.set(userRef,
-        {"messageBordRef": "/message_bords/$messageBordId", "role": "owner"});
+    batch.set(userRef, {"messageBordRef": messageBordRef, "role": "owner"});
     batch.set(messageBordRef, messageBord.toJson());
     batch.set(messageRef, message.toJson());
     batch.commit().then((value) {
@@ -222,7 +227,7 @@ class MessageBordRepository {
       return url;
     } catch (err) {
       print(err);
-      throw Exception(err);
+      throw Exception('$pathが保存できませんでした。');
     }
   }
 
