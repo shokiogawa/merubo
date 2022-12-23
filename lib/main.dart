@@ -10,7 +10,7 @@ import 'package:merubo/screen/message_bord_create_screen/create_bottom_message.d
 import 'package:merubo/screen/message_bord_create_screen/create_message.dart';
 import 'package:merubo/screen/message_bord_create_screen/create_top_message.dart';
 import 'package:merubo/screen/message_bord_screen/main.dart';
-import 'package:merubo/screen/message_bord_preview_screen_test/main.dart';
+import 'package:merubo/screen/message_bord_preview_screen/main.dart';
 import 'package:merubo/screen/top_screen/main.dart';
 import 'firebase_options.dart';
 
@@ -35,7 +35,7 @@ class MyApp extends ConsumerWidget {
       routes: {
         '/top': (context) => const TopScreen(),
         '/login': (context) => const LoginScreen(),
-        '/message_bord': (context) => const MessageBordScreen(),
+        // '/message_bord': (context) => const MessageBordScreen(),
         // '/message_bord_create': (context) => const MessageBordCreateScreen(),
         '/preview_message_bord': (context) => const PreviewMessageBordScreen(),
         '/message_bord_choose_template': (context) => const ChooseTemplateScreen(),

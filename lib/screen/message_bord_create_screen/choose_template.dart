@@ -95,7 +95,7 @@ class GridTemplate extends ConsumerWidget {
                             text: "プレビュー",
                             buttonColor: Colors.green.withOpacity(0.6),
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/message_bord',
+                              Navigator.of(context).pushNamed('/preview_message_bord',
                                   arguments:
                                   describeEnum(templateList[index].type));
                             },

@@ -84,15 +84,6 @@ class MessageBordScreen extends ConsumerWidget {
                               itemCount: data.messages.length,
                               itemBuilder: (context, index) {
                                 return MessageCard(message: data.messages[index]);
-                                // if (index % 2 == 1) {
-                                //   return MessageItemLeft(
-                                //     message: data.messages[index],
-                                //   );
-                                // } else {
-                                //   return MessageItemRight(
-                                //     message: data.messages[index],
-                                //   );
-                                // }
                               }),
                         ],
                       ),
