@@ -17,10 +17,10 @@ class Type2Template extends StatelessWidget {
             ),
             // テンプレートごとのタイトル(widgetごとの作成の方が良いかも)
             const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
               child: Text(
-                "新年、明けましておめでとうございます。",
-                style: TextStyle(fontSize: 25),
+                "Happy New Year !!",
+                style: TextStyle(fontSize: 40),
                 textAlign: TextAlign.center,
               ),
             ),
