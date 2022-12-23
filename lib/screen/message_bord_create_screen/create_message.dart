@@ -139,30 +139,30 @@ class CreateMessageScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      //音声メッセージ
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: Text("音声メッセージ(任意)"),
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              final imageSource = await ImagePicker()
-                                  .pickImage(source: ImageSource.gallery);
-                              if (imageSource != null) {}
-                            },
-                            child: Container(
-                              height: 50,
-                              width: 50,
-                              color: Colors.orangeAccent,
-                              child: const Text("画像が入る場所"),
-                            ),
-                          )
-                        ],
-                      ),
+                      // const SizedBox(height: 20),
+                      // //音声メッセージ
+                      // Column(
+                      //   crossAxisAlignment: CrossAxisAlignment.start,
+                      //   children: [
+                      //     const Padding(
+                      //       padding: EdgeInsets.only(bottom: 8),
+                      //       child: Text("音声メッセージ(任意)"),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () async {
+                      //         final imageSource = await ImagePicker()
+                      //             .pickImage(source: ImageSource.gallery);
+                      //         if (imageSource != null) {}
+                      //       },
+                      //       child: Container(
+                      //         height: 50,
+                      //         width: 50,
+                      //         color: Colors.orangeAccent,
+                      //         child: const Text("画像が入る場所"),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
                       const SizedBox(height: 40),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
