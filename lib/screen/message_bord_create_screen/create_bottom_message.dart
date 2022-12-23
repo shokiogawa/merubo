@@ -9,10 +9,13 @@ class CreateBottomMessageScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createMessageProvider = ref.read(createMessageBordProvider.notifier);
+    final createMessageProvider = ref.watch(createMessageBordProvider.notifier);
     final lastMessageController = createMessageProvider.lastMessageController;
     return Scaffold(
       appBar: const ProgressAppBar(),
+      bottomNavigationBar: BottomButton(onPressed: () async {
+        showProgressDialog(context);
+      }),
       body: Column(
         children: [
           Expanded(
@@ -50,71 +53,83 @@ class CreateBottomMessageScreen extends ConsumerWidget {
               ),
             ),
           ),
-          BottomButton(onPressed: () async {
-            showProgressDialog(context, ref);
-            ref.read(currentIndexProviderForCreate.notifier).state = 4;
-            // メッセージボード作成メソッド
-            await createMessageProvider
-                .createMessageBordWithMessage()
-                .then((value) {
-              ref.read(progressIndicatorProvider.notifier).state = false;
-              print("作成成功！！");
-            }).catchError((err) {
-              print(err);
-            });
-          })
         ],
       ),
     );
   }
 }
 
-void showProgressDialog(BuildContext context, WidgetRef ref) {
-  final isInProgress = ref.watch(progressIndicatorProvider.notifier).state;
+void showProgressDialog(BuildContext context) {
   showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return AlertDialog(
-          content: isInProgress
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
-                  children: [
-                    const Text("成功しました"),
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/message_bord_complete_message_bord_screen',
-                              (route) => false);
-                        },
-                        child: const Text("次へ"))
-                  ],
-                ),
-        );
+        return Consumer(builder: (context, ref, _) {
+          final isInProgress = ref.watch(progressIndicatorProvider);
+          final dialogHeight = MediaQuery.of(context).size.height / 5;
+          return AlertDialog(
+            content: isInProgress
+                ? Row(
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      CircularProgressIndicator(),
+                      SizedBox(width: 20),
+                      Text("作成中"),
+                    ],
+                  )
+                : SizedBox(
+                    height: dialogHeight,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const Text("寄せ書きを作成しますか？"),
+                          ElevatedButton(
+                              onPressed: () async {
+                                ref
+                                    .read(progressIndicatorProvider.notifier)
+                                    .state = true;
+                                await Future.delayed(const Duration(seconds: 3))
+                                    .then((value) {
+                                  ref
+                                      .read(progressIndicatorProvider.notifier)
+                                      .state = false;
+                                  ref
+                                      .read(
+                                      currentIndexProviderForCreate.notifier)
+                                      .state = 4;
+                                  //画面遷移
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                      '/message_bord_complete_message_bord_screen',
+                                          (route) => false);
+                                });
+
+                                // メッセージボード作成メソッド
+                                // await ref
+                                //     .read(createMessageBordProvider.notifier)
+                                //     .createMessageBordWithMessage()
+                                //     .then((value) {
+                                //   ref
+                                //       .read(progressIndicatorProvider.notifier)
+                                //       .state = false;
+                                //   //画面遷移
+                                //   Navigator.of(context).pushNamedAndRemoveUntil(
+                                //       '/message_bord_complete_message_bord_screen',
+                                //       (route) => false);
+                                // }).catchError((err) {
+                                //   print(err);
+                                // });
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: Text("作成する"),
+                              )),
+                        ],
+                      ),
+                    ),
+                  ),
+          );
+        });
       });
-  // showGeneralDialog(
-  //   barrierColor: Colors.black.withOpacity(0.3),
-  //   transitionDuration: const Duration(milliseconds: 100),
-  //   barrierDismissible: false,
-  //   barrierLabel: '',
-  //   context: context,
-  //   pageBuilder: (context, animation1, animation2) {
-  //     return Center(
-  //       child: isInProgress ?
-  //       const CircularProgressIndicator()
-  //           : Column(
-  //             children: [
-  //               const Text("作成に成功しました！！"),
-  //               ElevatedButton(
-  //               onPressed: (){
-  //                 Navigator.of(context).pushNamedAndRemoveUntil('/message_bord_complete_message_bord_screen', (route) => false);
-  //               },
-  //               child: const Text("次へ")),
-  //             ],
-  //           ),
-  //     );
-  //   },
-  // );
 }

@@ -13,8 +13,9 @@ class MessageItemRight extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(flex: 2, child: Container()),
-          Flexible(
+          Expanded(flex: 2, child: Container(
+          )),
+          Expanded(
             flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,

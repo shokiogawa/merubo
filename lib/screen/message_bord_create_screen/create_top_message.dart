@@ -18,6 +18,14 @@ class CreateTopMessageScreen extends ConsumerWidget {
     final titleMessageController = createTopMessageProvider.titleMessageController;
     return Scaffold(
       appBar: const ProgressAppBar(),
+      bottomNavigationBar:           BottomButton(
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              ref.read(currentIndexProviderForCreate.notifier).state = 2;
+              Navigator.of(context)
+                  .pushNamed('/message_bord_create_message_screen');
+            }
+          }),
       body: Column(
         children: [
           Expanded(
@@ -49,7 +57,7 @@ class CreateTopMessageScreen extends ConsumerWidget {
                             ),
                           ),
                           TextFormField(
-                            textInputAction: TextInputAction.next,
+                            textInputAction: TextInputAction.done,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "名前は必須項目です";
@@ -115,14 +123,14 @@ class CreateTopMessageScreen extends ConsumerWidget {
               ),
             ),
           ),
-          BottomButton(
-              onPressed: () {
-            if (formKey.currentState!.validate()) {
-              ref.read(currentIndexProviderForCreate.notifier).state = 2;
-              Navigator.of(context)
-                  .pushNamed('/message_bord_create_message_screen');
-            }
-          })
+          // BottomButton(
+          //     onPressed: () {
+          //   if (formKey.currentState!.validate()) {
+          //     ref.read(currentIndexProviderForCreate.notifier).state = 2;
+          //     Navigator.of(context)
+          //         .pushNamed('/message_bord_create_message_screen');
+          //   }
+          // })
         ],
       ),
     );

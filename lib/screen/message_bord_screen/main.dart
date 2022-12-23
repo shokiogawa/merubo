@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/provider/message_bord_provider.dart';
+import 'package:merubo/widgets/message_card.dart';
 import 'package:merubo/widgets/message_item_left.dart';
 import 'package:merubo/widgets/message_item_right.dart';
 
@@ -84,15 +85,16 @@ class MessageBordScreen extends ConsumerWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: data.messages.length,
                               itemBuilder: (context, index) {
-                                if (index % 2 == 1) {
-                                  return MessageItemLeft(
-                                    message: data.messages[index],
-                                  );
-                                } else {
-                                  return MessageItemRight(
-                                    message: data.messages[index],
-                                  );
-                                }
+                                return MessageCard(message: data.messages[index]);
+                                // if (index % 2 == 1) {
+                                //   return MessageItemLeft(
+                                //     message: data.messages[index],
+                                //   );
+                                // } else {
+                                //   return MessageItemRight(
+                                //     message: data.messages[index],
+                                //   );
+                                // }
                               }),
                         ],
                       ),

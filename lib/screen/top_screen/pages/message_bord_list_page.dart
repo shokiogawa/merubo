@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/provider/message_bord_provider.dart';
-import 'package:merubo/widgets/mesage_card.dart';
+import 'package:merubo/widgets/mesage_card_tile.dart';
 
 class MessageBordListPage extends ConsumerWidget {
   const MessageBordListPage({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class MessageBordListPage extends ConsumerWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: data.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return MessageCard(messageBord: data[index]);
+                        return MessageCardTile(messageBord: data[index]);
                       }),
                 ],
               ),

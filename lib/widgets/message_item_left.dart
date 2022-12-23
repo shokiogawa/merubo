@@ -22,7 +22,7 @@ class MessageItemLeft extends StatelessWidget {
           const SizedBox(
             width: 8,
           ),
-          Flexible(
+          Expanded(
             flex: 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,7 +61,7 @@ class MessageItemLeft extends StatelessWidget {
               ],
             ),
           ),
-          Flexible(flex: 2, child: Container()),
+          Expanded(flex: 2, child: Container()),
         ],
       ),
     );

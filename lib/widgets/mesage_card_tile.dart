@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 
-class MessageCard extends ConsumerWidget {
+class MessageCardTile extends ConsumerWidget {
   final MessageBord messageBord;
 
-  const MessageCard({Key? key, required this.messageBord}) : super(key: key);
+  const MessageCardTile({Key? key, required this.messageBord}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

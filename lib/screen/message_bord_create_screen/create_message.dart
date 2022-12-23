@@ -20,6 +20,13 @@ class CreateMessageScreen extends ConsumerWidget {
         createMessageProvider.messageContentController;
     return Scaffold(
       appBar: const ProgressAppBar(),
+      bottomNavigationBar: BottomButton(onPressed: () {
+        if (formKey.currentState!.validate()) {
+          ref.read(currentIndexProviderForCreate.notifier).state = 3;
+          Navigator.of(context)
+              .pushNamed('/message_bord_create_bottom_message_screen');
+        }
+      }),
       body: Column(
         children: [
           Expanded(
@@ -52,7 +59,7 @@ class CreateMessageScreen extends ConsumerWidget {
                             child: Text("あなたのお名前"),
                           ),
                           TextFormField(
-                            textInputAction: TextInputAction.next,
+                            textInputAction: TextInputAction.done,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "お名前は必須項目です。";
@@ -115,7 +122,6 @@ class CreateMessageScreen extends ConsumerWidget {
                             child: Text("メッセージ"),
                           ),
                           TextFormField(
-                            textInputAction: TextInputAction.done,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return "メッセージは必須項目です";
@@ -177,11 +183,13 @@ class CreateMessageScreen extends ConsumerWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
-                                  image: messageValue.image != null ? DecorationImage(
-                                      image:
-                                          Image.file(File(messageValue.image!))
+                                  image: messageValue.image != null
+                                      ? DecorationImage(
+                                          image: Image.file(
+                                                  File(messageValue.image!))
                                               .image,
-                                      fit: BoxFit.contain) : null),
+                                          fit: BoxFit.fill)
+                                      : null),
                               height: 250,
                               child: messageValue.image == null
                                   ? Row(
@@ -198,20 +206,12 @@ class CreateMessageScreen extends ConsumerWidget {
                         ],
                       ),
                       const SizedBox(height: 40),
-
                     ],
                   ),
                 ),
               ),
             ),
           ),
-          BottomButton(onPressed: () {
-            if (formKey.currentState!.validate()) {
-              ref.read(currentIndexProviderForCreate.notifier).state = 3;
-              Navigator.of(context)
-                  .pushNamed('/message_bord_create_bottom_message_screen');
-            }
-          })
         ],
       ),
     );
