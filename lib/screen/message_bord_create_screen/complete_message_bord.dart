@@ -47,6 +47,7 @@ class CompleteMessageBord extends ConsumerWidget {
               onPressed: () {
                 Navigator.of(context)
                     .pushNamedAndRemoveUntil('/top', (route) => false);
+                ref.refresh(createMessageBordProvider);
               },
               child: const Text("戻る")),
         ],

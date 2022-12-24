@@ -4,9 +4,6 @@ import 'package:merubo/screen/message_bord_create_screen/widget/bottom_button.da
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
 import '../../provider/create_message_bord_provider.dart';
 
-//TODO: stateless to statefull
-//TODO: create textEditingController
-
 class CreateTopMessageScreen extends ConsumerWidget {
   CreateTopMessageScreen({Key? key}) : super(key: key);
   final formKey = GlobalKey<FormState>();
@@ -123,14 +120,6 @@ class CreateTopMessageScreen extends ConsumerWidget {
               ),
             ),
           ),
-          // BottomButton(
-          //     onPressed: () {
-          //   if (formKey.currentState!.validate()) {
-          //     ref.read(currentIndexProviderForCreate.notifier).state = 2;
-          //     Navigator.of(context)
-          //         .pushNamed('/message_bord_create_message_screen');
-          //   }
-          // })
         ],
       ),
     );
