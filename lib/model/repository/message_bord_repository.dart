@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/common_provider/firebase_fire_storage.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
@@ -19,7 +20,7 @@ class MessageBordRepository {
   final Ref ref;
 
   //自分が管理また、メッセージしたメッセージボード一覧
-  Future<List<MessageBord>> fetchOwnMessageBordList(String userId) async {
+  Future<List<MessageBord>> fetchOwnMessageBordList(String userId, Role role) async {
     // ページによって変更させる。
     final List<String> whereIn = [];
     print("fetchOwnMessageBordList");
@@ -29,7 +30,7 @@ class MessageBordRepository {
           .collection("users")
           .doc(userId)
           .collection("own_message_bords")
-          .where("role", whereIn: ["owner", "receiver"]).withConverter(
+          .where("role", whereIn: [describeEnum(role)]).withConverter(
               fromFirestore: (snapshot, _) =>
                   OwnMessageBordRef.fromJson(snapshot.data()!),
               toFirestore: (messageBordRef, _) => messageBordRef.toJson());
@@ -43,8 +44,8 @@ class MessageBordRepository {
                 MessageBord.fromJson(snapshot.data()!),
             toFirestore: (messageBord, _) => messageBord.toJson());
         final messageBordRealDoc = await messageBordRealRef.get();
-        final messageBordReal =
-            messageBordRealDoc.data()!.copyWith(role: ref.role);
+
+        final messageBordReal = messageBordRealDoc.data()!;
         messageBordRealList.add(messageBordReal);
       });
       return messageBordRealList;
@@ -203,7 +204,7 @@ class MessageBordRepository {
         .collection("own_message_bords")
         .doc(messageBordId);
     //保存
-    batch.set(userRef, {"messageBordRef": messageBordRef, "role": "owner"});
+    batch.set(userRef, {"messageBordRef": messageBordRef, "role": Role.owner.toString()});
     batch.set(messageBordRef, messageBord.toJson());
     batch.set(messageRef, message.toJson());
     batch.commit().then((value) {

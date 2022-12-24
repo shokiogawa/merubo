@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/widgets/mesage_card_tile.dart';
 
@@ -9,7 +10,7 @@ class MessageBordListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     print("MessageBordListPage");
-    final asyncValue = ref.watch(ownMessageBordListProvider);
+    final asyncValue = ref.watch(ownMessageBordListProvider(Role.owner));
     return asyncValue.when(
         data: (data) => SingleChildScrollView(
               child: Column(

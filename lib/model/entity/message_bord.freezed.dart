@@ -28,7 +28,6 @@ mixin _$MessageBord {
   String? get lastPicture => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
-  Role? get role => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,8 +49,7 @@ abstract class $MessageBordCopyWith<$Res> {
       String? lastMovie,
       String? lastPicture,
       String? title,
-      Status status,
-      Role? role});
+      Status status});
 }
 
 /// @nodoc
@@ -75,7 +73,6 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? lastPicture = freezed,
     Object? title = freezed,
     Object? status = null,
-    Object? role = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -110,10 +107,6 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      role: freezed == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role?,
     ) as $Val);
   }
 }
@@ -134,8 +127,7 @@ abstract class _$$_MessageBordCopyWith<$Res>
       String? lastMovie,
       String? lastPicture,
       String? title,
-      Status status,
-      Role? role});
+      Status status});
 }
 
 /// @nodoc
@@ -157,7 +149,6 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? lastPicture = freezed,
     Object? title = freezed,
     Object? status = null,
-    Object? role = freezed,
   }) {
     return _then(_$_MessageBord(
       id: null == id
@@ -192,10 +183,6 @@ class __$$_MessageBordCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
-      role: freezed == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role?,
     ));
   }
 }
@@ -211,8 +198,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       this.lastMovie,
       this.lastPicture,
       this.title,
-      this.status = Status.edit,
-      this.role = Role.owner});
+      this.status = Status.edit});
 
   factory _$_MessageBord.fromJson(Map<String, dynamic> json) =>
       _$$_MessageBordFromJson(json);
@@ -234,13 +220,10 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @override
   @JsonKey()
   final Status status;
-  @override
-  @JsonKey()
-  final Role? role;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, status: $status, role: $role)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, status: $status)';
   }
 
   @override
@@ -255,8 +238,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       ..add(DiagnosticsProperty('lastMovie', lastMovie))
       ..add(DiagnosticsProperty('lastPicture', lastPicture))
       ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('role', role));
+      ..add(DiagnosticsProperty('status', status));
   }
 
   @override
@@ -275,14 +257,13 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
             (identical(other.lastPicture, lastPicture) ||
                 other.lastPicture == lastPicture) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, type, receiverUserName,
-      lastMessage, lastMovie, lastPicture, title, status, role);
+      lastMessage, lastMovie, lastPicture, title, status);
 
   @JsonKey(ignore: true)
   @override
@@ -307,8 +288,7 @@ abstract class _MessageBord implements MessageBord {
       final String? lastMovie,
       final String? lastPicture,
       final String? title,
-      final Status status,
-      final Role? role}) = _$_MessageBord;
+      final Status status}) = _$_MessageBord;
 
   factory _MessageBord.fromJson(Map<String, dynamic> json) =
       _$_MessageBord.fromJson;
@@ -329,8 +309,6 @@ abstract class _MessageBord implements MessageBord {
   String? get title;
   @override
   Status get status;
-  @override
-  Role? get role;
   @override
   @JsonKey(ignore: true)
   _$$_MessageBordCopyWith<_$_MessageBord> get copyWith =>

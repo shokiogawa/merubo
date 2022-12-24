@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/provider/current_user_provider.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_create_page.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_list_page.dart';
+import 'package:merubo/screen/top_screen/pages/receive_message_bord_list_page.dart';
 
 class TopScreen extends ConsumerStatefulWidget {
   const TopScreen({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class TopScreenState extends ConsumerState<TopScreen> {
   static const _pages = [
     MessageBordCreatePage(),
     MessageBordListPage(),
+    ReceiveMessageBordList()
   ];
 
   void _onChoosePage(int index) {
@@ -63,7 +65,8 @@ class TopScreenState extends ConsumerState<TopScreen> {
         currentIndex: _selectIndex,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.pages), label: "作成"),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: "リスト")
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "作成した寄せ書き"),
+          BottomNavigationBarItem(icon: Icon(Icons.gif_box), label: "受け取った寄せ書き")
         ],
         type: BottomNavigationBarType.fixed,
       ),

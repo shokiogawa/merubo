@@ -24,7 +24,6 @@ class MessageBord with _$MessageBord {
     String? lastPicture,
     String? title,
     @Default(Status.edit) Status status,
-    @Default(Role.owner) Role? role,
   }) = _MessageBord;
 
   factory MessageBord.fromJson(Map<String, dynamic> json) =>
