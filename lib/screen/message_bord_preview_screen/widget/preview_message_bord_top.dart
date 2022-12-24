@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
-import 'package:merubo/screen/message_bord_preview_screen/template/type1.dart';
-import 'package:merubo/screen/message_bord_preview_screen/template/type2.dart';
+import 'package:merubo/screen/message_bord_preview_screen/widget/template/type1.dart';
+import 'package:merubo/screen/message_bord_preview_screen/widget/template/type2.dart';
 
 class PreviewMessageBordTop extends ConsumerWidget {
   const PreviewMessageBordTop({Key? key, required this.messageBord})

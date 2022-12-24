@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/provider/message_bord_provider.dart';
-import 'package:merubo/screen/message_bord_preview_screen/preview_message_bord_bottom.dart';
-import 'package:merubo/screen/message_bord_preview_screen/preview_message_bord_message_area.dart';
-import 'package:merubo/screen/message_bord_preview_screen/preview_message_bord_top.dart';
+import 'package:merubo/screen/message_bord_preview_screen/widget/preview_message_bord_bottom.dart';
+import 'package:merubo/screen/message_bord_preview_screen/widget/preview_message_bord_message_area.dart';
+import 'package:merubo/screen/message_bord_preview_screen/widget/preview_message_bord_top.dart';
 
 class PreviewMessageBordScreen extends ConsumerWidget {
   const PreviewMessageBordScreen({Key? key}) : super(key: key);

@@ -20,7 +20,8 @@ class MessageBordRepository {
   final Ref ref;
 
   //自分が管理また、メッセージしたメッセージボード一覧
-  Future<List<MessageBord>> fetchOwnMessageBordList(String userId, Role role) async {
+  Future<List<MessageBord>> fetchOwnMessageBordList(
+      String userId, Role role) async {
     // ページによって変更させる。
     final List<String> whereIn = [];
     print("fetchOwnMessageBordList");
@@ -109,11 +110,11 @@ class MessageBordRepository {
     final messageId = value.messages.id;
 
     //firestorageに画像を保存
-    try{
+    try {
       if (value.messages.thumbnail != null) {
         print("thumbnail作成開始");
         await uploadImageToStorage(File(value.messages.thumbnail!),
-            'message_bords/$messageBordId/messages/$messageId/thumbnail')
+                'message_bords/$messageBordId/messages/$messageId/thumbnail')
             .then((thumbnail) {
           final newMessage = value.messages.copyWith(thumbnail: thumbnail);
           value = value.copyWith(messages: newMessage);
@@ -127,7 +128,7 @@ class MessageBordRepository {
       if (value.messages.image != null) {
         print("image作成開始");
         await uploadImageToStorage(File(value.messages.image!),
-            'message_bords/$messageBordId/messages/$messageId/image')
+                'message_bords/$messageBordId/messages/$messageId/image')
             .then((image) {
           final newMessage = value.messages.copyWith(image: image);
           value = value.copyWith(messages: newMessage);
@@ -141,9 +142,10 @@ class MessageBordRepository {
       if (value.messages.voiceMessage != null) {
         print("voiceMessage作成開始");
         await uploadImageToStorage(File(value.messages.voiceMessage!),
-            'message_bords/$messageBordId/messages/$messageId/voiceMessage')
+                'message_bords/$messageBordId/messages/$messageId/voiceMessage')
             .then((voiceMessage) {
-          final newMessage = value.messages.copyWith(voiceMessage: voiceMessage);
+          final newMessage =
+              value.messages.copyWith(voiceMessage: voiceMessage);
           value = value.copyWith(messages: newMessage);
           print("voiceMessage作成完了");
         }).catchError((err) {
@@ -154,38 +156,36 @@ class MessageBordRepository {
 
       if (value.messageBord.lastPicture != null) {
         print("lastPicture作成開始");
-        await uploadImageToStorage(
-            File(value.messageBord.lastPicture!),
-            'message_bords/$messageBordId/lastPicture').then((lastPicture){
+        await uploadImageToStorage(File(value.messageBord.lastPicture!),
+                'message_bords/$messageBordId/lastPicture')
+            .then((lastPicture) {
           final newMessageBord =
-          value.messageBord.copyWith(lastPicture: lastPicture);
+              value.messageBord.copyWith(lastPicture: lastPicture);
           value = value.copyWith(messageBord: newMessageBord);
           print("lastPicture作成完了");
-        }).catchError((err){
+        }).catchError((err) {
           print("lastPicture作成失敗");
           print(err);
         });
-
       }
 
       if (value.messageBord.lastMovie != null) {
         print("lastMovie作成開始");
-        await uploadImageToStorage(
-            File(value.messageBord.lastMovie!),
-            'message_bords/$messageBordId/lastMovie').then((lastMovie){
+        await uploadImageToStorage(File(value.messageBord.lastMovie!),
+                'message_bords/$messageBordId/lastMovie')
+            .then((lastMovie) {
           print("lastMovie作成完了");
-          final newMessageBord = value.messageBord.copyWith(lastMovie: lastMovie);
+          final newMessageBord =
+              value.messageBord.copyWith(lastMovie: lastMovie);
           value = value.copyWith(messageBord: newMessageBord);
-        }).catchError((err){
+        }).catchError((err) {
           print("lastMovie作成失敗");
           print(err);
         });
-
       }
-    }catch(error){
+    } catch (error) {
       throw Exception("画像送信で失敗しました。");
     }
-
 
     final messageBord = value.messageBord;
     final message = value.messages;
@@ -204,7 +204,8 @@ class MessageBordRepository {
         .collection("own_message_bords")
         .doc(messageBordId);
     //保存
-    batch.set(userRef, {"messageBordRef": messageBordRef, "role": Role.owner.toString()});
+    batch.set(userRef,
+        {"messageBordRef": messageBordRef, "role": Role.owner.toString()});
     batch.set(messageBordRef, messageBord.toJson());
     batch.set(messageRef, message.toJson());
     batch.commit().then((value) {
@@ -232,8 +233,61 @@ class MessageBordRepository {
     }
   }
 
+  // メッセージボード取得
+  Future<MessageBord> fetchMessageBordById(String messageBordId) async {
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    final messageBordRef = fireStore
+        .collection("message_bords")
+        .doc(messageBordId)
+        .withConverter(
+            fromFirestore: (snap, _) => MessageBord.fromJson(snap.data()!),
+            toFirestore: (messageBord, _) => messageBord.toJson());
+    final messageBordSnap = await messageBordRef.get();
+    if (!messageBordSnap.exists) {
+      throw Exception('Data is not exist messageBordId: $messageBordId');
+    }
+    return messageBordSnap.data()!;
+  }
+
+  //メッセージ取得
+  Future<Message> fetchMessageByMessageBordId(String messageBordId) async {
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    final userId = ref.watch(currentUserProvider).id;
+    final messageRef = fireStore
+        .collection("message_bords")
+        .doc(messageBordId)
+        .collection("messages")
+        .where('userId', isEqualTo: userId)
+        .withConverter(
+            fromFirestore: (snap, _) => Message.fromJson(snap.data()!),
+            toFirestore: (message, _) => message.toJson());
+    final messageSnap = await messageRef.get();
+    if (messageSnap.docs.isEmpty) {
+      throw Exception(
+          'Message Data is not exist in messageBordId: $messageBordId');
+    }
+    return messageSnap.docs.first.data();
+  }
+
   //メッセージボード更新
-  Future<void> updateMessageBord() async {}
+  Future<void> updateMessageBord(MessageBord messageBord) async {
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    await fireStore
+        .collection("message_bords")
+        .doc(messageBord.id)
+        .update(messageBord.toJson());
+  }
+
+  // メッセージ更新
+  Future<void> updateMessage(String messageBordId, Message message) async {
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    await fireStore
+        .collection("message_bords")
+        .doc(messageBordId)
+        .collection("messages")
+        .doc(message.id)
+        .update(message.toJson());
+  }
 
   //メッセージボード削除
   Future<void> deleteMessageBord() async {}

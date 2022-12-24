@@ -10,19 +10,21 @@ class CreateTopMessageScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final createTopMessageProvider = ref.watch(createMessageBordProvider.notifier);
-    final receiveUserController = createTopMessageProvider.receiverUserNameController;
-    final titleMessageController = createTopMessageProvider.titleMessageController;
+    final createTopMessageProvider =
+        ref.watch(createMessageBordProvider.notifier);
+    final receiveUserController =
+        createTopMessageProvider.receiverUserNameController;
+    final titleMessageController =
+        createTopMessageProvider.titleMessageController;
     return Scaffold(
       appBar: const ProgressAppBar(),
-      bottomNavigationBar:           BottomButton(
-          onPressed: () {
-            if (formKey.currentState!.validate()) {
-              ref.read(currentIndexProviderForCreate.notifier).state = 2;
-              Navigator.of(context)
-                  .pushNamed('/message_bord_create_message_screen');
-            }
-          }),
+      bottomNavigationBar: BottomButton(onPressed: () {
+        if (formKey.currentState!.validate()) {
+          ref.read(currentIndexProviderForCreate.notifier).state = 2;
+          Navigator.of(context)
+              .pushNamed('/message_bord_create_message_screen');
+        }
+      }),
       body: Column(
         children: [
           Expanded(
@@ -63,8 +65,7 @@ class CreateTopMessageScreen extends ConsumerWidget {
                                 return "20文字以下でご入力ください";
                               }
                             },
-                            controller:
-                                receiveUserController,
+                            controller: receiveUserController,
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.person),
                                 contentPadding: EdgeInsets.all(0),

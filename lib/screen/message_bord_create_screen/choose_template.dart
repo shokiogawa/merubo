@@ -9,9 +9,9 @@ import 'package:merubo/widgets/button.dart';
 
 class ChooseTemplateScreen extends ConsumerWidget {
   const ChooseTemplateScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final tabList = mapTemplate.keys.toList().map((e) => Tab(text: e)).toList();
     final tabViewList = mapTemplate.values
         .toList()
@@ -19,7 +19,6 @@ class ChooseTemplateScreen extends ConsumerWidget {
         .toList();
     return Scaffold(
       appBar: const ProgressAppBar(),
-      // appBar: AppBar(title: const Text("choosetemplate"),),
       body: DefaultTabController(
         length: mapTemplate.length,
         child: Padding(
@@ -95,18 +94,25 @@ class GridTemplate extends ConsumerWidget {
                             text: "プレビュー",
                             buttonColor: Colors.green.withOpacity(0.6),
                             onPressed: () {
-                              Navigator.of(context).pushNamed('/preview_message_bord',
+                              Navigator.of(context).pushNamed(
+                                  '/preview_message_bord',
                                   arguments:
-                                  describeEnum(templateList[index].type));
+                                      describeEnum(templateList[index].type));
                             },
                           ),
                           Button(
                               text: "決定",
                               buttonColor: Colors.orange,
                               onPressed: () {
-                                ref.read(currentIndexProviderForCreate.notifier).state = 1;
-                                ref.read(createMessageBordProvider.notifier).setType(templateList[index].type);
-                                Navigator.of(context).pushNamed('/message_bord_create_top_message_screen');
+                                ref
+                                    .read(
+                                        currentIndexProviderForCreate.notifier)
+                                    .state = 1;
+                                ref
+                                    .read(createMessageBordProvider.notifier)
+                                    .setType(templateList[index].type);
+                                Navigator.of(context).pushNamed(
+                                    '/message_bord_create_top_message_screen');
                               }),
                         ],
                       ),
