@@ -4,8 +4,9 @@ import 'package:merubo/model/entity/message_bord.dart';
 
 class MessageCardTile extends ConsumerWidget {
   final MessageBord messageBord;
+  final Function() onTap;
 
-  const MessageCardTile({Key? key, required this.messageBord}) : super(key: key);
+  const MessageCardTile({Key? key, required this.messageBord, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -13,10 +14,7 @@ class MessageCardTile extends ConsumerWidget {
       padding: const EdgeInsets.all(10),
       // height: 140,
       child: GestureDetector(
-        onTap: () {
-          Navigator.of(context)
-              .pushNamed('/preview_message_bord', arguments: messageBord.id);
-        },
+        onTap: onTap,
         child: Card(
             elevation: 7,
             child: Row(

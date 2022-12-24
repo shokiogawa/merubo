@@ -27,7 +27,14 @@ class MessageBordListPage extends ConsumerWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: data.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return MessageCardTile(messageBord: data[index]);
+                        return MessageCardTile(
+                          messageBord: data[index],
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                                '/message_bord_manage_screen',
+                                arguments: data[index].id);
+                          },
+                        );
                       }),
                 ],
               ),

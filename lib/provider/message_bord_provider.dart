@@ -14,9 +14,18 @@ final ownMessageBordListProvider = FutureProvider.family<List<MessageBord>, Role
 });
 
 // 上にスクロールすると更新されるようにする。
-final messageBordDetailProvider = FutureProvider.family((ref, messageBordId) async {
+final messageBordDetailProvider = FutureProvider.family.autoDispose((ref, messageBordId) async {
   final messageBordDetail = await ref
       .watch(messageBordRepositoryProvider)
       .fetchMessageBordDetail(messageBordId.toString());
   return messageBordDetail;
+});
+
+// 選択されている寄せ書きのIDを取得
+final selectedMessageBordId = Provider.family.autoDispose<MessageBord, String>((ref, messageBordId){
+  final data = ref.watch(ownMessageBordListProvider(Role.owner));
+  if (data.value != null){
+    return data.value!.where((element) => element.id == messageBordId).toList()[0];
+  }
+  throw UnimplementedError('selectedMessageBordIdプロバイダーが機能していません。');
 });
