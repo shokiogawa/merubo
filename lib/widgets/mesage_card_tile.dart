@@ -15,7 +15,7 @@ class MessageCardTile extends ConsumerWidget {
       child: GestureDetector(
         onTap: () {
           Navigator.of(context)
-              .pushNamed('/message_bord', arguments: messageBord.id);
+              .pushNamed('/preview_message_bord', arguments: messageBord.id);
         },
         child: Card(
             elevation: 7,
@@ -56,14 +56,6 @@ class MessageCardTile extends ConsumerWidget {
                 ),
               ],
             )
-            // Container(
-            //   decoration: const BoxDecoration(
-            //       image: DecorationImage(
-            //           image: AssetImage('assets/images/letter.png'),
-            //         fit: BoxFit.cover
-            //       )),
-            //   child: Center(child: Text(messageBord.receiverUserName)),
-            // ),
             ),
       ),
     );

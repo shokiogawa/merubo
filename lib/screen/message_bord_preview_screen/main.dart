@@ -10,30 +10,26 @@ class PreviewMessageBordScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final args = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as String;
-    final asyncValue = ref.watch(messageBordDetailProvider(args));
+    final messageBordId = ModalRoute.of(context)!.settings.arguments as String;
+    final asyncValue = ref.watch(messageBordDetailProvider(messageBordId));
     return Scaffold(
       body: SingleChildScrollView(
-          child: asyncValue.when(
-              data: (data) {
-                return Column(
-                  children: [
-                    PreviewMessageBordTop(messageBord: data.messageBord,),
-                    PreviewMessageBordMessageArea(messages: data.messages),
-                    PreviewMessageBordBottom(messageBord: data.messageBord)
-                  ],
-                );
-              },
-              error: (err, _) {
-                print(err);
-              },
-              loading: () {
-                return const Center(child: CircularProgressIndicator());
-              })
-      ),
+          child: asyncValue.when(data: (data) {
+        return Column(
+          children: [
+            PreviewMessageBordTop(
+              messageBord: data.messageBord,
+            ),
+            PreviewMessageBordMessageArea(messages: data.messages),
+            PreviewMessageBordBottom(messageBord: data.messageBord)
+          ],
+        );
+      }, error: (err, _) {
+        Navigator.of(context).pop();
+        throw Exception(err);
+      }, loading: () {
+        return const Center(child: CircularProgressIndicator());
+      })),
     );
   }
 }

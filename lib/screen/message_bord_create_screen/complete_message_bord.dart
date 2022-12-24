@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/provider/create_message_bord_provider.dart';
+import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
 
-class CompleteMessageBord extends StatelessWidget {
+class CompleteMessageBord extends ConsumerWidget {
   const CompleteMessageBord({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final messageBord = ref.watch(createMessageBordProvider);
     return Scaffold(
       appBar: const ProgressAppBar(),
       body: Column(
@@ -13,29 +17,36 @@ class CompleteMessageBord extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ElevatedButton(
-              onPressed: (){
+              onPressed: () {
                 //TODO: LINEかメールで寄せ書きを送信する。(idとともに)
                 // 送信方法を選択してください。→ 送信完了 → 送信完了しました。
               },
-              child: const Text("寄せ書きを送る")
-          ),
+              child: const Text("寄せ書きを送る")),
           ElevatedButton(
-              onPressed: (){
+              onPressed: () {
                 //TODO: URLを共有し寄せ書きを集めよう。
                 // TODO: LINE and E-mailで共有可能(twitter、Facebookもいずれ可能)
               },
               child: const Text("他の人から寄せ書きを集める")),
           ElevatedButton(
-              onPressed: (){
+              onPressed: () {
+                // stateで保持しているデータを取得
+                final messageBordId =
+                    ref.read(createMessageBordProvider).messageBord.id;
+                // 遷移
+                Navigator.of(context).pushNamed('/preview_message_bord',
+                    arguments: messageBordId);
               },
               child: const Text("作成した寄せ書きを表示する")),
           ElevatedButton(
-              onPressed: (){
-              },
+              onPressed: () {},
               child: const Text("作成した寄せ書きを編集する")),
           ElevatedButton(
-              onPressed: (){
-                Navigator.of(context).pushNamedAndRemoveUntil('/top', (route) => false);
+              onPressed: () {}, child: const Text("寄せ書きにメッセージを追加する。")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamedAndRemoveUntil('/top', (route) => false);
               },
               child: const Text("戻る")),
         ],
