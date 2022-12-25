@@ -21,6 +21,7 @@ Message _$MessageFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Message {
   String get id => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
   String? get userName => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   String? get voiceMessage => throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ abstract class $MessageCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String? userId,
       String? userName,
       String? content,
       String? voiceMessage,
@@ -60,6 +62,7 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
   @override
   $Res call({
     Object? id = null,
+    Object? userId = freezed,
     Object? userName = freezed,
     Object? content = freezed,
     Object? voiceMessage = freezed,
@@ -71,6 +74,10 @@ class _$MessageCopyWithImpl<$Res, $Val extends Message>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -104,6 +111,7 @@ abstract class _$$_MessageCopyWith<$Res> implements $MessageCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String? userId,
       String? userName,
       String? content,
       String? voiceMessage,
@@ -122,6 +130,7 @@ class __$$_MessageCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? userId = freezed,
     Object? userName = freezed,
     Object? content = freezed,
     Object? voiceMessage = freezed,
@@ -133,6 +142,10 @@ class __$$_MessageCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
       userName: freezed == userName
           ? _value.userName
           : userName // ignore: cast_nullable_to_non_nullable
@@ -162,6 +175,7 @@ class __$$_MessageCopyWithImpl<$Res>
 class _$_Message implements _Message {
   const _$_Message(
       {required this.id,
+      this.userId,
       this.userName,
       this.content,
       this.voiceMessage,
@@ -173,6 +187,8 @@ class _$_Message implements _Message {
 
   @override
   final String id;
+  @override
+  final String? userId;
   @override
   final String? userName;
   @override
@@ -186,7 +202,7 @@ class _$_Message implements _Message {
 
   @override
   String toString() {
-    return 'Message(id: $id, userName: $userName, content: $content, voiceMessage: $voiceMessage, thumbnail: $thumbnail, image: $image)';
+    return 'Message(id: $id, userId: $userId, userName: $userName, content: $content, voiceMessage: $voiceMessage, thumbnail: $thumbnail, image: $image)';
   }
 
   @override
@@ -195,6 +211,7 @@ class _$_Message implements _Message {
         (other.runtimeType == runtimeType &&
             other is _$_Message &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.userName, userName) ||
                 other.userName == userName) &&
             (identical(other.content, content) || other.content == content) &&
@@ -207,8 +224,8 @@ class _$_Message implements _Message {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, userName, content, voiceMessage, thumbnail, image);
+  int get hashCode => Object.hash(runtimeType, id, userId, userName, content,
+      voiceMessage, thumbnail, image);
 
   @JsonKey(ignore: true)
   @override
@@ -227,6 +244,7 @@ class _$_Message implements _Message {
 abstract class _Message implements Message {
   const factory _Message(
       {required final String id,
+      final String? userId,
       final String? userName,
       final String? content,
       final String? voiceMessage,
@@ -237,6 +255,8 @@ abstract class _Message implements Message {
 
   @override
   String get id;
+  @override
+  String? get userId;
   @override
   String? get userName;
   @override

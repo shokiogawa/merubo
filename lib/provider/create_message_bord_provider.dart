@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/message_bord_with_message.dart';
+import 'package:merubo/model/repository/firebase_storage_repository.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
+import 'package:merubo/provider/current_user_provider.dart';
 import 'package:uuid/uuid.dart';
 
 // メッセージボード作成のためのprovider
@@ -27,8 +30,9 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
             messageBord: MessageBord(
                 id: const Uuid().v4(), receiverUserName: "", title: ""),
             messages: Message(id: const Uuid().v4())));
+
   @override
-  void dispose(){
+  void dispose() {
     print("dispose provider");
     receiverUserNameController.dispose();
     titleMessageController.dispose();
@@ -52,40 +56,57 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
   }
 
   void setMessageImage(String imagePath) {
-    final newMessage = state.messages.copyWith(image: imagePath);
-    state = state.copyWith(messages: newMessage);
+    state = state.copyWith(imagePath: imagePath);
   }
 
   void setMessageThumbnail(String thumbnailPath) {
-    final newMessage = state.messages.copyWith(thumbnail: thumbnailPath);
-    state = state.copyWith(messages: newMessage);
-  }
-
-  void setMessageVoiceMessage(String voiceMessage) {
-    final newMessage = state.messages.copyWith(voiceMessage: voiceMessage);
-    state = state.copyWith(messages: newMessage);
+    state = state.copyWith(thumbnailPath: thumbnailPath);
   }
 
   void setMessageBordLastPicture(String lastPicture) {
-    final messageBord = state.messageBord.copyWith(lastPicture: lastPicture);
-    state = state.copyWith(messageBord: messageBord);
-  }
-
-  void setMessageBordLastVideo(String lastMovie) {
-    final messageBord = state.messageBord.copyWith(lastMovie: lastMovie);
-    state = state.copyWith(messageBord: messageBord);
+    state = state.copyWith(lastPicturePath: lastPicture);
   }
 
   // 保存メソッド
   Future<void> createMessageBordWithMessage() async {
-    final newMessage = state.messages.copyWith(
-        userName: yourNameController.text,
-        content: messageContentController.text);
-    final newMessageBord = state.messageBord.copyWith(
-        title: titleMessageController.text,
-        receiverUserName: receiverUserNameController.text,
-        lastMessage: lastMessageController.text);
-    state = state.copyWith(messages: newMessage, messageBord: newMessageBord);
-    await ref.watch(messageBordRepositoryProvider).createMessageBord(state);
+    try {
+      final messageBordId = state.messageBord.id;
+      final messageId = state.messages.id;
+      final userId = ref.watch(currentUserProvider).id;
+      final firebaseStorageRepo = ref.watch(firebaseStorageRepository);
+
+      // 画像作成
+      if (state.thumbnailPath != null) {
+        final thumbnailURL = await firebaseStorageRepo.uploadImage(
+            File(state.thumbnailPath!),
+            'message_bords/$messageBordId/messages/$messageId/thumbnail');
+        final newMessage = state.messages.copyWith(thumbnail: thumbnailURL);
+        state = state.copyWith(messages: newMessage);
+      }
+
+      //画像作成
+      if (state.imagePath != null) {
+        final imageURL = await firebaseStorageRepo.uploadImage(
+            File(state.imagePath!),
+            'message_bords/$messageBordId/messages/$messageId/image');
+        final newMessage = state.messages.copyWith(image: imageURL);
+        state = state.copyWith(messages: newMessage);
+      }
+
+      // モデルにデータ格納
+      final newMessage = state.messages.copyWith(
+          userName: yourNameController.text,
+          content: messageContentController.text,
+          userId: userId);
+      final newMessageBord = state.messageBord.copyWith(
+          title: titleMessageController.text,
+          receiverUserName: receiverUserNameController.text,
+          lastMessage: lastMessageController.text);
+      state = state.copyWith(messages: newMessage, messageBord: newMessageBord);
+
+      await ref.watch(messageBordRepositoryProvider).createMessageBord(state);
+    } catch (err) {
+      throw Exception("error");
+    }
   }
 }

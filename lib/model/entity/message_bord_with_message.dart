@@ -11,5 +11,8 @@ class MessageBordWithMessage with _$MessageBordWithMessage {
   const factory MessageBordWithMessage({
     required MessageBord messageBord,
     required Message messages,
+    String? thumbnailPath,
+    String? imagePath,
+    String? lastPicturePath
   }) = _MessageBordWithMessage;
 }

@@ -6,6 +6,7 @@ part 'message.g.dart';
 class Message with _$Message {
   const factory Message({
     required String id,
+    String? userId,
     String? userName,
     String? content,
     String? voiceMessage,

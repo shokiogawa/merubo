@@ -18,6 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MessageBordWithMessage {
   MessageBord get messageBord => throw _privateConstructorUsedError;
   Message get messages => throw _privateConstructorUsedError;
+  String? get thumbnailPath => throw _privateConstructorUsedError;
+  String? get imagePath => throw _privateConstructorUsedError;
+  String? get lastPicturePath => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MessageBordWithMessageCopyWith<MessageBordWithMessage> get copyWith =>
@@ -30,7 +33,12 @@ abstract class $MessageBordWithMessageCopyWith<$Res> {
           $Res Function(MessageBordWithMessage) then) =
       _$MessageBordWithMessageCopyWithImpl<$Res, MessageBordWithMessage>;
   @useResult
-  $Res call({MessageBord messageBord, Message messages});
+  $Res call(
+      {MessageBord messageBord,
+      Message messages,
+      String? thumbnailPath,
+      String? imagePath,
+      String? lastPicturePath});
 
   $MessageBordCopyWith<$Res> get messageBord;
   $MessageCopyWith<$Res> get messages;
@@ -52,6 +60,9 @@ class _$MessageBordWithMessageCopyWithImpl<$Res,
   $Res call({
     Object? messageBord = null,
     Object? messages = null,
+    Object? thumbnailPath = freezed,
+    Object? imagePath = freezed,
+    Object? lastPicturePath = freezed,
   }) {
     return _then(_value.copyWith(
       messageBord: null == messageBord
@@ -62,6 +73,18 @@ class _$MessageBordWithMessageCopyWithImpl<$Res,
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as Message,
+      thumbnailPath: freezed == thumbnailPath
+          ? _value.thumbnailPath
+          : thumbnailPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imagePath: freezed == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastPicturePath: freezed == lastPicturePath
+          ? _value.lastPicturePath
+          : lastPicturePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -90,7 +113,12 @@ abstract class _$$_MessageBordWithMessageCopyWith<$Res>
       __$$_MessageBordWithMessageCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({MessageBord messageBord, Message messages});
+  $Res call(
+      {MessageBord messageBord,
+      Message messages,
+      String? thumbnailPath,
+      String? imagePath,
+      String? lastPicturePath});
 
   @override
   $MessageBordCopyWith<$Res> get messageBord;
@@ -112,6 +140,9 @@ class __$$_MessageBordWithMessageCopyWithImpl<$Res>
   $Res call({
     Object? messageBord = null,
     Object? messages = null,
+    Object? thumbnailPath = freezed,
+    Object? imagePath = freezed,
+    Object? lastPicturePath = freezed,
   }) {
     return _then(_$_MessageBordWithMessage(
       messageBord: null == messageBord
@@ -122,6 +153,18 @@ class __$$_MessageBordWithMessageCopyWithImpl<$Res>
           ? _value.messages
           : messages // ignore: cast_nullable_to_non_nullable
               as Message,
+      thumbnailPath: freezed == thumbnailPath
+          ? _value.thumbnailPath
+          : thumbnailPath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      imagePath: freezed == imagePath
+          ? _value.imagePath
+          : imagePath // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastPicturePath: freezed == lastPicturePath
+          ? _value.lastPicturePath
+          : lastPicturePath // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -130,16 +173,26 @@ class __$$_MessageBordWithMessageCopyWithImpl<$Res>
 
 class _$_MessageBordWithMessage implements _MessageBordWithMessage {
   const _$_MessageBordWithMessage(
-      {required this.messageBord, required this.messages});
+      {required this.messageBord,
+      required this.messages,
+      this.thumbnailPath,
+      this.imagePath,
+      this.lastPicturePath});
 
   @override
   final MessageBord messageBord;
   @override
   final Message messages;
+  @override
+  final String? thumbnailPath;
+  @override
+  final String? imagePath;
+  @override
+  final String? lastPicturePath;
 
   @override
   String toString() {
-    return 'MessageBordWithMessage(messageBord: $messageBord, messages: $messages)';
+    return 'MessageBordWithMessage(messageBord: $messageBord, messages: $messages, thumbnailPath: $thumbnailPath, imagePath: $imagePath, lastPicturePath: $lastPicturePath)';
   }
 
   @override
@@ -150,11 +203,18 @@ class _$_MessageBordWithMessage implements _MessageBordWithMessage {
             (identical(other.messageBord, messageBord) ||
                 other.messageBord == messageBord) &&
             (identical(other.messages, messages) ||
-                other.messages == messages));
+                other.messages == messages) &&
+            (identical(other.thumbnailPath, thumbnailPath) ||
+                other.thumbnailPath == thumbnailPath) &&
+            (identical(other.imagePath, imagePath) ||
+                other.imagePath == imagePath) &&
+            (identical(other.lastPicturePath, lastPicturePath) ||
+                other.lastPicturePath == lastPicturePath));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, messageBord, messages);
+  int get hashCode => Object.hash(runtimeType, messageBord, messages,
+      thumbnailPath, imagePath, lastPicturePath);
 
   @JsonKey(ignore: true)
   @override
@@ -167,12 +227,21 @@ class _$_MessageBordWithMessage implements _MessageBordWithMessage {
 abstract class _MessageBordWithMessage implements MessageBordWithMessage {
   const factory _MessageBordWithMessage(
       {required final MessageBord messageBord,
-      required final Message messages}) = _$_MessageBordWithMessage;
+      required final Message messages,
+      final String? thumbnailPath,
+      final String? imagePath,
+      final String? lastPicturePath}) = _$_MessageBordWithMessage;
 
   @override
   MessageBord get messageBord;
   @override
   Message get messages;
+  @override
+  String? get thumbnailPath;
+  @override
+  String? get imagePath;
+  @override
+  String? get lastPicturePath;
   @override
   @JsonKey(ignore: true)
   _$$_MessageBordWithMessageCopyWith<_$_MessageBordWithMessage> get copyWith =>

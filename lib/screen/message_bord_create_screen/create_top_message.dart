@@ -69,7 +69,7 @@ class CreateTopMessageScreen extends ConsumerWidget {
                             decoration: const InputDecoration(
                                 prefixIcon: Icon(Icons.person),
                                 contentPadding: EdgeInsets.all(0),
-                                hintText: "〇〇さん",
+                                hintText: "小川 翔生",
                                 hintStyle: TextStyle(fontSize: 12),
                                 border: OutlineInputBorder()),
                           ),

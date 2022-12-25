@@ -19,29 +19,28 @@ class CreateBottomMessageScreen extends ConsumerWidget {
             context: context,
             onPressed: () async {
               ref.read(progressIndicatorProvider.notifier).state = true;
-              await Future.delayed(const Duration(seconds: 3)).then((value) {
-                ref.read(progressIndicatorProvider.notifier).state = false;
-                ref.read(currentIndexProviderForCreate.notifier).state = 4;
-                //画面遷移
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/message_bord_complete_message_bord_screen',
-                    (route) => false);
-              });
-              // TODO:本番はコメントアウトを外す。(メッセージボード作成メソッド)
-              // await ref
-              //     .read(createMessageBordProvider.notifier)
-              //     .createMessageBordWithMessage()
-              //     .then((value) {
-              //   ref
-              //       .read(progressIndicatorProvider.notifier)
-              //       .state = false;
+              // await Future.delayed(const Duration(seconds: 3)).then((value) {
+              //   ref.read(progressIndicatorProvider.notifier).state = false;
+              //   ref.read(currentIndexProviderForCreate.notifier).state = 4;
               //   //画面遷移
               //   Navigator.of(context).pushNamedAndRemoveUntil(
               //       '/message_bord_complete_message_bord_screen',
               //       (route) => false);
-              // }).catchError((err) {
-              //   print(err);
               // });
+              await ref
+                  .read(createMessageBordProvider.notifier)
+                  .createMessageBordWithMessage()
+                  .then((value) {
+                ref
+                    .read(progressIndicatorProvider.notifier)
+                    .state = false;
+                //画面遷移
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/message_bord_complete_message_bord_screen',
+                    (route) => false);
+              }).catchError((err) {
+                print(err);
+              });
             },
             inProgressText: '作成中',
             confirmText: '寄せ書きを作成しますか？',

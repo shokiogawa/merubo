@@ -15,6 +15,8 @@ class CreateMessageScreen extends ConsumerWidget {
     final createMessageProvider = ref.watch(createMessageBordProvider.notifier);
     final messageValue =
         ref.watch(createMessageBordProvider.select((value) => value.messages));
+    final thumbnailPath = ref.watch(createMessageBordProvider.select((value) => value.thumbnailPath));
+    final imagePath = ref.watch(createMessageBordProvider.select((value) => value.imagePath));
     final yourNameController = createMessageProvider.yourNameController;
     final messageContentController =
         createMessageProvider.messageContentController;
@@ -102,9 +104,9 @@ class CreateMessageScreen extends ConsumerWidget {
                                 child: CircleAvatar(
                                   radius: 50,
                                   backgroundImage:
-                                      messageValue.thumbnail != null
+                                  thumbnailPath != null
                                           ? Image.file(
-                                                  File(messageValue.thumbnail!))
+                                                  File(thumbnailPath))
                                               .image
                                           : null,
                                 ))
@@ -139,30 +141,6 @@ class CreateMessageScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      // const SizedBox(height: 20),
-                      // //音声メッセージ
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     const Padding(
-                      //       padding: EdgeInsets.only(bottom: 8),
-                      //       child: Text("音声メッセージ(任意)"),
-                      //     ),
-                      //     GestureDetector(
-                      //       onTap: () async {
-                      //         final imageSource = await ImagePicker()
-                      //             .pickImage(source: ImageSource.gallery);
-                      //         if (imageSource != null) {}
-                      //       },
-                      //       child: Container(
-                      //         height: 50,
-                      //         width: 50,
-                      //         color: Colors.orangeAccent,
-                      //         child: const Text("画像が入る場所"),
-                      //       ),
-                      //     )
-                      //   ],
-                      // ),
                       const SizedBox(height: 40),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -183,15 +161,15 @@ class CreateMessageScreen extends ConsumerWidget {
                             child: Container(
                               decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
-                                  image: messageValue.image != null
+                                  image: imagePath != null
                                       ? DecorationImage(
                                           image: Image.file(
-                                                  File(messageValue.image!))
+                                                  File(imagePath))
                                               .image,
-                                          fit: BoxFit.fill)
+                                          fit: BoxFit.contain)
                                       : null),
                               height: 250,
-                              child: messageValue.image == null
+                              child: imagePath == null
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
