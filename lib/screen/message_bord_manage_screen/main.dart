@@ -26,13 +26,15 @@ class MessageBordManageScreen extends ConsumerWidget {
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     children: [
-                      Text('$receiverUserNameさんへの寄せ書き', textAlign: TextAlign.center),
+                      Text('$receiverUserNameさんへの寄せ書き',
+                          textAlign: TextAlign.center),
                       const SizedBox(height: 20),
                       CardButton(
-                          text: "寄せ書きを確認する",
-                        onTap: (){
-                          Navigator.of(context)
-                              .pushNamed('/preview_message_bord', arguments: messageBordId);
+                        text: "寄せ書きを確認する",
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              '/preview_message_bord',
+                              arguments: messageBordId);
                         },
                       ),
                     ],
@@ -46,20 +48,26 @@ class MessageBordManageScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
-                    children: const [
-                      Text('編集する', textAlign: TextAlign.center),
-                      SizedBox(height: 20),
+                    children: [
+                      const Text('編集する', textAlign: TextAlign.center),
+                      const SizedBox(height: 20),
                       // デザイン編集
-                      CardButton(text: "テンプレートを変更する"),
-                      SizedBox(height: 20),
+                      const CardButton(text: "テンプレートを変更する"),
+                      const SizedBox(height: 20),
                       //基本情報の編集
-                      CardButton(text: "基本情報を変更する"),
-                      SizedBox(height: 20),
+                      CardButton(
+                          text: "基本情報を変更する",
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                                '/message_bord_edit_screen',
+                                arguments: messageBordId);
+                          }),
+                      const SizedBox(height: 20),
                       //自分が投稿したメッセージの編集
-                      CardButton(text: "自分のメッセージを編集する"),
-                      SizedBox(height: 20),
+                      const CardButton(text: "自分のメッセージを編集する"),
+                      const SizedBox(height: 20),
                       // 最後のメッセージの編集
-                      CardButton(text: "まとめメッセージを編集する")
+                      const CardButton(text: "まとめメッセージを編集する")
                     ],
                   ),
                 ),

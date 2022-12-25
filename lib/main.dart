@@ -9,6 +9,7 @@ import 'package:merubo/screen/message_bord_create_screen/complete_message_bord.d
 import 'package:merubo/screen/message_bord_create_screen/create_bottom_message.dart';
 import 'package:merubo/screen/message_bord_create_screen/create_message.dart';
 import 'package:merubo/screen/message_bord_create_screen/create_top_message.dart';
+import 'package:merubo/screen/message_bord_edit_screen/main.dart';
 import 'package:merubo/screen/message_bord_manage_screen/main.dart';
 import 'package:merubo/screen/message_bord_preview_screen/main.dart';
 import 'package:merubo/screen/top_screen/main.dart';
@@ -49,7 +50,8 @@ class MyApp extends ConsumerWidget {
         '/message_bord_complete_message_bord_screen': (context) =>
             const CompleteMessageBord(),
         '/message_bord_manage_screen': (context) =>
-            const MessageBordManageScreen()
+            const MessageBordManageScreen(),
+        '/message_bord_edit_screen': (context) => const MessageBordEditScreen()
       },
     );
   }

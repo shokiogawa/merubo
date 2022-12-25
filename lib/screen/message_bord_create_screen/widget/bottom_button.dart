@@ -17,10 +17,10 @@ class BottomButton extends ConsumerWidget {
           Expanded(
               child: ElevatedButton(
                   onPressed: () {
-                    //クリーンアップ
-                    if(currentIndex == 1){
-                      ref.read(createMessageBordProvider.notifier).cleanUp();
-                    }
+                    // //クリーンアップ
+                    // if(currentIndex == 1){
+                    //   ref.read(createMessageBordProvider.notifier).cleanUp();
+                    // }
                     if (currentIndex != 0) {
                       ref.read(currentIndexProviderForCreate.notifier).state =
                           currentIndex - 1;
