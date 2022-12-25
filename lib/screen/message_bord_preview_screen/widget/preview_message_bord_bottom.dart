@@ -10,13 +10,18 @@ class PreviewMessageBordBottom extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SizedBox(
-      height: 200,
-      child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.amber), color: Colors.white30),
-          child: Center(child: Text(messageBord?.lastMessage ?? "unnown"))),
-    );
+    return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.amber), color: Colors.white30),
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
+            const Text("Last Message", style: TextStyle(fontSize: 20),),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 20),
+              child: Text(messageBord.lastMessage ?? "unnown"),
+            ),
+          ],
+        ));
   }
 }
