@@ -12,6 +12,7 @@ import 'package:merubo/screen/message_bord_create_screen/create_top_message.dart
 import 'package:merubo/screen/message_bord_edit_screen/main.dart';
 import 'package:merubo/screen/message_bord_manage_screen/main.dart';
 import 'package:merubo/screen/message_bord_preview_screen/main.dart';
+import 'package:merubo/screen/message_edit_screen/main.dart';
 import 'package:merubo/screen/top_screen/main.dart';
 import 'firebase_options.dart';
 
@@ -51,7 +52,8 @@ class MyApp extends ConsumerWidget {
             const CompleteMessageBord(),
         '/message_bord_manage_screen': (context) =>
             const MessageBordManageScreen(),
-        '/message_bord_edit_screen': (context) => const MessageBordEditScreen()
+        '/message_bord_edit_screen': (context) => const MessageBordEditScreen(),
+        '/message_edit_screen':(context) => const MessageEditScreen()
       },
     );
   }

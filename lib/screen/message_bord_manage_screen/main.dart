@@ -64,7 +64,14 @@ class MessageBordManageScreen extends ConsumerWidget {
                           }),
                       const SizedBox(height: 20),
                       //自分が投稿したメッセージの編集
-                      const CardButton(text: "自分のメッセージを編集する"),
+                      CardButton(
+                        text: "自分のメッセージを編集する",
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              '/message_edit_screen',
+                              arguments: messageBordId);
+                        },
+                      ),
                     ],
                   ),
                 ),
