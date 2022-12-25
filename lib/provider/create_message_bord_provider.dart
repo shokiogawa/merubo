@@ -11,6 +11,9 @@ final currentIndexProviderForCreate = StateProvider<int>((ref) {
   return 0;
 });
 
+// ローディングメソッド
+// enum LoadingState { beforeLoading, inLoading, succeedLoading, failedLoading}
+// final loadingStateProvider = StateProvider((ref) => LoadingState.beforeLoading);
 final progressIndicatorProvider = StateProvider<bool>((ref) => false);
 
 final createMessageBordProvider =

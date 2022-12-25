@@ -65,9 +65,6 @@ class MessageBordManageScreen extends ConsumerWidget {
                       const SizedBox(height: 20),
                       //自分が投稿したメッセージの編集
                       const CardButton(text: "自分のメッセージを編集する"),
-                      const SizedBox(height: 20),
-                      // 最後のメッセージの編集
-                      const CardButton(text: "まとめメッセージを編集する")
                     ],
                   ),
                 ),

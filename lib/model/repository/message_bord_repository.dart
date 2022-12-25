@@ -271,11 +271,16 @@ class MessageBordRepository {
 
   //メッセージボード更新
   Future<void> updateMessageBord(MessageBord messageBord) async {
+    print(messageBord.id);
     final fireStore = ref.watch(firebaseFireStoreProvider);
-    await fireStore
-        .collection("message_bords")
-        .doc(messageBord.id)
-        .update(messageBord.toJson());
+    try{
+      await fireStore
+          .collection("message_bords")
+          .doc(messageBord.id)
+          .update(messageBord.toJson());
+    }catch(err){
+      throw Exception(err);
+    }
   }
 
   // メッセージ更新
