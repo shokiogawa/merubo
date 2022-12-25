@@ -37,6 +37,16 @@ class MessageBordManageScreen extends ConsumerWidget {
                               arguments: messageBordId);
                         },
                       ),
+                      const SizedBox(height: 20),
+                      CardButton(
+                        text: "寄せ書きを送る",
+                        onTap: () {},
+                      ),
+                      const SizedBox(height: 20),
+                      CardButton(
+                        text: "メッセージを集める",
+                        onTap: () {},
+                      ),
                     ],
                   ),
                 ),
