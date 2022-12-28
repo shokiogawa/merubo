@@ -217,4 +217,62 @@ class MessageBordRepository {
 
   //メッセージボード削除
   Future<void> deleteMessageBord() async {}
+
+  // 寄せ書きが存在しているかチェック
+  Future<bool> checkIsExistMessageBord(String messageBordId) async {
+    try {
+      final fireStore = ref.watch(firebaseFireStoreProvider);
+      final isExistMessageBord =
+          (await fireStore.collection("message_bords").doc(messageBordId).get())
+              .exists;
+      return isExistMessageBord;
+    } catch (err) {
+      throw Exception(err);
+    }
+  }
+
+  // 寄せ書きをすでに取得しているかどうかのチェック
+  Future<bool> checkHasMessageBord(String messageBordId) async {
+    final userId = ref.watch(currentUserProvider).id;
+    try {
+      final fireStore = ref.watch(firebaseFireStoreProvider);
+      final hasMessageBord = (await fireStore
+              .collection("users")
+              .doc(userId)
+              .collection("own_message_bords")
+              .doc(messageBordId)
+              .get())
+          .exists;
+      return hasMessageBord;
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
+
+  // メッセージボードを受取人が登録
+  Future<void> registerMessageBord(String messageBordId) async {
+    try {
+      if (await checkIsExistMessageBord(messageBordId) &&
+          !await checkHasMessageBord(messageBordId)) {
+        final fireStore = ref.watch(firebaseFireStoreProvider);
+        final userId = ref.watch(currentUserProvider).id;
+        final messageBordRef =
+            fireStore.collection("message_bords").doc(messageBordId);
+        fireStore
+            .collection("users")
+            .doc(userId)
+            .collection("own_message_bords")
+            .doc(messageBordId)
+            .set({
+          "messageBordRef": messageBordRef,
+          "role": describeEnum(Role.receiver)
+        });
+      } else {
+        throw Exception(
+            'MessageBordId $messageBordId is not exist or has already had ');
+      }
+    } catch (err) {
+      throw Exception(err);
+    }
+  }
 }

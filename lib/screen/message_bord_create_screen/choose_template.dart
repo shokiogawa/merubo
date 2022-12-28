@@ -97,7 +97,8 @@ class GridTemplate extends ConsumerWidget {
                               Navigator.of(context).pushNamed(
                                   '/preview_message_bord',
                                   arguments:
-                                      describeEnum(templateList[index].type));
+                                      describeEnum(templateList[index].type)
+                              );
                             },
                           ),
                           Button(
