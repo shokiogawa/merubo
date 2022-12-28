@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/provider/current_user_provider.dart';
 import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/widgets/card_button.dart';
+import 'package:share_plus/share_plus.dart';
 
 class MessageBordManageScreen extends ConsumerWidget {
   const MessageBordManageScreen({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class MessageBordManageScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final messageBordId = ModalRoute.of(context)!.settings.arguments as String;
     final messageBord = ref.watch(selectedMessageBordId(messageBordId));
+    final currentUserName = ref.watch(currentUserProvider).displayName;
     final receiverUserName = messageBord.receiverUserName;
     return Scaffold(
       appBar: AppBar(),
@@ -40,12 +43,18 @@ class MessageBordManageScreen extends ConsumerWidget {
                       const SizedBox(height: 20),
                       CardButton(
                         text: "寄せ書きを送る",
-                        onTap: () {},
+                        onTap: () {
+                          Share.share(
+                              '$currentUserNameさんより、寄せ書きが届いています。アプリをインストールされていない方は、アプリをインストール後、以下のidを入力してください。寄せ書きID: $messageBordId');
+                        },
                       ),
                       const SizedBox(height: 20),
                       CardButton(
                         text: "メッセージを集める",
-                        onTap: () {},
+                        onTap: () {
+                          Share.share(
+                              '以下のリンクから、$receiverUserNameさんへのメッセージを追加しよう。 https://enlioo.com/merubo/?messageBordId=$messageBordId');
+                        },
                       ),
                     ],
                   ),
