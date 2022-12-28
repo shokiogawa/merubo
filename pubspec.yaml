@@ -49,6 +49,7 @@ dependencies:
   firebase_storage: ^11.0.6
   image_picker: ^0.8.6
   share_plus: ^6.3.0
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:

@@ -37,14 +37,14 @@ class TopScreenState extends ConsumerState<TopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "Merubo",
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: const Center(
+      //     child: Text(
+      //       "Merubo",
+      //       style: TextStyle(color: Colors.white),
+      //     ),
+      //   ),
+      // ),
       //トップページ表示前に、ユーザー情報を取得する。
       body: FutureBuilder(
         future: _future,
