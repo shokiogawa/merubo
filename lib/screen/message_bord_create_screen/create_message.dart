@@ -13,18 +13,15 @@ class CreateMessageScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final createMessageProvider = ref.watch(createMessageBordProvider.notifier);
-    final messageValue =
-        ref.watch(createMessageBordProvider.select((value) => value.messages));
     final thumbnailPath = ref.watch(createMessageBordProvider.select((value) => value.thumbnailPath));
     final imagePath = ref.watch(createMessageBordProvider.select((value) => value.imagePath));
     final yourNameController = createMessageProvider.yourNameController;
     final messageContentController =
         createMessageProvider.messageContentController;
     return Scaffold(
-      appBar: const ProgressAppBar(),
+      appBar: const ProgressAppBar(currentIndex: 2),
       bottomNavigationBar: BottomButton(onPressed: () {
         if (formKey.currentState!.validate()) {
-          ref.read(currentIndexProviderForCreate.notifier).state = 3;
           Navigator.of(context)
               .pushNamed('/message_bord_create_bottom_message_screen');
         }

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../provider/create_message_bord_provider.dart';
 
 //ページ数に応じて線と円のwidgetを作成する。
 class ProgressCreateMessageBord extends ConsumerWidget {
   final int totalPages;
-  const ProgressCreateMessageBord({Key? key, required this.totalPages})
+  final int currentIndex;
+  const ProgressCreateMessageBord({Key? key, required this.totalPages, required this.currentIndex})
       : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Widget> progress = [];
     for (int i = 0; i < totalPages; i++) {
-      progress.add(CircleWidget(index: i));
+      progress.add(CircleWidget(index: i, currentIndex: currentIndex));
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -23,15 +23,16 @@ class ProgressCreateMessageBord extends ConsumerWidget {
 
 //線と円を組み合わせたWidget
 class CircleWidget extends StatelessWidget {
-  const CircleWidget({Key? key, required this.index}) : super(key: key);
+  const CircleWidget({Key? key, required this.index, required this.currentIndex}) : super(key: key);
   final int index;
+  final int currentIndex;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: index == 0
-          ? [ProgressCircle(index: index)]
-          : [const ProgressBar(), ProgressCircle(index: index)],
+          ? [ProgressCircle(index: index, currentIndex: currentIndex,)]
+          : [const ProgressBar(), ProgressCircle(index: index, currentIndex: currentIndex,)],
     );
   }
 }
@@ -39,12 +40,13 @@ class CircleWidget extends StatelessWidget {
 //円の部分
 class ProgressCircle extends ConsumerWidget {
   final int index;
+  final int currentIndex;
 
-  const ProgressCircle({Key? key, required this.index}) : super(key: key);
+  const ProgressCircle({Key? key, required this.index, required this.currentIndex}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentIndex = ref.watch(currentIndexProviderForCreate);
+    // final currentIndex = ref.watch(currentIndexProviderForCreate);
     return CircleAvatar(
       radius: 18,
       backgroundColor: Colors.white,

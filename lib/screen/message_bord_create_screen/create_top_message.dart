@@ -17,10 +17,9 @@ class CreateTopMessageScreen extends ConsumerWidget {
     final titleMessageController =
         createTopMessageProvider.titleMessageController;
     return Scaffold(
-      appBar: const ProgressAppBar(),
+      appBar: const ProgressAppBar(currentIndex: 1),
       bottomNavigationBar: BottomButton(onPressed: () {
         if (formKey.currentState!.validate()) {
-          ref.read(currentIndexProviderForCreate.notifier).state = 2;
           Navigator.of(context)
               .pushNamed('/message_bord_create_message_screen');
         }

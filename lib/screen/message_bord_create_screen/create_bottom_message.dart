@@ -13,7 +13,7 @@ class CreateBottomMessageScreen extends ConsumerWidget {
     final createMessageProvider = ref.watch(createMessageBordProvider.notifier);
     final lastMessageController = createMessageProvider.lastMessageController;
     return Scaffold(
-      appBar: const ProgressAppBar(),
+      appBar: const ProgressAppBar(currentIndex: 2),
       bottomNavigationBar: BottomButton(onPressed: () {
         showProgressDialog(
             context: context,

@@ -10,7 +10,7 @@ class CompleteMessageBord extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final messageBord = ref.watch(createMessageBordProvider);
     return Scaffold(
-      appBar: const ProgressAppBar(),
+      appBar: const ProgressAppBar(currentIndex: 4,),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,

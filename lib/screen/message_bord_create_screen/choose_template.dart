@@ -18,7 +18,7 @@ class ChooseTemplateScreen extends ConsumerWidget {
         .map((e) => GridTemplate(templateList: e))
         .toList();
     return Scaffold(
-      appBar: const ProgressAppBar(),
+      appBar: const ProgressAppBar(currentIndex: 0),
       body: DefaultTabController(
         length: mapTemplate.length,
         child: Padding(
@@ -105,10 +105,6 @@ class GridTemplate extends ConsumerWidget {
                               text: "決定",
                               buttonColor: Colors.orange,
                               onPressed: () {
-                                ref
-                                    .read(
-                                        currentIndexProviderForCreate.notifier)
-                                    .state = 1;
                                 ref
                                     .read(createMessageBordProvider.notifier)
                                     .setType(templateList[index].type);
