@@ -30,7 +30,7 @@ class MessageBordCreatePage extends ConsumerWidget {
             MenuButton(
                 onTap: () {
                   showModalBottomSheet(
-                    isScrollControlled: true,
+                      isScrollControlled: true,
                       shape: const RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.vertical(top: Radius.circular(20))),
@@ -69,18 +69,48 @@ class MessageBordCreatePage extends ConsumerWidget {
                                     text: "受け取る",
                                     buttonColor: Colors.orangeAccent,
                                     onPressed: () async {
+                                      // ローディング開始
+                                      showGeneralDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          pageBuilder: (context, animation1,
+                                              animation2) {
+                                            return const Center(
+                                                child:
+                                                    CircularProgressIndicator());
+                                          });
                                       await ref
                                           .read(registerMessageBordProvider)
                                           .register()
                                           .then((value) {
                                         Navigator.of(context).pop();
+                                        Navigator.of(context).pop();
                                         Navigator.of(context).pushNamed(
                                             '/preview_message_bord',
                                             arguments: controller.text);
                                         controller.clear();
-                                      }).catchError((err){
-                                        print(err);
-                                        // TODO: snakbarなどのエラー表示
+                                      }).catchError((err) {
+                                        Navigator.of(context).pop();
+                                        controller.clear();
+                                        showDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return AlertDialog(
+                                                title: const Text("取得に失敗しました", style: TextStyle(fontSize: 17),),
+                                                titlePadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                                                actions: [
+                                                  GestureDetector(
+                                                    child: const Padding(
+                                                      padding: EdgeInsets.all(8.0),
+                                                      child: Text("戻る"),
+                                                    ),
+                                                    onTap: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  )
+                                                ],
+                                              );
+                                            });
                                       });
                                     })
                               ],
