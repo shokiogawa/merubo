@@ -15,6 +15,9 @@ _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
       lastMovie: json['lastMovie'] as String?,
       lastPicture: json['lastPicture'] as String?,
       title: json['title'] as String?,
+      ownerUserName: json['ownerUserName'] as String?,
+      receivedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['receivedAt'], const DateTimeConverter().fromJson),
       status:
           $enumDecodeNullable(_$StatusEnumMap, json['status']) ?? Status.edit,
     );
@@ -28,6 +31,9 @@ Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>
       'lastMovie': instance.lastMovie,
       'lastPicture': instance.lastPicture,
       'title': instance.title,
+      'ownerUserName': instance.ownerUserName,
+      'receivedAt': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.receivedAt, const DateTimeConverter().toJson),
       'status': _$StatusEnumMap[instance.status]!,
     };
 
@@ -38,8 +44,20 @@ const _$MessageBordTypeEnumMap = {
   MessageBordType.type4: 'type4',
 };
 
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
 const _$StatusEnumMap = {
   Status.edit: 'edit',
   Status.send: 'send',
   Status.preview: 'preview',
 };
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

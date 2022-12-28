@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:merubo/model/entity/converter/date_time_converter.dart';
 
 part 'message_bord.freezed.dart';
 
@@ -23,7 +25,9 @@ class MessageBord with _$MessageBord {
     String? lastMovie,
     String? lastPicture,
     String? title,
-    @Default(Status.edit) Status status,
+    String? ownerUserName,
+    @DateTimeConverter() DateTime? receivedAt,
+    @Default(Status.edit) Status status
   }) = _MessageBord;
 
   factory MessageBord.fromJson(Map<String, dynamic> json) =>

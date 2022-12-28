@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/provider/message_bord_provider.dart';
+import 'package:merubo/screen/top_screen/widget/thumbnail_circle.dart';
 import 'package:timelines/timelines.dart';
 
 class ReceiveMessageBordList extends ConsumerWidget {
@@ -60,10 +61,26 @@ class ReceiveMessageBordList extends ConsumerWidget {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: data.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final sendUserName = data[index].messageBord.receiverUserName;
+                        final sendUserName =
+                            data[index].messageBord.ownerUserName;
                         final messageCount = data[index].messages.length;
+                        final receivedAt = data[index].messageBord.receivedAt;
+                        final List<Widget> messageThumbnails = [
+                          ...data[index]
+                              .messages
+                              .map((message) => ThumbnailCircle(
+                                  thumbnailPath: message.thumbnail!))
+                              .toList()
+                              .take(3)
+                              .toList()
+                        ];
+                        if (data[index].messages.length > 3) {
+                          messageThumbnails.add(const Text("...",
+                              style: TextStyle(fontSize: 10)));
+                        }
                         return Row(children: [
-                          const Text("12月9日", style: TextStyle(fontSize: 10)),
+                          Text(receivedAt.toString(),
+                              style: const TextStyle(fontSize: 10)),
                           Expanded(
                             flex: 1,
                             child: SizedBox(
@@ -83,7 +100,11 @@ class ReceiveMessageBordList extends ConsumerWidget {
                                           flex: 1,
                                           child: CircleAvatar(
                                               radius: 30,
-                                              backgroundImage: Image.asset(getImageByType(data[index].messageBord.type)).image)),
+                                              backgroundImage: Image.asset(
+                                                      getImageByType(data[index]
+                                                          .messageBord
+                                                          .type))
+                                                  .image)),
                                       Expanded(
                                         flex: 2,
                                         child: Column(
@@ -100,30 +121,7 @@ class ReceiveMessageBordList extends ConsumerWidget {
                                             Row(children: [
                                               const Text("参加者:"),
                                               Row(
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 2),
-                                                    child: CircleAvatar(
-                                                      backgroundImage: Image.asset(
-                                                              'assets/images/chrisumasu.jpg')
-                                                          .image,
-                                                      radius: 12,
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 2),
-                                                    child: CircleAvatar(
-                                                      backgroundImage: Image.asset(
-                                                              'assets/images/chrisumasu.jpg')
-                                                          .image,
-                                                      radius: 12,
-                                                    ),
-                                                  ),
-                                                ],
+                                                children: messageThumbnails,
                                               )
                                             ]),
                                             const SizedBox(

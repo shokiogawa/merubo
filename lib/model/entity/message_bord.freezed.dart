@@ -27,6 +27,9 @@ mixin _$MessageBord {
   String? get lastMovie => throw _privateConstructorUsedError;
   String? get lastPicture => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  String? get ownerUserName => throw _privateConstructorUsedError;
+  @DateTimeConverter()
+  DateTime? get receivedAt => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,6 +52,8 @@ abstract class $MessageBordCopyWith<$Res> {
       String? lastMovie,
       String? lastPicture,
       String? title,
+      String? ownerUserName,
+      @DateTimeConverter() DateTime? receivedAt,
       Status status});
 }
 
@@ -72,6 +77,8 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? lastMovie = freezed,
     Object? lastPicture = freezed,
     Object? title = freezed,
+    Object? ownerUserName = freezed,
+    Object? receivedAt = freezed,
     Object? status = null,
   }) {
     return _then(_value.copyWith(
@@ -103,6 +110,14 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      ownerUserName: freezed == ownerUserName
+          ? _value.ownerUserName
+          : ownerUserName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receivedAt: freezed == receivedAt
+          ? _value.receivedAt
+          : receivedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -127,6 +142,8 @@ abstract class _$$_MessageBordCopyWith<$Res>
       String? lastMovie,
       String? lastPicture,
       String? title,
+      String? ownerUserName,
+      @DateTimeConverter() DateTime? receivedAt,
       Status status});
 }
 
@@ -148,6 +165,8 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? lastMovie = freezed,
     Object? lastPicture = freezed,
     Object? title = freezed,
+    Object? ownerUserName = freezed,
+    Object? receivedAt = freezed,
     Object? status = null,
   }) {
     return _then(_$_MessageBord(
@@ -179,6 +198,14 @@ class __$$_MessageBordCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      ownerUserName: freezed == ownerUserName
+          ? _value.ownerUserName
+          : ownerUserName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receivedAt: freezed == receivedAt
+          ? _value.receivedAt
+          : receivedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -198,6 +225,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       this.lastMovie,
       this.lastPicture,
       this.title,
+      this.ownerUserName,
+      @DateTimeConverter() this.receivedAt,
       this.status = Status.edit});
 
   factory _$_MessageBord.fromJson(Map<String, dynamic> json) =>
@@ -218,12 +247,17 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @override
   final String? title;
   @override
+  final String? ownerUserName;
+  @override
+  @DateTimeConverter()
+  final DateTime? receivedAt;
+  @override
   @JsonKey()
   final Status status;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, status: $status)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, ownerUserName: $ownerUserName, receivedAt: $receivedAt, status: $status)';
   }
 
   @override
@@ -238,6 +272,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       ..add(DiagnosticsProperty('lastMovie', lastMovie))
       ..add(DiagnosticsProperty('lastPicture', lastPicture))
       ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('ownerUserName', ownerUserName))
+      ..add(DiagnosticsProperty('receivedAt', receivedAt))
       ..add(DiagnosticsProperty('status', status));
   }
 
@@ -257,13 +293,27 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
             (identical(other.lastPicture, lastPicture) ||
                 other.lastPicture == lastPicture) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.ownerUserName, ownerUserName) ||
+                other.ownerUserName == ownerUserName) &&
+            (identical(other.receivedAt, receivedAt) ||
+                other.receivedAt == receivedAt) &&
             (identical(other.status, status) || other.status == status));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, type, receiverUserName,
-      lastMessage, lastMovie, lastPicture, title, status);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      type,
+      receiverUserName,
+      lastMessage,
+      lastMovie,
+      lastPicture,
+      title,
+      ownerUserName,
+      receivedAt,
+      status);
 
   @JsonKey(ignore: true)
   @override
@@ -288,6 +338,8 @@ abstract class _MessageBord implements MessageBord {
       final String? lastMovie,
       final String? lastPicture,
       final String? title,
+      final String? ownerUserName,
+      @DateTimeConverter() final DateTime? receivedAt,
       final Status status}) = _$_MessageBord;
 
   factory _MessageBord.fromJson(Map<String, dynamic> json) =
@@ -307,6 +359,11 @@ abstract class _MessageBord implements MessageBord {
   String? get lastPicture;
   @override
   String? get title;
+  @override
+  String? get ownerUserName;
+  @override
+  @DateTimeConverter()
+  DateTime? get receivedAt;
   @override
   Status get status;
   @override
