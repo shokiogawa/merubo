@@ -56,11 +56,55 @@ class MessageBordRepository {
     }
   }
 
-  //自分が受け取ったメッセージボード一覧
-  Future<List<MessageBord>> fetchReceiveMessageBordList(String userId) async {
-    print("fetchReceiveMessageBordList");
-    final List<MessageBord> messageBordList = [];
-    return messageBordList;
+  // 受け取った寄せ書き一覧を取得(メッセージ付き)
+  Future<List<MessageBordWithMessages>> fetchReceiveMessageBordList() async {
+    final userId = ref.watch(currentUserProvider).id;
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    final List<MessageBordWithMessages> messageBordWithMessages = [];
+    try {
+      final messageBordIdListRefQuery = fireStore
+          .collection("users")
+          .doc(userId)
+          .collection("own_message_bords")
+          .where("role", whereIn: [describeEnum(Role.receiver)]).withConverter(
+              fromFirestore: (snapshot, _) =>
+                  OwnMessageBordRef.fromJson(snapshot.data()!),
+              toFirestore: (messageBordRef, _) => messageBordRef.toJson());
+      final messageBordListRef = await messageBordIdListRefQuery.get();
+
+      await Future.forEach(messageBordListRef.docs, (messageBordRef) async {
+        final ref = messageBordRef.data();
+        // MessageBordデータ
+        final messageBordRealRef = ref.messageBordRef.withConverter(
+            fromFirestore: (snapshot, _) =>
+                MessageBord.fromJson(snapshot.data()!),
+            toFirestore: (messageBord, _) => messageBord.toJson());
+        final messageBordRealDoc = await messageBordRealRef.get();
+        final messageBordReal = messageBordRealDoc.data()!;
+
+        // Messageデータ
+        final messageRealRef = ref.messageBordRef
+            .collection("messages")
+            .withConverter(
+                fromFirestore: (snapshot, _) =>
+                    Message.fromJson(snapshot.data()!),
+                toFirestore: (message, _) => message.toJson());
+        final messageRealDoc = await messageRealRef.get();
+
+        final List<Message> messagesReal = [];
+        for (var message in messageRealDoc.docs) {
+          messagesReal.add(message.data());
+        }
+        final value = MessageBordWithMessages(
+            messageBord: messageBordReal, messages: messagesReal);
+
+        messageBordWithMessages.add(value);
+      });
+      return messageBordWithMessages;
+    } catch (err) {
+      print(err);
+      throw Exception(err);
+    }
   }
 
   //メッセージボード詳細

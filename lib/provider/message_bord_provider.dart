@@ -15,6 +15,13 @@ final ownMessageBordListProvider =
   return messageBordList;
 });
 
+// 受け取ったメッセージボード一覧を取得
+final receiveMessageBordListProvider = FutureProvider((ref) async {
+  return await ref
+      .watch(messageBordRepositoryProvider)
+      .fetchReceiveMessageBordList();
+});
+
 // 上にスクロールすると更新されるようにする。
 final messageBordDetailProvider =
     FutureProvider.family.autoDispose((ref, messageBordId) async {
