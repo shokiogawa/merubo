@@ -12,33 +12,40 @@ class MessageBordListPage extends ConsumerWidget {
     print("MessageBordListPage");
     final asyncValue = ref.watch(ownMessageBordListProvider(Role.owner));
     return asyncValue.when(
-        data: (data) => SingleChildScrollView(
-              child: Column(
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Text(
-                      "寄せ書き一覧",
-                      style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
-                    ),
+        data: (data) => RefreshIndicator(
+          // TODO: 2回回るのをやめたい
+          onRefresh: ()async{
+            return await ref.refresh(ownMessageBordListProvider(Role.owner));
+          },
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    "寄せ書き一覧",
+                    style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
                   ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: data.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return MessageCardTile(
-                          messageBord: data[index],
-                          onTap: () {
-                            Navigator.of(context).pushNamed(
-                                '/message_bord_manage_screen',
-                                arguments: data[index].id);
-                          },
-                        );
-                      }),
-                ],
-              ),
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return MessageCardTile(
+                        messageBord: data[index],
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              '/message_bord_manage_screen',
+                              arguments: data[index].id);
+                        },
+                      );
+                    }),
+              ],
             ),
+          ),
+        ),
         // GridView.builder(
         // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         //     // crossAxisSpacing: 10,
