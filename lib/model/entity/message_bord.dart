@@ -26,6 +26,7 @@ class MessageBord with _$MessageBord {
     String? lastPicture,
     String? title,
     String? ownerUserName,
+    String? category,
     @DateTimeConverter() DateTime? receivedAt,
     @Default(Status.edit) Status status
   }) = _MessageBord;

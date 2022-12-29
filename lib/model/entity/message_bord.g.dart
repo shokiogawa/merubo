@@ -16,6 +16,7 @@ _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
       lastPicture: json['lastPicture'] as String?,
       title: json['title'] as String?,
       ownerUserName: json['ownerUserName'] as String?,
+      category: json['category'] as String?,
       receivedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['receivedAt'], const DateTimeConverter().fromJson),
       status:
@@ -32,6 +33,7 @@ Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>
       'lastPicture': instance.lastPicture,
       'title': instance.title,
       'ownerUserName': instance.ownerUserName,
+      'category': instance.category,
       'receivedAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.receivedAt, const DateTimeConverter().toJson),
       'status': _$StatusEnumMap[instance.status]!,

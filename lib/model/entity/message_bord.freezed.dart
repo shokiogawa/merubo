@@ -28,6 +28,7 @@ mixin _$MessageBord {
   String? get lastPicture => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get ownerUserName => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
   @DateTimeConverter()
   DateTime? get receivedAt => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
@@ -53,6 +54,7 @@ abstract class $MessageBordCopyWith<$Res> {
       String? lastPicture,
       String? title,
       String? ownerUserName,
+      String? category,
       @DateTimeConverter() DateTime? receivedAt,
       Status status});
 }
@@ -78,6 +80,7 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? lastPicture = freezed,
     Object? title = freezed,
     Object? ownerUserName = freezed,
+    Object? category = freezed,
     Object? receivedAt = freezed,
     Object? status = null,
   }) {
@@ -114,6 +117,10 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
           ? _value.ownerUserName
           : ownerUserName // ignore: cast_nullable_to_non_nullable
               as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
       receivedAt: freezed == receivedAt
           ? _value.receivedAt
           : receivedAt // ignore: cast_nullable_to_non_nullable
@@ -143,6 +150,7 @@ abstract class _$$_MessageBordCopyWith<$Res>
       String? lastPicture,
       String? title,
       String? ownerUserName,
+      String? category,
       @DateTimeConverter() DateTime? receivedAt,
       Status status});
 }
@@ -166,6 +174,7 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? lastPicture = freezed,
     Object? title = freezed,
     Object? ownerUserName = freezed,
+    Object? category = freezed,
     Object? receivedAt = freezed,
     Object? status = null,
   }) {
@@ -202,6 +211,10 @@ class __$$_MessageBordCopyWithImpl<$Res>
           ? _value.ownerUserName
           : ownerUserName // ignore: cast_nullable_to_non_nullable
               as String?,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
       receivedAt: freezed == receivedAt
           ? _value.receivedAt
           : receivedAt // ignore: cast_nullable_to_non_nullable
@@ -226,6 +239,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       this.lastPicture,
       this.title,
       this.ownerUserName,
+      this.category,
       @DateTimeConverter() this.receivedAt,
       this.status = Status.edit});
 
@@ -249,6 +263,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @override
   final String? ownerUserName;
   @override
+  final String? category;
+  @override
   @DateTimeConverter()
   final DateTime? receivedAt;
   @override
@@ -257,7 +273,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, ownerUserName: $ownerUserName, receivedAt: $receivedAt, status: $status)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, ownerUserName: $ownerUserName, category: $category, receivedAt: $receivedAt, status: $status)';
   }
 
   @override
@@ -273,6 +289,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       ..add(DiagnosticsProperty('lastPicture', lastPicture))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('ownerUserName', ownerUserName))
+      ..add(DiagnosticsProperty('category', category))
       ..add(DiagnosticsProperty('receivedAt', receivedAt))
       ..add(DiagnosticsProperty('status', status));
   }
@@ -295,6 +312,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.ownerUserName, ownerUserName) ||
                 other.ownerUserName == ownerUserName) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.receivedAt, receivedAt) ||
                 other.receivedAt == receivedAt) &&
             (identical(other.status, status) || other.status == status));
@@ -312,6 +331,7 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       lastPicture,
       title,
       ownerUserName,
+      category,
       receivedAt,
       status);
 
@@ -339,6 +359,7 @@ abstract class _MessageBord implements MessageBord {
       final String? lastPicture,
       final String? title,
       final String? ownerUserName,
+      final String? category,
       @DateTimeConverter() final DateTime? receivedAt,
       final Status status}) = _$_MessageBord;
 
@@ -361,6 +382,8 @@ abstract class _MessageBord implements MessageBord {
   String? get title;
   @override
   String? get ownerUserName;
+  @override
+  String? get category;
   @override
   @DateTimeConverter()
   DateTime? get receivedAt;

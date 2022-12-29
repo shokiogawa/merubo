@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
@@ -73,7 +74,8 @@ class MessageBordRepository {
       final messageBordQuery = fireStore
           .collection("message_bords")
           .orderBy("receivedAt")
-          .where("id", whereIn: ownMessageBordDocIds).withConverter(
+          .where("id", whereIn: ownMessageBordDocIds)
+          .withConverter(
               fromFirestore: (snapshot, _) =>
                   MessageBord.fromJson(snapshot.data()!),
               toFirestore: (messageBord, _) => messageBord.toJson());
@@ -222,22 +224,6 @@ class MessageBordRepository {
     }
   }
 
-  // Future<String> uploadImageToStorage(File imageFile, String path) async {
-  //   try {
-  //     // message_bords/{message_bord_id}/thumbnail
-  //     final uuid = const Uuid().v4();
-  //     final storagePath = '$path/$uuid';
-  //     final storageRef =
-  //         ref.watch(fireBaseFireStorageProvider).child(storagePath);
-  //     final uploadTask = await storageRef.putFile(imageFile);
-  //     final url = await uploadTask.ref.getDownloadURL();
-  //     return url;
-  //   } catch (err) {
-  //     print(err);
-  //     throw Exception('$pathが保存できませんでした。');
-  //   }
-  // }
-
   // メッセージボード取得
   Future<MessageBord> fetchMessageBordById(String messageBordId) async {
     final fireStore = ref.watch(firebaseFireStoreProvider);
@@ -335,22 +321,38 @@ class MessageBordRepository {
 
   // メッセージボードを受取人が登録
   Future<void> registerMessageBord(String messageBordId) async {
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    final userId = ref.watch(currentUserProvider).id;
     try {
       if (await checkIsExistMessageBord(messageBordId) &&
           !await checkHasMessageBord(messageBordId)) {
-        final fireStore = ref.watch(firebaseFireStoreProvider);
-        final userId = ref.watch(currentUserProvider).id;
+        final batch = fireStore.batch();
         final messageBordRef =
             fireStore.collection("message_bords").doc(messageBordId);
-        fireStore
+        final userRef = fireStore
             .collection("users")
             .doc(userId)
             .collection("own_message_bords")
-            .doc(messageBordId)
-            .set({
+            .doc(messageBordId);
+        batch.update(messageBordRef,
+            { 'receivedAt': Timestamp.fromDate(DateTime.now()),
+              'status': describeEnum(Status.send)
+            }
+        );
+        batch.update(userRef, {
           "messageBordRef": messageBordRef,
           "role": describeEnum(Role.receiver)
         });
+        batch.commit();
+        // fireStore
+        //     .collection("users")
+        //     .doc(userId)
+        //     .collection("own_message_bords")
+        //     .doc(messageBordId)
+        //     .set({
+        //   "messageBordRef": messageBordRef,
+        //   "role": describeEnum(Role.receiver)
+        // });
       } else {
         throw Exception(
             'MessageBordId $messageBordId is not exist or has already had ');
