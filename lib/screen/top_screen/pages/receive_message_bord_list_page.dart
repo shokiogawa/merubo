@@ -68,6 +68,7 @@ class ReceiveMessageBordList extends ConsumerWidget {
                         final receivedAt = data[index].messageBord.receivedAt;
                         final displayFormat = DateFormat('MM月dd日');
                         final displayReceivedAt = displayFormat.format(receivedAt!);
+                        final category = data[index].messageBord.category;
                         final List<Widget> messageThumbnails = [
                           ...data[index]
                               .messages
@@ -115,7 +116,7 @@ class ReceiveMessageBordList extends ConsumerWidget {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '$sendUserNameさんより、誕生日のお祝いが届きました',
+                                              '$sendUserNameさんより、$categoryのお祝いが届きました',
                                               overflow: TextOverflow.clip,
                                               style: const TextStyle(
                                                   fontWeight: FontWeight.bold),

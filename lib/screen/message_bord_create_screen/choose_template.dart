@@ -10,13 +10,14 @@ import 'package:merubo/widgets/button.dart';
 class ChooseTemplateScreen extends ConsumerWidget {
   const ChooseTemplateScreen({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tabList = mapTemplate.keys.toList().map((e) => Tab(text: e)).toList();
-    final tabViewList = mapTemplate.values
-        .toList()
-        .map((e) => GridTemplate(templateList: e))
-        .toList();
+    final List<Widget> tabViewList = [];
+    mapTemplate.forEach((key, value) {
+      tabViewList.add(GridTemplate(templateList: value, category: key));
+    });
     return Scaffold(
       appBar: const ProgressAppBar(currentIndex: 0),
       body: DefaultTabController(
@@ -58,8 +59,9 @@ class ChooseTemplateScreen extends ConsumerWidget {
 }
 
 class GridTemplate extends ConsumerWidget {
-  const GridTemplate({Key? key, required this.templateList}) : super(key: key);
+  const GridTemplate({Key? key, required this.templateList, required this.category}) : super(key: key);
   final List<Template> templateList;
+  final String category;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,7 +109,7 @@ class GridTemplate extends ConsumerWidget {
                               onPressed: () {
                                 ref
                                     .read(createMessageBordProvider.notifier)
-                                    .setType(templateList[index].type);
+                                    .setType(templateList[index].type, category);
                                 Navigator.of(context).pushNamed(
                                     '/message_bord_create_top_message_screen');
                               }),

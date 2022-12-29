@@ -4,8 +4,8 @@ import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/template.dart';
 
 final Map<String, List<Template>> mapTemplate = {
-  "結婚祝い": templateList1,
-  "お誕生日祝い": templateList2,
+  "結婚": templateList1,
+  "お誕生日": templateList2,
   "おめでとう": templateList3,
   "ありがとう": templateList4,
   "クリスマス": templateList5,

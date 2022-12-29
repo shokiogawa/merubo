@@ -14,9 +14,6 @@ final currentIndexProviderForCreate = StateProvider<int>((ref) {
   return 0;
 });
 
-// ローディングメソッド
-// enum LoadingState { beforeLoading, inLoading, succeedLoading, failedLoading}
-// final loadingStateProvider = StateProvider((ref) => LoadingState.beforeLoading);
 final progressIndicatorProvider = StateProvider<bool>((ref) => false);
 
 final createMessageBordProvider =
@@ -50,8 +47,9 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
   final messageContentController = TextEditingController();
   final lastMessageController = TextEditingController();
 
-  void setType(MessageBordType type) {
-    final messageBord = state.messageBord.copyWith(type: type);
+  void setType(MessageBordType type, String category) {
+    final messageBord = state.messageBord.copyWith(type: type, category: category);
+    print(messageBord.category);
     state = state.copyWith(messageBord: messageBord);
   }
 
