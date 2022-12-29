@@ -20,6 +20,7 @@ class MenuButton extends StatelessWidget {
           height: 150,
           child: Container(
             decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
                 image: DecorationImage(
                     image: AssetImage(imagePath), fit: BoxFit.cover)),
           ),
@@ -27,8 +28,10 @@ class MenuButton extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.2),
+                  borderRadius: const BorderRadius.all(Radius.circular(20))),
               height: 150,
-              color: Colors.black.withOpacity(0.2),
               child: Center(
                   child:
                       Text(text, style: const TextStyle(color: Colors.white)))),

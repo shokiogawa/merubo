@@ -21,13 +21,12 @@ class MessageBordCreatePage extends ConsumerWidget {
         )),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // const SizedBox(height: 150,),
+              const SizedBox(height: 20),
               MenuButton(
                   onTap: () {
                     Navigator.pushNamed(
@@ -35,7 +34,7 @@ class MessageBordCreatePage extends ConsumerWidget {
                   },
                   imagePath: 'assets/images/make_letter.jpg',
                   text: "寄せ書きを作成する"),
-              const SizedBox(height: 50),
+              const SizedBox(height: 20),
               MenuButton(
                   onTap: () {
                     showModalBottomSheet(

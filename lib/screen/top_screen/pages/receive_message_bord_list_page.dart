@@ -37,7 +37,28 @@ class ReceiveMessageBordList extends ConsumerWidget {
                               const SizedBox(width: 58),
                               CircleAvatar(
                                   child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Scaffold(
+                                                body: Column(
+                                                  children: [
+                                                    const SizedBox(height: 50),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.close)),
+
+                                                  ],
+                                                ),
+                                              );
+                                            });
+                                      },
                                       icon: const Icon(Icons.add))),
                               const SizedBox(width: 50),
                               const Text(
@@ -60,7 +81,8 @@ class ReceiveMessageBordList extends ConsumerWidget {
                       itemCount: data.length,
                       itemBuilder: (BuildContext context, int index) {
                         final displayYear = data.keys.elementAt(index);
-                        return MessageBordByYear(displayYear: displayYear, data: data[displayYear]!);
+                        return MessageBordByYear(
+                            displayYear: displayYear, data: data[displayYear]!);
                       }),
                 ),
               ),
@@ -71,6 +93,3 @@ class ReceiveMessageBordList extends ConsumerWidget {
             ));
   }
 }
-
-
-
