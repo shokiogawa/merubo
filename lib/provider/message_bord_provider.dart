@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
+import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
 import 'package:merubo/provider/auth_provider.dart';
 import 'package:merubo/provider/current_user_provider.dart';
@@ -17,9 +19,22 @@ final ownMessageBordListProvider =
 
 // 受け取ったメッセージボード一覧を取得
 final receiveMessageBordListProvider = FutureProvider((ref) async {
-  return await ref
+  final data = await ref
       .watch(messageBordRepositoryProvider)
       .fetchReceiveMessageBordList();
+  final Map<String, List<MessageBordWithMessages>> mapValue = {};
+  for (var value in data) {
+    final yearFormat = DateFormat('yyyy年');
+    final key = yearFormat.format(value.messageBord.receivedAt!);
+
+    if(mapValue.containsKey(key)){
+      mapValue[yearFormat.format(value.messageBord.receivedAt!)]!.add(value);
+    }else{
+      final list = [value];
+      mapValue[yearFormat.format(value.messageBord.receivedAt!)] = list;
+    }
+  }
+  return mapValue;
 });
 
 // 上にスクロールすると更新されるようにする。
