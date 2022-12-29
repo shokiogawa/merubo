@@ -99,7 +99,9 @@ class CreateMessageBord extends StateNotifier<MessageBordWithMessage> {
       final newMessageBord = state.messageBord.copyWith(
           title: titleMessageController.text,
           receiverUserName: receiverUserNameController.text,
-          lastMessage: lastMessageController.text);
+          lastMessage: lastMessageController.text,
+        ownerUserName: yourNameController.text
+      );
       state = state.copyWith(messages: newMessage, messageBord: newMessageBord);
 
       await ref.watch(messageBordRepositoryProvider).createMessageBord(state);

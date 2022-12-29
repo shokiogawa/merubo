@@ -64,7 +64,7 @@ class MessageBordRepository {
       final ownMessageBordListRef = await fireStore
           .collection("users")
           .doc(userId)
-          .collection("own_message_bords")
+          .collection("own_message_bords").where('role', isEqualTo: describeEnum(Role.receiver))
           .get();
       // documentId一覧
       final ownMessageBordDocIds =
@@ -73,7 +73,7 @@ class MessageBordRepository {
       // 寄せ書きを受け取り日順に取得
       final messageBordQuery = fireStore
           .collection("message_bords")
-          .orderBy("receivedAt")
+          .orderBy("receivedAt", descending: true)
           .where("id", whereIn: ownMessageBordDocIds)
           .withConverter(
               fromFirestore: (snapshot, _) =>
@@ -344,15 +344,6 @@ class MessageBordRepository {
           "role": describeEnum(Role.receiver)
         });
         batch.commit();
-        // fireStore
-        //     .collection("users")
-        //     .doc(userId)
-        //     .collection("own_message_bords")
-        //     .doc(messageBordId)
-        //     .set({
-        //   "messageBordRef": messageBordRef,
-        //   "role": describeEnum(Role.receiver)
-        // });
       } else {
         throw Exception(
             'MessageBordId $messageBordId is not exist or has already had ');
