@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/screen/top_screen/widget/thumbnail_circle.dart';
@@ -65,6 +66,8 @@ class ReceiveMessageBordList extends ConsumerWidget {
                             data[index].messageBord.ownerUserName;
                         final messageCount = data[index].messages.length;
                         final receivedAt = data[index].messageBord.receivedAt;
+                        final displayFormat = DateFormat('MM月dd日');
+                        final displayReceivedAt = displayFormat.format(receivedAt!);
                         final List<Widget> messageThumbnails = [
                           ...data[index]
                               .messages
@@ -79,7 +82,7 @@ class ReceiveMessageBordList extends ConsumerWidget {
                               style: TextStyle(fontSize: 10)));
                         }
                         return Row(children: [
-                          Text(receivedAt.toString(),
+                          Text(displayReceivedAt,
                               style: const TextStyle(fontSize: 10)),
                           Expanded(
                             flex: 1,

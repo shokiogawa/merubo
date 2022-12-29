@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/model/common_provider/firebase_fire_storage.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
@@ -9,7 +7,6 @@ import 'package:merubo/model/entity/message_bord_with_message.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
 import 'package:merubo/provider/current_user_provider.dart';
-import 'package:uuid/uuid.dart';
 
 final messageBordRepositoryProvider =
     Provider((ref) => MessageBordRepository(ref));
@@ -62,49 +59,93 @@ class MessageBordRepository {
     final fireStore = ref.watch(firebaseFireStoreProvider);
     final List<MessageBordWithMessages> messageBordWithMessages = [];
     try {
-      final messageBordIdListRefQuery = fireStore
+      // userが持っている寄せ書き情報一覧を取得
+      final ownMessageBordListRef = await fireStore
           .collection("users")
           .doc(userId)
           .collection("own_message_bords")
-          .where("role", whereIn: [describeEnum(Role.receiver)]).withConverter(
+          .get();
+      // documentId一覧
+      final ownMessageBordDocIds =
+          ownMessageBordListRef.docs.map((value) => value.id).toList();
+
+      // 寄せ書きを受け取り日順に取得
+      final messageBordQuery = fireStore
+          .collection("message_bords")
+          .orderBy("receivedAt")
+          .where("id", whereIn: ownMessageBordDocIds).withConverter(
               fromFirestore: (snapshot, _) =>
-                  OwnMessageBordRef.fromJson(snapshot.data()!),
-              toFirestore: (messageBordRef, _) => messageBordRef.toJson());
-      final messageBordListRef = await messageBordIdListRefQuery.get();
+                  MessageBord.fromJson(snapshot.data()!),
+              toFirestore: (messageBord, _) => messageBord.toJson());
+      final messageBordSnap = await messageBordQuery.get();
 
-      await Future.forEach(messageBordListRef.docs, (messageBordRef) async {
-        final ref = messageBordRef.data();
-        // MessageBordデータ
-        final messageBordRealRef = ref.messageBordRef.withConverter(
-            fromFirestore: (snapshot, _) =>
-                MessageBord.fromJson(snapshot.data()!),
-            toFirestore: (messageBord, _) => messageBord.toJson());
-        final messageBordRealDoc = await messageBordRealRef.get();
-        final messageBordReal = messageBordRealDoc.data()!;
-
-        // Messageデータ
-        final messageRealRef = ref.messageBordRef
+      // 該当の寄せ書きを回し、紐づいているメッセージを取得
+      await Future.forEach(messageBordSnap.docs, (doc) async {
+        final messageQuery = fireStore
+            .collection("message_bords")
+            .doc(doc.id)
             .collection("messages")
             .withConverter(
                 fromFirestore: (snapshot, _) =>
                     Message.fromJson(snapshot.data()!),
                 toFirestore: (message, _) => message.toJson());
-        final messageRealDoc = await messageRealRef.get();
 
-        final List<Message> messagesReal = [];
-        for (var message in messageRealDoc.docs) {
-          messagesReal.add(message.data());
-        }
+        final messageSnap = await messageQuery.get();
+        // 該当の寄せ書きに紐づいているメッセージを取得
+        final messages = messageSnap.docs.map((snap) => snap.data()).toList();
         final value = MessageBordWithMessages(
-            messageBord: messageBordReal, messages: messagesReal);
-
+            messageBord: doc.data(), messages: messages);
+        print(doc.data());
         messageBordWithMessages.add(value);
       });
       return messageBordWithMessages;
     } catch (err) {
-      print(err);
       throw Exception(err);
     }
+    // try {
+    //   final messageBordIdListRefQuery = fireStore
+    //       .collection("users")
+    //       .doc(userId)
+    //       .collection("own_message_bords")
+    //       .where("role", whereIn: [describeEnum(Role.receiver)]).withConverter(
+    //           fromFirestore: (snapshot, _) =>
+    //               OwnMessageBordRef.fromJson(snapshot.data()!),
+    //           toFirestore: (messageBordRef, _) => messageBordRef.toJson());
+    //   final messageBordListRef = await messageBordIdListRefQuery.get();
+    //
+    //   await Future.forEach(messageBordListRef.docs, (messageBordRef) async {
+    //     final ref = messageBordRef.data();
+    //     // MessageBordデータ
+    //     final messageBordRealRef = ref.messageBordRef.withConverter(
+    //         fromFirestore: (snapshot, _) =>
+    //             MessageBord.fromJson(snapshot.data()!),
+    //         toFirestore: (messageBord, _) => messageBord.toJson());
+    //     final messageBordRealDoc = await messageBordRealRef.get();
+    //     final messageBordReal = messageBordRealDoc.data()!;
+    //
+    //     // Messageデータ
+    //     final messageRealRef = ref.messageBordRef
+    //         .collection("messages")
+    //         .withConverter(
+    //             fromFirestore: (snapshot, _) =>
+    //                 Message.fromJson(snapshot.data()!),
+    //             toFirestore: (message, _) => message.toJson());
+    //     final messageRealDoc = await messageRealRef.get();
+    //
+    //     final List<Message> messagesReal = [];
+    //     for (var message in messageRealDoc.docs) {
+    //       messagesReal.add(message.data());
+    //     }
+    //     final value = MessageBordWithMessages(
+    //         messageBord: messageBordReal, messages: messagesReal);
+    //
+    //     messageBordWithMessages.add(value);
+    //   });
+    //   return messageBordWithMessages;
+    // } catch (err) {
+    //   print(err);
+    //   throw Exception(err);
+    // }
   }
 
   //メッセージボード詳細
