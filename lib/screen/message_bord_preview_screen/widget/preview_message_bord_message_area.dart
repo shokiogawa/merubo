@@ -26,8 +26,9 @@ class PreviewMessageBordMessageArea extends ConsumerWidget {
                 style: TextStyle(
                     fontSize: 20,
                     fontStyle: FontStyle.italic,
-                    decoration: TextDecoration.underline,
-                    decorationStyle: TextDecorationStyle.double),
+                    // decoration: TextDecoration.underline,
+                    // decorationStyle: TextDecorationStyle.double
+                ),
               )),
           ListView.builder(
               padding: const EdgeInsets.only(top: 0),

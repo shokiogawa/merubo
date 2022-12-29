@@ -10,62 +10,51 @@ class MessageCard extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Column(
-        children: [
-          Card(
-            elevation: 10,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      child: Card(
+        elevation: 10,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // 自分の名前、サムネイル
+              Row(
                 children: [
-                  // 自分の名前、サムネイル
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: message.thumbnail == null ? Image.asset('assets/images/chrisumasu.jpg').image  : Image.network(message.thumbnail!).image,
-                        radius: 15,
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Text(message.userName ?? "unknown")
-                    ],
+                  CircleAvatar(
+                    backgroundImage: message.thumbnail == null ? Image.asset('assets/images/chrisumasu.jpg').image  : Image.network(message.thumbnail!).image,
+                    radius: 15,
                   ),
-                  // voiceMessage
-                  Container(),
-                  // メッセージ欄
-                  Padding(
-                     padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-                     child: Text(message.content ?? "おめでとう！！",
-                       style: const TextStyle(
-                           overflow: TextOverflow.clip,
-                         fontSize: 15,
-                         height: 1.6,
-                       ),),
-                   ),
-                  // 画像エリア
-                  Container()
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Text(message.userName ?? "unknown")
                 ],
               ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                height: 150,
+              // voiceMessage
+              Container(),
+              // メッセージ欄
+              Padding(
+                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                 child: Text(message.content ?? "おめでとう！！",
+                   style: const TextStyle(
+                       overflow: TextOverflow.clip,
+                     fontSize: 15,
+                     height: 1.6,
+                   ),),
+               ),
+              // 画像エリア
+              message.image != null ? Container(
+                height: 170,
                 width: width,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    fit: BoxFit.contain,
-                      image: message.image == null ? Image.asset('assets/images/chrisumasu.jpg').image : Image.network(message.image!).image),
+                      fit: BoxFit.cover,
+                      image: Image.network(message.image!).image),
                 ),
-              ),
-            ),
-          )
-        ],
+              ) : Container()
+            ],
+          ),
+        ),
       ),
     );
   }
