@@ -95,7 +95,6 @@ class MessageBordRepository {
         final messages = messageSnap.docs.map((snap) => snap.data()).toList();
         final value = MessageBordWithMessages(
             messageBord: doc.data(), messages: messages);
-        print(doc.data());
         messageBordWithMessages.add(value);
       });
       return messageBordWithMessages;
