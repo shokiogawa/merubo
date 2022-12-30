@@ -49,7 +49,7 @@ class TextForm extends StatelessWidget {
           maxLines: maxLine ?? 1,
           decoration: InputDecoration(
               prefixIcon: prefixIcon,
-              contentPadding: contentPadding ?? const EdgeInsets.all(0),
+              contentPadding: contentPadding ?? const EdgeInsets.only(left: 10),
               hintText: hintText,
               hintStyle: const TextStyle(fontSize: 12),
               border: const OutlineInputBorder()),

@@ -119,28 +119,10 @@ class CreateMessageScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 40),
                       ImageForm(
-                        onTap: () async {
-                          final imageSource = await ImagePicker()
-                              .pickImage(source: ImageSource.gallery);
-                          if (imageSource != null) {
-                            createMessageProvider
-                                .setMessageImage(imageSource.path);
-                          }
+                        coverText: "思い出の画像を選択",
+                        onChange: (value){
+                          createMessageProvider.setMessageImage(value);
                         },
-                        image: imagePath != null
-                            ? DecorationImage(
-                                image: Image.file(File(imagePath)).image,
-                                fit: BoxFit.contain)
-                            : null,
-                        coverChild: imagePath == null
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(Icons.camera_alt_rounded),
-                                  Text("思い出の画像を選択"),
-                                ],
-                              )
-                            : null,
                       ),
                       const SizedBox(height: 40),
                     ],

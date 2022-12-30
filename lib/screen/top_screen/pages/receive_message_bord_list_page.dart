@@ -4,6 +4,8 @@ import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/provider/register_message_bord_provider.dart';
 import 'package:merubo/screen/top_screen/widget/message_bord_by_year.dart';
 import 'package:merubo/widgets/button.dart';
+import 'package:merubo/widgets/image_form.dart';
+import 'package:merubo/widgets/text_form.dart';
 
 class ReceiveMessageBordList extends ConsumerWidget {
   const ReceiveMessageBordList({Key? key}) : super(key: key);
@@ -162,7 +164,7 @@ class AddMessageBord extends StatelessWidget {
                             ? const AddMeruboMessageBord()
                             : messageBordType == MessageBordType.online
                                 ? const AddOnlineMessageBord()
-                                : const Text("Paper"),
+                                : const AddPaperMessageBord(),
                       )
                     ],
                   );
@@ -176,52 +178,135 @@ class AddMessageBord extends StatelessWidget {
   }
 }
 
+class AddPaperMessageBord extends StatelessWidget {
+  const AddPaperMessageBord({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
+    return Column(
+      children: [
+        Form(
+            key: formKey,
+            child: Column(
+              children: [
+                const TextForm(
+                  label: "誰から受け取りましたか？",
+                  hintText: "名前",
+                ),
+                const SizedBox(height: 20),
+                const TextForm(
+                  label: "なんのお祝いですか？",
+                  hintText: "高校卒業、部活引退など",
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text("受け取り日"),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: ()async{
+                        final DateTime? selectedDate = await showDatePicker(
+                            locale: const Locale("ja"),
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime.now());
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(4.0)),
+                            border: Border.all(color: Colors.grey)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            "yyyy年MM月DD日",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                ImageForm(
+                  coverText: "寄せ書きの写真",
+                  onChange: (value){
+                    print(value);
+                  },
+                ),
+              ],
+            )),
+        Button(text: "登録", buttonColor: Colors.orangeAccent, onPressed: () {})
+      ],
+    );
+  }
+}
+
+
 class AddOnlineMessageBord extends StatelessWidget {
   const AddOnlineMessageBord({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final formKey = GlobalKey<FormState>();
     return Column(
       children: [
         Form(
+            key: formKey,
             child: Column(
               children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(fontSize: 12),
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: "受け取ったURLを入力してください"),
+                const TextForm(
+                  label: "寄せ書きのURLを入力",
+                  hintText: "https://merubo.com/yosegaki",
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(fontSize: 12),
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: "誰から受け取りましたか？"),
+                const TextForm(
+                  label: "誰から受け取りましたか？",
+                  hintText: "名前",
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(fontSize: 12),
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: "なんのお祝いですか？"),
+                const TextForm(
+                  label: "なんのお祝いですか？",
+                  hintText: "高校卒業、部活引退など",
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintStyle: TextStyle(fontSize: 12),
-                      contentPadding: EdgeInsets.all(10),
-                      hintText: "いつ受け取りましたか？"),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text("受け取り日"),
+                    const SizedBox(height: 8),
+                    GestureDetector(
+                      onTap: ()async{
+                        final DateTime? selectedDate = await showDatePicker(
+                          locale: const Locale("ja"),
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime.now());
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(4.0)),
+                            border: Border.all(color: Colors.grey)),
+                        child: const Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            "yyyy年MM月DD日",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
               ],
-            )
-        ),
-        Button(text: "登録", buttonColor: Colors.orangeAccent, onPressed: (){})
+            )),
+        Button(text: "登録", buttonColor: Colors.orangeAccent, onPressed: () {})
       ],
     );
   }
@@ -234,17 +319,21 @@ class AddMeruboMessageBord extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final controller =
         ref.watch(registerMessageBordProvider).messageBordIdController;
+    final formKey = GlobalKey<FormState>();
     return Column(
       children: [
         Form(
-            child: TextFormField(
-          controller: controller,
-          decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintStyle: TextStyle(fontSize: 12),
-              contentPadding: EdgeInsets.all(10),
-              hintText: "寄せ書きIDを入力してください"),
-        )),
+            key: formKey,
+            child: TextForm(
+              controller: controller,
+              label: "寄せ書きIDを入力してください",
+              hintText: "寄せ書きID",
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "入力してください";
+                }
+              },
+            )),
         const SizedBox(height: 20),
         Button(
             text: "受け取る",
