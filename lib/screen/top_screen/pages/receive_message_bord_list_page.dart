@@ -4,6 +4,7 @@ import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/provider/register_message_bord_provider.dart';
 import 'package:merubo/screen/top_screen/widget/message_bord_by_year.dart';
 import 'package:merubo/widgets/button.dart';
+import 'package:merubo/widgets/date_form.dart';
 import 'package:merubo/widgets/image_form.dart';
 import 'package:merubo/widgets/text_form.dart';
 
@@ -274,35 +275,11 @@ class AddOnlineMessageBord extends StatelessWidget {
                   hintText: "高校卒業、部活引退など",
                 ),
                 const SizedBox(height: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const Text("受け取り日"),
-                    const SizedBox(height: 8),
-                    GestureDetector(
-                      onTap: ()async{
-                        final DateTime? selectedDate = await showDatePicker(
-                          locale: const Locale("ja"),
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime.now());
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(4.0)),
-                            border: Border.all(color: Colors.grey)),
-                        child: const Padding(
-                          padding: EdgeInsets.all(12.0),
-                          child: Text(
-                            "yyyy年MM月DD日",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                DateForm(
+                  label: "受け取り日",
+                  onSelected: (value){
+                    print(value);
+                  },
                 ),
                 const SizedBox(height: 20),
               ],
