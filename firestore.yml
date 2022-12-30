@@ -20,6 +20,8 @@ message_bords:
   movieMessage: string //URL
   createdAt: DateTime
   status: EDITED | SENDED
+  category: String
+  type: Merubo | Online | Paper
 
 
   messages:

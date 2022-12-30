@@ -11,87 +11,82 @@ class ReceiveMessageBordList extends ConsumerWidget {
     print("MessageBordListPage");
     final asyncValue = ref.watch(receiveMessageBordListProvider);
     return asyncValue.when(
-        data: (data) => RefreshIndicator(
-          onRefresh: ()async{
-            return await ref.refresh(receiveMessageBordListProvider);
-          },
-          child: Scaffold(
-                appBar: AppBar(
-                    toolbarHeight: 140,
-                    flexibleSpace: Stack(
-                      children: [
-                        const Center(
-                            child: Text(
-                          "Merubo",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                        )),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.2),
-                            ),
-                            height: 70,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(width: 58),
-                                CircleAvatar(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return Scaffold(
-                                                  body: Column(
-                                                    children: [
-                                                      const SizedBox(height: 50),
-                                                      IconButton(
-                                                          onPressed: () {
-                                                            Navigator.of(context)
-                                                                .pop();
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.close)),
+        data: (data) => Scaffold(
+              appBar: AppBar(
+                  toolbarHeight: 140,
+                  flexibleSpace: Stack(
+                    children: [
+                      const Center(
+                          child: Text(
+                        "Merubo",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      )),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.2),
+                          ),
+                          height: 70,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const SizedBox(width: 58),
+                              CircleAvatar(
+                                  child: IconButton(
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Scaffold(
+                                                body: Column(
+                                                  children: [
+                                                    const SizedBox(height: 50),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.close)),
 
-                                                    ],
-                                                  ),
-                                                );
-                                              });
-                                        },
-                                        icon: const Icon(Icons.add))),
-                                const SizedBox(width: 50),
-                                const Text(
-                                  "タイムライン",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                              ],
-                            ),
+                                                  ],
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      icon: const Icon(Icons.add))),
+                              const SizedBox(width: 50),
+                              const Text(
+                                "タイムライン",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    )),
-                body: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: data.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final displayYear = data.keys.elementAt(index);
-                          return MessageBordByYear(
-                              displayYear: displayYear, data: data[displayYear]!);
-                        }),
-                  ),
+                      ),
+                    ],
+                  )),
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: data.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final displayYear = data.keys.elementAt(index);
+                        return MessageBordByYear(
+                            displayYear: displayYear, data: data[displayYear]!);
+                      }),
                 ),
               ),
-        ),
+            ),
         error: (err, _) => Text(err.toString()),
         loading: () => const Center(
               child: CircularProgressIndicator(),

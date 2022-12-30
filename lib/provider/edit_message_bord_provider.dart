@@ -7,6 +7,7 @@ import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/message_bord_with_message.dart';
 import 'package:merubo/model/repository/firebase_storage_repository.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
+import 'package:merubo/provider/message_bord_provider.dart';
 
 final editMessageBordProvider = StateNotifierProvider.autoDispose<
     EditMessageBordProvider, MessageBordWithMessage>((ref) {
@@ -55,7 +56,6 @@ class EditMessageBordProvider extends StateNotifier<MessageBordWithMessage> {
   }
 
   Future<void> updateMessageBord() async {
-    print(receiverUserNameController.text);
     final updateMessageBord = state.messageBord.copyWith(
         receiverUserName: receiverUserNameController.text,
         title: titleController.text,
@@ -63,6 +63,12 @@ class EditMessageBordProvider extends StateNotifier<MessageBordWithMessage> {
     await ref
         .watch(messageBordRepositoryProvider)
         .updateMessageBord(updateMessageBord);
+
+    // SSTOを意識した設計
+    // 自信をリフレッシュ
+    ref.invalidateSelf();
+    // 一覧取得データをリフレッシュ
+    ref.invalidate(ownMessageBordListProvider(Role.owner));
   }
 
   Future<void> updateMessage(String messageBordId) async {
