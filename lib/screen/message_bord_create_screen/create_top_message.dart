@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/bottom_button.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
+import 'package:merubo/widgets/text_form.dart';
 import '../../provider/create_message_bord_provider.dart';
 
 class CreateTopMessageScreen extends ConsumerWidget {
@@ -40,79 +41,39 @@ class CreateTopMessageScreen extends ConsumerWidget {
                         style: TextStyle(fontSize: 20),
                       ),
                       //誰に送るのか？
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: Text("お名前"),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              "寄せ書きを送る相手のお名前を書きましょう",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TextFormField(
-                            textInputAction: TextInputAction.done,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "名前は必須項目です";
-                              }
-                              if (value.length > 20) {
-                                return "20文字以下でご入力ください";
-                              }
-                            },
-                            controller: receiveUserController,
-                            decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.person),
-                                contentPadding: EdgeInsets.all(0),
-                                hintText: "小川 翔生",
-                                hintStyle: TextStyle(fontSize: 12),
-                                border: OutlineInputBorder()),
-                          ),
-                        ],
+                      TextForm(
+                        controller: receiveUserController,
+                        label: "お名前",
+                        subLabel: "寄せ書きを送る相手のお名前を書きましょう",
+                        hintText: "小川翔生",
+                        prefixIcon: const Icon(Icons.person),
+                        validator: (value){
+                          if (value == null || value.isEmpty) {
+                            return "名前は必須項目です";
+                          }
+                          if (value.length > 20) {
+                            return "20文字以下でご入力ください";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(height: 50),
                       //初めのメッセージは？
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: Text("初めのメッセージ"),
-                          ),
-                          const Text(
-                            "初めのメッセージを記入しましょう",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 8),
-                            child: Text(
-                              "※20文字までです。",
-                              style: TextStyle(fontSize: 12),
-                            ),
-                          ),
-                          TextFormField(
-                            textInputAction: TextInputAction.done,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "初めのメッセージは必須項目です";
-                              }
-                              if (value.length > 20) {
-                                return "初めのメッセージは20文字以内でご入力ください";
-                              }
-                            },
-                            controller: titleMessageController,
-                            decoration: const InputDecoration(
-                                prefixIcon: Icon(Icons.message),
-                                contentPadding: EdgeInsets.all(0),
-                                hintText: "ご結婚おめでとうございます。など",
-                                hintStyle: TextStyle(fontSize: 12),
-                                border: OutlineInputBorder()),
-                          ),
-                        ],
+                      TextForm(
+                        controller: titleMessageController,
+                        label: "初めのメッセージ",
+                        subLabel: "初めのメッセージを記入しましょう",
+                        hintText: "ご結婚おめでとうございます。など",
+                        prefixIcon: const Icon(Icons.message),
+                        validator: (value){
+                          if (value == null || value.isEmpty) {
+                            return "初めのメッセージは必須項目です。";
+                          }
+                          if (value.length > 20) {
+                            return "初めのメッセージは20文字以内でご入力ください";
+                          }
+                          return null;
+                        },
                       ),
                     ],
                   ),
