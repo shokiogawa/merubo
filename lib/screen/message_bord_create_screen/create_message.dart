@@ -119,6 +119,7 @@ class CreateMessageScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 40),
                       ImageForm(
+                        label: "写真(任意)",
                         coverText: "思い出の画像を選択",
                         onChange: (value){
                           createMessageProvider.setMessageImage(value);

@@ -232,7 +232,8 @@ class AddPaperMessageBord extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ImageForm(
-                  coverText: "寄せ書きの写真",
+                  coverText: "写真",
+                  label: "寄せ書きの写真",
                   onChange: (value){
                     print(value);
                   },

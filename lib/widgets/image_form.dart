@@ -9,10 +9,11 @@ final selectedImageProvider = StateProvider.autoDispose<String>((ref) => "");
 
 class ImageForm extends ConsumerWidget {
   final String? coverText;
+  final String? label;
   final ValueChanged<String>? onChange;
 
   const ImageForm(
-      {Key? key, this.coverText, this.onChange})
+      {Key? key,this.label, this.coverText, this.onChange})
       : super(key: key);
 
   @override
@@ -21,10 +22,10 @@ class ImageForm extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(bottom: 8),
-          child: Text("写真(任意)"),
-        ),
+         label != null ? Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Text(label!),
+        ) : Container(),
         GestureDetector(
           onTap: () async {
             final imageSource =
