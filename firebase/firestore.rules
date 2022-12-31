@@ -1,0 +1,61 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+  function isAnyAuthentication(){
+  return request.auth != null;
+  }
+  
+  //誰がこのデータを触っているのかという認可
+  function isUserAuthenticated(userId){
+   return isAnyAuthentication() && userId == request.auth.uid
+  }
+  
+  // createdAtとupdatedAtのチェック
+  function checkCreatedAtAndUpdatedAt(){
+  let checkCreatedAt = (request.resource.data.createdAt is timestamp && request.resource.data.createdAt == request.time);
+  let checkUpdatedAt = (request.resource.data.updatedAt is timestamp && request.resource.data.updatedAt == request.time);
+  return checkCreatedAt && checkUpdatedAt;
+  }
+  
+  // function isUserOwnMessageBord(messageBordId){
+  // return exists(documentPath(['users',request.auth.uid, 'own_message_bords', messageBordId]));
+  // }
+  
+  match /users/{userId}{
+     allow create: if isUserAuthenticated(userId)
+     // 特定のフィールド以外書き込めないようにする
+     && request.resource.data.keys().hasOnly(['id','name', 'createdAt', 'updatedAt'])
+     // 特定のフィールドを必須
+     && request.resource.data.keys().hasAll(['id', 'name'])
+     // idのバリデーション
+     && (request.resource.data.id is string && request.resource.data.id == userId && request.resource.data.id.size() <= 255)
+     // nameのバリデーション
+     && (request.resource.data.name is string && request.resource.data.name.size() <= 30)
+     // createsAtとUpdatedAtのバリデーション
+     && checkCreatedAtAndUpdatedAt();
+     
+     match /own_message_bords/{ownMessageBordId}{
+     allow create: if isUserAuthenticated(userId)
+     // 特定のフィールド以外書き込めないようにする
+     && request.resource.data.keys().hasOnly(['messageBordRef', 'role'])
+     // 特定のフィールドを
+     && request.resource.data.hasAll(['messageBordRef', 'role'])
+     // statueのバリデーション
+     && request.resource.data.status is string && request.resource.data.status in ['receiver', 'owner', 'participant']
+     // メッセージボード参照のバリデーション
+     && request.resource.data.messageBordRef is path
+     // createsAtとUpdatedAtのバリデーション
+     && checkCreatedAtAndUpdatedAt();
+     }
+  }
+  
+  // match /message_bords/{mesageBordId}{
+  // allow read: if isUserOwnMessageBord(messageBordId);
+  // }
+  
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
