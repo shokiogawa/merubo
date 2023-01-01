@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/model/repository/auth_repository.dart';
 import 'package:merubo/provider/current_user_provider.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_list_page.dart';
 import 'package:merubo/screen/top_screen/pages/receive_message_bord_list_page.dart';
@@ -35,6 +36,9 @@ class TopScreenState extends ConsumerState<TopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        ref.read(authRepositoryProvider).logOut();
+      }),
       // appBar: AppBar(
       //   title: const Center(
       //     child: Text(
