@@ -32,66 +32,59 @@ service cloud.firestore {
   function isUserOwner(messageBordId){
     return get(documentPath(['users', request.auth.uid, 'own_message_bords', messageBordId])).data.role == 'owner';
   }
-  
-  // function isUserOwnMessageBord(messageBordId){
-  // return exists(documentPath(['users',request.auth.uid, 'own_message_bords', messageBordId]));
-  // }
+
   
   match /users/{userId}{
     // GET
      allow get: if isUserAuthenticated(userId);
-    // LIST
-     allow list: if isUserAuthenticated(userId);
-
+     // List
+     allow list: if isAnyAuthentication();
      // Create
      allow create: if isUserAuthenticated(userId)
      // 特定のフィールド以外書き込めないようにする
      && request.resource.data.keys().hasOnly(['id','name', 'createdAt', 'updatedAt'])
      // 特定のフィールドを必須
-     && request.resource.data.keys().hasAll(['id', 'name'])
+     && request.resource.data.keys().hasAll(['id', 'name', 'createdAt', 'updatedAt'])
      // idのバリデーション
-     && (request.resource.data.id is string && request.resource.data.id == userId && request.resource.data.id.size() <= 255)
+     && (request.resource.data.id is string && request.resource.data.id == userId && request.resource.data.id.size() <= 225)
      // nameのバリデーション
      && (request.resource.data.name is string && request.resource.data.name.size() <= 30)
      // createsAtとUpdatedAtのバリデーション
-     && checkCreatedAtAndUpdatedAt();
+     && checkCreatedAtAndUpdatedAt()
+     ;
 
-     //Update
-     allow update: if isUserAuthenticated(userId) && request.resource.data.updatedAt == request.time;
+    //  //Update
+    //  allow update: if isUserAuthenticated(userId) && request.resource.data.updatedAt == request.time;
 
      
      match /own_message_bords/{ownMessageBordId}{
-       //GET
-       allow get: if isUserAuthenticated(userId);
-      //LIST
-       allow list: if isUserAuthenticated(userId);
-
+       //GET and List
+       allow read: if isUserAuthenticated(userId);
        //Create
        allow create: if isUserAuthenticated(userId)
        // 特定のフィールド以外書き込めないようにする
        && request.resource.data.keys().hasOnly(['messageBordRef', 'role'])
-       // 特定のフィールドを
-       && request.resource.data.hasAll(['messageBordRef', 'role'])
-       // statueのバリデーション
-       && request.resource.data.status is string && request.resource.data.status in ['receiver', 'owner', 'participant']
-       // メッセージボード参照のバリデーション
+      //  // 特定のフィールドを
+       && request.resource.data.keys().hasAll(['messageBordRef', 'role'])
+      //  // statueのバリデーション
+       && request.resource.data.role is string && request.resource.data.role in ['receiver', 'owner', 'participant']
+      //  // メッセージボード参照のバリデーション
        && request.resource.data.messageBordRef is path
        // createsAtとUpdatedAtのバリデーション
-       && checkCreatedAtAndUpdatedAt()
-       // messageBord(本体)が存在保存された後に保存
-       && getAfter(documentPath(['message_bords', ownMessageBordId])).data.id == ownMessageBordId;
-
+      //  && checkCreatedAtAndUpdatedAt()
+      //  // messageBord(本体)が存在保存された後に保存
+      //  && getAfter(documentPath(['message_bords', ownMessageBordId])).data.id == ownMessageBordId
+      ;
        //Update
        allow update: if isUserAuthenticated(userId) && request.resource.data.updatedAt == request.time;
      }
   }
   
-  match /message_bords/{mesageBordId}{
+  match /message_bords/{messageBordId}{
     // GET
-    allow get: if isUserOwnMessageBord(messageBordId);
-    // GET
-    allow list: if isUserOwnMessageBord(messageBordId);
-
+    allow get: if isAnyAuthentication();
+    //List
+    allow list: if isAnyAuthentication();
     // Update
     allow update: if isUserOwnMessageBord(messageBordId) 
     // ユーザーロール確認
@@ -99,22 +92,21 @@ service cloud.firestore {
     && request.resource.data.updatedAt == request.time;
 
     // Create
-    allow create: if isAnyAuthentication()
-    && getAfter(documentPath(['users', request.auth.uid, 'own_message_bords', messageBordId])).data.id == messageBordId;
+    allow create: if isAnyAuthentication();
+    // && getAfter(documentPath(['users', request.auth.uid, 'own_message_bords', messageBordId])).data.id == messageBordId;
 
     match /messages/{messageId}{
       //Create
-      allow create: if true;
+      allow create: if isAnyAuthentication();
       // GET
-      allow get: if isUserOwnMessageBord(messageBordId);
+      allow get: if isAnyAuthentication();
       // LIST
-      allow list: if isUserOwnMessageBord(messageBordId);
+      allow list: if isAnyAuthentication();
       // Update
-      allow update: if isUserOwner(messageBordId);
+      allow update: if isAnyAuthentication();
     }
   }
-  
-    // match /{document=**} {
+    //   match /{document=**} {
     //   allow read, write: if request.auth != null;
     // }
   }
