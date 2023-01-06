@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-// 初期は空
+// 初期は空 TODO: コンポーネント的に問題なのでfamilyにずるなどの対策が必要
 final selectedImageProvider = StateProvider.autoDispose<String>((ref) => "");
 
 class ImageForm extends ConsumerWidget {

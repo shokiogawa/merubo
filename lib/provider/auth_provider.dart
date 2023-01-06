@@ -8,17 +8,22 @@ class AuthProvider {
   AuthProvider(this.ref);
   // ログアウト
   Future<void> logOut() async {
-    await ref.read(authRepositoryProvider).logOut();
+    await ref.watch(authRepositoryProvider).logOut();
   }
 
   //メアドとパスワードでログイン
   Future<void> logInWithEmailAndPassword(String email, String password)async{
-    await ref.read(authRepositoryProvider).logInWithPassword(email, password);
+    await ref.watch(authRepositoryProvider).logInWithPassword(email, password);
+  }
+
+  //メアドでサインアップ
+  Future<void> signUp(String email, String password)async{
+    await ref.watch(authRepositoryProvider).signUp(email, password);
   }
 
   //Googleログイン
   Future<void> logInWithGoogle()async{
-    await ref.read(authRepositoryProvider).logInWithGoogle();
+    await ref.watch(authRepositoryProvider).logInWithGoogle();
   }
 
   //ログインしているかどうか確認

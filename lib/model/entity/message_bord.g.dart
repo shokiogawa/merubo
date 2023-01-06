@@ -21,6 +21,8 @@ _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
           json['receivedAt'], const DateTimeConverter().fromJson),
       status:
           $enumDecodeNullable(_$StatusEnumMap, json['status']) ?? Status.edit,
+      kinds: $enumDecodeNullable(_$MessageBordKindsEnumMap, json['kinds']) ??
+          MessageBordKinds.merubo,
     );
 
 Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>
@@ -37,6 +39,7 @@ Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>
       'receivedAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.receivedAt, const DateTimeConverter().toJson),
       'status': _$StatusEnumMap[instance.status]!,
+      'kinds': _$MessageBordKindsEnumMap[instance.kinds]!,
     };
 
 const _$MessageBordTypeEnumMap = {
@@ -56,6 +59,12 @@ const _$StatusEnumMap = {
   Status.edit: 'edit',
   Status.send: 'send',
   Status.preview: 'preview',
+};
+
+const _$MessageBordKindsEnumMap = {
+  MessageBordKinds.merubo: 'merubo',
+  MessageBordKinds.online: 'online',
+  MessageBordKinds.paper: 'paper',
 };
 
 Json? _$JsonConverterToJson<Json, Value>(

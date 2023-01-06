@@ -13,6 +13,8 @@ enum Status { edit, send, preview }
 
 enum Role { receiver, owner, participant }
 
+enum MessageBordKinds{merubo, online, paper}
+
 // flutter pub run build_runner build --delete-conflicting-outputs
 @freezed
 class MessageBord with _$MessageBord {
@@ -28,7 +30,8 @@ class MessageBord with _$MessageBord {
     String? ownerUserName,
     String? category,
     @DateTimeConverter() DateTime? receivedAt,
-    @Default(Status.edit) Status status
+    @Default(Status.edit) Status status,
+    @Default(MessageBordKinds.merubo) MessageBordKinds kinds
   }) = _MessageBord;
 
   factory MessageBord.fromJson(Map<String, dynamic> json) =>

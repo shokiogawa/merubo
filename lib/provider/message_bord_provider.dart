@@ -4,7 +4,6 @@ import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
-import 'package:merubo/provider/auth_provider.dart';
 import 'package:merubo/provider/current_user_provider.dart';
 
 // データが追加されるたびに、このプロバイダーをリフレッシュする。
@@ -23,13 +22,16 @@ final receiveMessageBordListProvider = FutureProvider((ref) async {
       .watch(messageBordRepositoryProvider)
       .fetchReceiveMessageBordList();
   final Map<String, List<MessageBordWithMessages>> mapValue = {};
+  if (data.isEmpty) {
+    return mapValue;
+  }
   for (var value in data) {
     final yearFormat = DateFormat('yyyy年');
     final key = yearFormat.format(value.messageBord.receivedAt!);
 
-    if(mapValue.containsKey(key)){
+    if (mapValue.containsKey(key)) {
       mapValue[yearFormat.format(value.messageBord.receivedAt!)]!.add(value);
-    }else{
+    } else {
       final list = [value];
       mapValue[yearFormat.format(value.messageBord.receivedAt!)] = list;
     }

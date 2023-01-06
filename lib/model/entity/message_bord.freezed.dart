@@ -32,6 +32,7 @@ mixin _$MessageBord {
   @DateTimeConverter()
   DateTime? get receivedAt => throw _privateConstructorUsedError;
   Status get status => throw _privateConstructorUsedError;
+  MessageBordKinds get kinds => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -56,7 +57,8 @@ abstract class $MessageBordCopyWith<$Res> {
       String? ownerUserName,
       String? category,
       @DateTimeConverter() DateTime? receivedAt,
-      Status status});
+      Status status,
+      MessageBordKinds kinds});
 }
 
 /// @nodoc
@@ -83,6 +85,7 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
     Object? category = freezed,
     Object? receivedAt = freezed,
     Object? status = null,
+    Object? kinds = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -129,6 +132,10 @@ class _$MessageBordCopyWithImpl<$Res, $Val extends MessageBord>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      kinds: null == kinds
+          ? _value.kinds
+          : kinds // ignore: cast_nullable_to_non_nullable
+              as MessageBordKinds,
     ) as $Val);
   }
 }
@@ -152,7 +159,8 @@ abstract class _$$_MessageBordCopyWith<$Res>
       String? ownerUserName,
       String? category,
       @DateTimeConverter() DateTime? receivedAt,
-      Status status});
+      Status status,
+      MessageBordKinds kinds});
 }
 
 /// @nodoc
@@ -177,6 +185,7 @@ class __$$_MessageBordCopyWithImpl<$Res>
     Object? category = freezed,
     Object? receivedAt = freezed,
     Object? status = null,
+    Object? kinds = null,
   }) {
     return _then(_$_MessageBord(
       id: null == id
@@ -223,6 +232,10 @@ class __$$_MessageBordCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as Status,
+      kinds: null == kinds
+          ? _value.kinds
+          : kinds // ignore: cast_nullable_to_non_nullable
+              as MessageBordKinds,
     ));
   }
 }
@@ -241,7 +254,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       this.ownerUserName,
       this.category,
       @DateTimeConverter() this.receivedAt,
-      this.status = Status.edit});
+      this.status = Status.edit,
+      this.kinds = MessageBordKinds.merubo});
 
   factory _$_MessageBord.fromJson(Map<String, dynamic> json) =>
       _$$_MessageBordFromJson(json);
@@ -270,10 +284,13 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
   @override
   @JsonKey()
   final Status status;
+  @override
+  @JsonKey()
+  final MessageBordKinds kinds;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, ownerUserName: $ownerUserName, category: $category, receivedAt: $receivedAt, status: $status)';
+    return 'MessageBord(id: $id, type: $type, receiverUserName: $receiverUserName, lastMessage: $lastMessage, lastMovie: $lastMovie, lastPicture: $lastPicture, title: $title, ownerUserName: $ownerUserName, category: $category, receivedAt: $receivedAt, status: $status, kinds: $kinds)';
   }
 
   @override
@@ -291,7 +308,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       ..add(DiagnosticsProperty('ownerUserName', ownerUserName))
       ..add(DiagnosticsProperty('category', category))
       ..add(DiagnosticsProperty('receivedAt', receivedAt))
-      ..add(DiagnosticsProperty('status', status));
+      ..add(DiagnosticsProperty('status', status))
+      ..add(DiagnosticsProperty('kinds', kinds));
   }
 
   @override
@@ -316,7 +334,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
                 other.category == category) &&
             (identical(other.receivedAt, receivedAt) ||
                 other.receivedAt == receivedAt) &&
-            (identical(other.status, status) || other.status == status));
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.kinds, kinds) || other.kinds == kinds));
   }
 
   @JsonKey(ignore: true)
@@ -333,7 +352,8 @@ class _$_MessageBord with DiagnosticableTreeMixin implements _MessageBord {
       ownerUserName,
       category,
       receivedAt,
-      status);
+      status,
+      kinds);
 
   @JsonKey(ignore: true)
   @override
@@ -361,7 +381,8 @@ abstract class _MessageBord implements MessageBord {
       final String? ownerUserName,
       final String? category,
       @DateTimeConverter() final DateTime? receivedAt,
-      final Status status}) = _$_MessageBord;
+      final Status status,
+      final MessageBordKinds kinds}) = _$_MessageBord;
 
   factory _MessageBord.fromJson(Map<String, dynamic> json) =
       _$_MessageBord.fromJson;
@@ -389,6 +410,8 @@ abstract class _MessageBord implements MessageBord {
   DateTime? get receivedAt;
   @override
   Status get status;
+  @override
+  MessageBordKinds get kinds;
   @override
   @JsonKey(ignore: true)
   _$$_MessageBordCopyWith<_$_MessageBord> get copyWith =>

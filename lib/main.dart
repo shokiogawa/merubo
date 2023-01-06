@@ -41,7 +41,7 @@ class MyApp extends ConsumerWidget {
       home: const InitPage(),
       routes: {
         '/top': (context) => const TopScreen(),
-        '/login': (context) => const LoginScreen(),
+        '/login': (context) => LoginScreen(),
         // '/message_bord': (context) => const MessageBordScreen(),
         // '/message_bord_create': (context) => const MessageBordCreateScreen(),
         '/preview_message_bord': (context) => const PreviewMessageBordScreen(),
@@ -77,7 +77,7 @@ class InitPage extends ConsumerWidget {
           }
           if (snapshot.hasData) {
             final isLoggedIn = snapshot.data ?? false;
-            return isLoggedIn ? const TopScreen() : const LoginScreen();
+            return isLoggedIn ? const TopScreen() : LoginScreen();
           }
           if (snapshot.hasError) {
             return const Center(

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,9 +10,10 @@ import 'package:merubo/model/entity/message_bord_with_message.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
 import 'package:merubo/provider/current_user_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final messageBordRepositoryProvider =
-    Provider((ref) => MessageBordRepository(ref));
+Provider((ref) => MessageBordRepository(ref));
 
 class MessageBordRepository {
   MessageBordRepository(this.ref);
@@ -18,8 +21,8 @@ class MessageBordRepository {
   final Ref ref;
 
   //自分が管理また、メッセージしたメッセージボード一覧
-  Future<List<MessageBord>> fetchOwnMessageBordList(
-      String userId, Role role) async {
+  Future<List<MessageBord>> fetchOwnMessageBordList(String userId,
+      Role role) async {
     // ページによって変更させる。
     final List<String> whereIn = [];
     print("fetchOwnMessageBordList");
@@ -30,9 +33,9 @@ class MessageBordRepository {
           .doc(userId)
           .collection("own_message_bords")
           .where("role", whereIn: [describeEnum(role)]).withConverter(
-              fromFirestore: (snapshot, _) =>
-                  OwnMessageBordRef.fromJson(snapshot.data()!),
-              toFirestore: (messageBordRef, _) => messageBordRef.toJson());
+          fromFirestore: (snapshot, _) =>
+              OwnMessageBordRef.fromJson(snapshot.data()!),
+          toFirestore: (messageBordRef, _) => messageBordRef.toJson());
       final messageBordListRef = await messageBordIdListRefQuery.get();
       final List<MessageBord> messageBordRealList = [];
       await Future.forEach(messageBordListRef.docs, (messageBordRef) async {
@@ -56,7 +59,9 @@ class MessageBordRepository {
 
   // 受け取った寄せ書き一覧を取得(メッセージ付き)
   Future<List<MessageBordWithMessages>> fetchReceiveMessageBordList() async {
-    final userId = ref.watch(currentUserProvider).id;
+    final userId = ref
+        .watch(currentUserProvider)
+        .id;
     final fireStore = ref.watch(firebaseFireStoreProvider);
     final List<MessageBordWithMessages> messageBordWithMessages = [];
     try {
@@ -64,11 +69,15 @@ class MessageBordRepository {
       final ownMessageBordListRef = await fireStore
           .collection("users")
           .doc(userId)
-          .collection("own_message_bords").where('role', isEqualTo: describeEnum(Role.receiver))
+          .collection("own_message_bords").where(
+          'role', isEqualTo: describeEnum(Role.receiver))
           .get();
+      if (ownMessageBordListRef.size == 0) {
+        return messageBordWithMessages;
+      }
       // documentId一覧
       final ownMessageBordDocIds =
-          ownMessageBordListRef.docs.map((value) => value.id).toList();
+      ownMessageBordListRef.docs.map((value) => value.id).toList();
 
       // 寄せ書きを受け取り日順に取得
       final messageBordQuery = fireStore
@@ -76,9 +85,9 @@ class MessageBordRepository {
           .orderBy("receivedAt", descending: true)
           .where("id", whereIn: ownMessageBordDocIds)
           .withConverter(
-              fromFirestore: (snapshot, _) =>
-                  MessageBord.fromJson(snapshot.data()!),
-              toFirestore: (messageBord, _) => messageBord.toJson());
+          fromFirestore: (snapshot, _) =>
+              MessageBord.fromJson(snapshot.data()!),
+          toFirestore: (messageBord, _) => messageBord.toJson());
       final messageBordSnap = await messageBordQuery.get();
 
       // 該当の寄せ書きを回し、紐づいているメッセージを取得
@@ -88,9 +97,9 @@ class MessageBordRepository {
             .doc(doc.id)
             .collection("messages")
             .withConverter(
-                fromFirestore: (snapshot, _) =>
-                    Message.fromJson(snapshot.data()!),
-                toFirestore: (message, _) => message.toJson());
+            fromFirestore: (snapshot, _) =>
+                Message.fromJson(snapshot.data()!),
+            toFirestore: (message, _) => message.toJson());
 
         final messageSnap = await messageQuery.get();
         // 該当の寄せ書きに紐づいているメッセージを取得
@@ -171,16 +180,16 @@ class MessageBordRepository {
           .doc(filePath)
           .collection("messages")
           .withConverter(
-              fromFirestore: (snapshot, _) =>
-                  Message.fromJson(snapshot.data()!),
-              toFirestore: (message, _) => message.toJson());
+          fromFirestore: (snapshot, _) =>
+              Message.fromJson(snapshot.data()!),
+          toFirestore: (message, _) => message.toJson());
       final messageQuery = await messageRef.get();
       final messages = messageQuery.docs.map((message) {
         return message.data();
       }).toList();
 
       final messageBordWithMessage =
-          MessageBordWithMessages(messageBord: messageBord, messages: messages);
+      MessageBordWithMessages(messageBord: messageBord, messages: messages);
       return messageBordWithMessage;
     } catch (err) {
       print(err);
@@ -204,11 +213,13 @@ class MessageBordRepository {
       final batch = fireStore.batch();
       // 保存場所指定
       final messageBordRef =
-          fireStore.collection("message_bords").doc(messageBordId);
+      fireStore.collection("message_bords").doc(messageBordId);
       final messageRef = messageBordRef.collection("messages").doc(messageId);
       final userRef = fireStore
           .collection("users")
-          .doc(ref.watch(currentUserProvider).id)
+          .doc(ref
+          .watch(currentUserProvider)
+          .id)
           .collection("own_message_bords")
           .doc(messageBordId);
       //保存
@@ -231,8 +242,8 @@ class MessageBordRepository {
         .collection("message_bords")
         .doc(messageBordId)
         .withConverter(
-            fromFirestore: (snap, _) => MessageBord.fromJson(snap.data()!),
-            toFirestore: (messageBord, _) => messageBord.toJson());
+        fromFirestore: (snap, _) => MessageBord.fromJson(snap.data()!),
+        toFirestore: (messageBord, _) => messageBord.toJson());
     final messageBordSnap = await messageBordRef.get();
     if (!messageBordSnap.exists) {
       throw Exception('Data is not exist messageBordId: $messageBordId');
@@ -243,15 +254,17 @@ class MessageBordRepository {
   //メッセージ取得
   Future<Message> fetchMessageByMessageBordId(String messageBordId) async {
     final fireStore = ref.watch(firebaseFireStoreProvider);
-    final userId = ref.watch(currentUserProvider).id;
+    final userId = ref
+        .watch(currentUserProvider)
+        .id;
     final messageRef = fireStore
         .collection("message_bords")
         .doc(messageBordId)
         .collection("messages")
         .where('userId', isEqualTo: userId)
         .withConverter(
-            fromFirestore: (snap, _) => Message.fromJson(snap.data()!),
-            toFirestore: (message, _) => message.toJson());
+        fromFirestore: (snap, _) => Message.fromJson(snap.data()!),
+        toFirestore: (message, _) => message.toJson());
     final messageSnap = await messageRef.get();
     if (messageSnap.docs.isEmpty) {
       throw Exception(
@@ -303,15 +316,17 @@ class MessageBordRepository {
 
   // 寄せ書きをすでに取得しているかどうかのチェック
   Future<bool> checkHasMessageBord(String messageBordId) async {
-    final userId = ref.watch(currentUserProvider).id;
+    final userId = ref
+        .watch(currentUserProvider)
+        .id;
     try {
       final fireStore = ref.watch(firebaseFireStoreProvider);
       final hasMessageBord = (await fireStore
-              .collection("users")
-              .doc(userId)
-              .collection("own_message_bords")
-              .doc(messageBordId)
-              .get())
+          .collection("users")
+          .doc(userId)
+          .collection("own_message_bords")
+          .doc(messageBordId)
+          .get())
           .exists;
       return hasMessageBord;
     } catch (error) {
@@ -319,16 +334,30 @@ class MessageBordRepository {
     }
   }
 
+  Future<void> registerMessageBordOnlineOrPaper(MessageBord messageBord) async {
+    final share = await SharedPreferences.getInstance();
+    final messageBordJson = jsonEncode(messageBord.toJson());
+    final result = share.getStringList('messageBordList') ?? [];
+    result.add(messageBordJson);
+
+    await share.setStringList('messageBordList', result);
+    // final currentResultList = result.map((value) =>
+    //     MessageBord.fromJson(jsonDecode(value))).toList();
+
+  }
+
   // メッセージボードを受取人が登録
   Future<void> registerMessageBord(String messageBordId) async {
     final fireStore = ref.watch(firebaseFireStoreProvider);
-    final userId = ref.watch(currentUserProvider).id;
+    final userId = ref
+        .watch(currentUserProvider)
+        .id;
     try {
       if (await checkIsExistMessageBord(messageBordId) &&
           !await checkHasMessageBord(messageBordId)) {
         final batch = fireStore.batch();
         final messageBordRef =
-            fireStore.collection("message_bords").doc(messageBordId);
+        fireStore.collection("message_bords").doc(messageBordId);
         final userRef = fireStore
             .collection("users")
             .doc(userId)
@@ -339,7 +368,7 @@ class MessageBordRepository {
               'status': describeEnum(Status.send)
             }
         );
-        batch.update(userRef, {
+        batch.set(userRef, {
           "messageBordRef": messageBordRef,
           "role": describeEnum(Role.receiver)
         });
