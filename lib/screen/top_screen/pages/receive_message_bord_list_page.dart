@@ -5,10 +5,7 @@ import 'package:merubo/provider/message_bord_provider.dart';
 import 'package:merubo/screen/top_screen/widget/add_merubo_message_bord.dart';
 import 'package:merubo/screen/top_screen/widget/add_online_message_bord.dart';
 import 'package:merubo/screen/top_screen/widget/add_paper_message_bord.dart';
-import 'package:merubo/screen/top_screen/widget/message_bord_by_year.dart';
 import 'package:merubo/screen/top_screen/widget/receive_message_bord_list_area.dart';
-
-import '../../../model/entity/message_bord_with_messages.dart';
 
 class ReceiveMessageBordList extends ConsumerWidget {
   const ReceiveMessageBordList({Key? key}) : super(key: key);
@@ -77,7 +74,7 @@ class ReceiveMessageBordList extends ConsumerWidget {
 
 
 
-final selectedMessageBordType = StateProvider((ref) => MessageBordKinds.merubo);
+final selectedMessageBordType = StateProvider.autoDispose((ref) => MessageBordKinds.merubo);
 
 class AddMessageBord extends StatelessWidget {
   const AddMessageBord({Key? key}) : super(key: key);
