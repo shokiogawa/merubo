@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
+import 'package:merubo/screen/top_screen/widget/message_bord_menu_button.dart';
 import 'package:merubo/screen/top_screen/widget/thumbnail_circle.dart';
 
 class MeruboMessageBordCard extends StatelessWidget {
@@ -66,15 +67,9 @@ class MeruboMessageBordCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Expanded(
+                      const Expanded(
                         flex: 1,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.more_vert_rounded,
-                            size: 20,
-                          ),
-                        ),
+                        child: MessageBordMenuButton(),
                       )
                     ],
                   )

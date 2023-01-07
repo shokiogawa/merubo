@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:merubo/model/entity/message_bord.dart';
+import 'package:merubo/screen/top_screen/widget/message_bord_menu_button.dart';
 
 class PaperMessageBordCard extends StatelessWidget {
   final MessageBord messageBord;
@@ -23,7 +24,7 @@ class PaperMessageBordCard extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 30,
                   backgroundImage:
-                  Image.file(File(messageBord.lastPicture!)).image,
+                      Image.file(File(messageBord.lastPicture!)).image,
                 )),
             Expanded(
               flex: 2,
@@ -36,24 +37,15 @@ class PaperMessageBordCard extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Row(
-                    children: [
-                      const Expanded(
+                    children: const [
+                      Expanded(
                           flex: 5,
                           child: Text(
                             "紙の寄せ書き",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           )),
-                      Expanded(
-                        flex: 1,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.more_vert_rounded,
-                            size: 20,
-                          ),
-                        ),
-                      )
+                      Expanded(flex: 1, child: MessageBordMenuButton())
                     ],
                   ),
                 ],

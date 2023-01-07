@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/provider/query/hp_info_provider.dart';
+import 'package:merubo/screen/top_screen/widget/message_bord_menu_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class OnlineMessageBordCard extends ConsumerWidget {
@@ -60,16 +61,8 @@ class OnlineMessageBordCard extends ConsumerWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               )),
-                          Expanded(
-                            flex: 1,
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.more_vert_rounded,
-                                size: 20,
-                              ),
-                            ),
-                          )
+                          const Expanded(
+                              flex: 1, child: MessageBordMenuButton())
                         ],
                       ),
                     ],
