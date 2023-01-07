@@ -14,7 +14,7 @@ final currentIndexProviderForCreate = StateProvider<int>((ref) {
   return 0;
 });
 
-final progressIndicatorProvider = StateProvider<bool>((ref) => false);
+
 
 final createMessageBordProvider =
     StateNotifierProvider<CreateMessageBord, MessageBordWithMessage>((ref) {

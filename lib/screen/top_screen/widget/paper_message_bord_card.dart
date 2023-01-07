@@ -37,15 +37,19 @@ class PaperMessageBordCard extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Row(
-                    children: const [
-                      Expanded(
+                    children: [
+                      const Expanded(
                           flex: 5,
                           child: Text(
                             "紙の寄せ書き",
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           )),
-                      Expanded(flex: 1, child: MessageBordMenuButton())
+                      Expanded(
+                          flex: 1,
+                          child: MessageBordMenuButton(
+                            messageBord: messageBord,
+                          ))
                     ],
                   ),
                 ],

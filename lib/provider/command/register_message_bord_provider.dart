@@ -31,6 +31,8 @@ class RegisterMessageBordProvider {
     await ref
         .watch(messageBordRepositoryProvider)
         .registerMessageBord(messageBordIdController.text);
+    ref.invalidateSelf();
+    ref.invalidate(receiveMessageBordListProvider);
   }
 
   Future<void> registerOnlineOrPaper() async {

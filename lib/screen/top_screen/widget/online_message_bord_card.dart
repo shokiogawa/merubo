@@ -61,8 +61,8 @@ class OnlineMessageBordCard extends ConsumerWidget {
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                               )),
-                          const Expanded(
-                              flex: 1, child: MessageBordMenuButton())
+                          Expanded(
+                              flex: 1, child: MessageBordMenuButton(messageBord: messageBord,))
                         ],
                       ),
                     ],

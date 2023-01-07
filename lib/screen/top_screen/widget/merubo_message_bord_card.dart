@@ -67,9 +67,9 @@ class MeruboMessageBordCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const Expanded(
+                      Expanded(
                         flex: 1,
-                        child: MessageBordMenuButton(),
+                        child: MessageBordMenuButton(messageBord: data.messageBord),
                       )
                     ],
                   )
