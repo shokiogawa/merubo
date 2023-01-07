@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:merubo/model/entity/message_bord.dart';
@@ -7,29 +9,19 @@ import 'package:timelines/timelines.dart';
 
 class TimeLineTile extends StatelessWidget {
   final MessageBordWithMessages data;
+
   const TimeLineTile({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final sendUserName = data.messageBord.ownerUserName;
-    final messageCount = data.messages.length;
     final receivedAt = data.messageBord.receivedAt;
     final displayFormat = DateFormat('MM月dd日');
     final displayReceivedAt = displayFormat.format(receivedAt!);
-    final category = data.messageBord.category;
-    final List<Widget> messageThumbnails = [
-      ...data
-          .messages
-          .map((message) =>
-          ThumbnailCircle(thumbnailPath: message.thumbnail))
-          .toList()
-          .take(3)
-          .toList()
-    ];
-    if (data.messages.length > 3) {
-      messageThumbnails
-          .add(const Text("...", style: TextStyle(fontSize: 10)));
-    }
+    final displayCard = data.messageBord.kinds == MessageBordKinds.merubo
+        ? MeruboMessageBordCard(data: data)
+        : data.messageBord.kinds == MessageBordKinds.online
+            ? OnlineMessageBordCard(messageBord: data.messageBord)
+            : PaperMessageBordCard(messageBord: data.messageBord);
     return Row(children: [
       Text(displayReceivedAt, style: const TextStyle(fontSize: 10)),
       Expanded(
@@ -39,51 +31,156 @@ class TimeLineTile extends StatelessWidget {
           child: TimelineNode.simple(),
         ),
       ),
-      Flexible(
-          flex: 10,
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                  right: 10, left: 0, top: 10, bottom: 10),
-              child: Row(
+      // 寄せ書きカード
+      Flexible(flex: 10, child: displayCard)
+    ]);
+  }
+}
+
+class MeruboMessageBordCard extends StatelessWidget {
+  final MessageBordWithMessages data;
+
+  const MeruboMessageBordCard({Key? key, required this.data}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final sendUserName = data.messageBord.ownerUserName;
+    final messageCount = data.messages.length;
+    final category = data.messageBord.category;
+    final List<Widget> messageThumbnails = [
+      ...data.messages
+          .map((message) => ThumbnailCircle(thumbnailPath: message.thumbnail))
+          .toList()
+          .take(3)
+          .toList()
+    ];
+    if (data.messages.length > 3) {
+      messageThumbnails.add(const Text("...", style: TextStyle(fontSize: 10)));
+    }
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10, left: 0, top: 10, bottom: 10),
+        child: Row(
+          children: [
+            Expanded(
+                flex: 1,
+                child: CircleAvatar(
+                    radius: 30,
+                    backgroundImage:
+                        Image.asset(getImageByType(data.messageBord.type))
+                            .image)),
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                      flex: 1,
-                      child: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: Image.asset(getImageByType(
-                              data.messageBord.type))
-                              .image)),
-                  Expanded(
-                    flex: 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '$sendUserNameさんより、$categoryのお祝いが届きました',
-                          overflow: TextOverflow.clip,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 15),
-                        Row(children: [
-                          const Text("参加者:"),
-                          Row(
-                            children: messageThumbnails,
-                          )
-                        ]),
-                        const SizedBox(
-                          height: 2,
-                        ),
-                        Text('参加人数: $messageCount')
-                      ],
-                    ),
+                  Text(
+                    '$sendUserNameさんより、$categoryのお祝いが届きました',
+                    overflow: TextOverflow.clip,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  const SizedBox(height: 15),
+                  Row(children: [
+                    const Text("参加者:"),
+                    Row(
+                      children: messageThumbnails,
+                    )
+                  ]),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  Text('参加人数: $messageCount')
                 ],
               ),
             ),
-          ))
-    ]);
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class PaperMessageBordCard extends StatelessWidget {
+  final MessageBord messageBord;
+  const PaperMessageBordCard({Key? key, required this.messageBord}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final sendUserName = messageBord.ownerUserName;
+    final category = messageBord.category;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10, left: 0, top: 10, bottom: 10),
+        child: Row(
+          children: [
+             Expanded(
+                flex: 1,
+                child: CircleAvatar(
+                  radius: 30,
+                  backgroundImage: Image.file(File(messageBord.lastPicture!)).image,
+                )),
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$sendUserNameさんより、$categoryのお祝いが届きました',
+                    overflow: TextOverflow.clip,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text("Mesecaよりメッセージ作成されました。")
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class OnlineMessageBordCard extends StatelessWidget {
+  final MessageBord messageBord;
+
+  const OnlineMessageBordCard({Key? key, required this.messageBord})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final sendUserName = messageBord.ownerUserName;
+    final category = messageBord.category;
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10, left: 0, top: 10, bottom: 10),
+        child: Row(
+          children: [
+            const Expanded(
+                flex: 1,
+                child: CircleAvatar(
+                  radius: 30,
+                )),
+            Expanded(
+              flex: 2,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$sendUserNameさんより、$categoryのお祝いが届きました',
+                    overflow: TextOverflow.clip,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 15),
+                  const Text("Mesecaよりメッセージ作成されました。")
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
