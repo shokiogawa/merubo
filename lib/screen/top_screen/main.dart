@@ -15,6 +15,7 @@ class TopScreen extends ConsumerStatefulWidget {
 class TopScreenState extends ConsumerState<TopScreen> {
   int _selectIndex = 0;
   late Future<void> _future;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -22,10 +23,7 @@ class TopScreenState extends ConsumerState<TopScreen> {
     super.initState();
   }
 
-  static const _pages = [
-    MessageBordListPage(),
-    ReceiveMessageBordList()
-  ];
+  static const _pages = [ReceiveMessageBordList(), MessageBordListPage()];
 
   void _onChoosePage(int index) {
     setState(() {
@@ -36,7 +34,7 @@ class TopScreenState extends ConsumerState<TopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: (){
+      floatingActionButton: FloatingActionButton(onPressed: () {
         ref.read(authRepositoryProvider).logOut();
       }),
       // appBar: AppBar(
@@ -49,8 +47,8 @@ class TopScreenState extends ConsumerState<TopScreen> {
       // ),
       //トップページ表示前に、ユーザー情報を取得する。
       body: FutureBuilder(
-        future: _future,
-          builder: (context, snapshot){
+          future: _future,
+          builder: (context, snapshot) {
             if (snapshot.connectionState != ConnectionState.done) {
               return const CircularProgressIndicator();
             }
@@ -61,14 +59,15 @@ class TopScreenState extends ConsumerState<TopScreen> {
             } else {
               return _pages[_selectIndex];
             }
-      }),
+          }),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onChoosePage,
         currentIndex: _selectIndex,
         items: const <BottomNavigationBarItem>[
           // BottomNavigationBarItem(icon: Icon(Icons.pages), label: "作成"),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: "作成した寄せ書き"),
-          BottomNavigationBarItem(icon: Icon(Icons.gif_box), label: "受け取った寄せ書き")
+          BottomNavigationBarItem(
+              icon: Icon(Icons.gif_box), label: "受け取った寄せ書き"),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: "作成した寄せ書き")
         ],
         type: BottomNavigationBarType.fixed,
       ),

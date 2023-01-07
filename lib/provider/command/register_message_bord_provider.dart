@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/repository/local_storage_repository.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
 import 'package:merubo/provider/query/message_bord_provider.dart';
-import 'package:merubo/screen/top_screen/pages/receive_message_bord_list_page.dart';
+import 'package:merubo/screen/message_bord_register_screen/main.dart';
 import 'package:merubo/widgets/date_form.dart';
 import 'package:merubo/widgets/image_form.dart';
 import 'package:uuid/uuid.dart';
