@@ -1,9 +1,6 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/model/common_provider/firebase_fire_storage.dart';
 import 'package:merubo/model/common_provider/firebase_fire_store.dart';
 import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
@@ -11,7 +8,6 @@ import 'package:merubo/model/entity/message_bord_with_message.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/entity/reference/own_message_bord_ref.dart';
 import 'package:merubo/provider/query/current_user_provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 final messageBordRepositoryProvider =
     Provider((ref) => MessageBordRepository(ref));
