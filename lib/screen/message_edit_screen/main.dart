@@ -49,23 +49,44 @@ class MessageEditScreen extends ConsumerWidget {
             buttonColor: Colors.green,
             onPressed: () async {
               if (formKey.currentState!.validate()) {
-                showProgressDialog(
+                showNewProgressDialog(
                     context: context,
-                    onPressed: () async {
-                      ref.read(progressIndicatorProvider.notifier).state = true;
-                      await ref
-                          .read(editMessageBordProvider.notifier)
-                          .updateMessage(messageBordId)
-                          .then((value) {
-                        ref.read(progressIndicatorProvider.notifier).state =
-                        false;
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      });
-                    },
-                    inProgressText: '更新中',
-                    confirmText: '更新しますか？',
-                    buttonText: '更新');
+                    inProgressText: '編集中',
+                    beforeTitle: '編集しますか？',
+                    beforeContent: '該当のデータを編集します。',
+                    beforeCancelText: "キャンセル",
+                    beforeDoText: "編集",
+                  beforeCancelOnPress: (){
+                      Navigator.of(context).pop();
+                  },
+                  beforeDoOnPress: ()async{
+                      await ref.read(editMessageBordProvider.notifier).updateMessage(messageBordId);
+                  },
+                  onSucceedMethod: (){
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                  },
+                  onFailedMethod: (){
+                      // TODO: 失敗した時のメソッド
+                  }
+                );
+                // showProgressDialog(
+                //     context: context,
+                //     onPressed: () async {
+                //       ref.read(progressIndicatorProvider.notifier).state = true;
+                //       await ref
+                //           .read(editMessageBordProvider.notifier)
+                //           .updateMessage(messageBordId)
+                //           .then((value) {
+                //         ref.read(progressIndicatorProvider.notifier).state =
+                //         false;
+                //         Navigator.of(context).pop();
+                //         Navigator.of(context).pop();
+                //       });
+                //     },
+                //     inProgressText: '更新中',
+                //     confirmText: '更新しますか？',
+                //     buttonText: '更新');
               }
             }),
       ),

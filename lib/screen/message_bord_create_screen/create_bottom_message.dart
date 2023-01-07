@@ -15,36 +15,52 @@ class CreateBottomMessageScreen extends ConsumerWidget {
     return Scaffold(
       appBar: const ProgressAppBar(currentIndex: 3),
       bottomNavigationBar: BottomButton(onPressed: () {
-        showProgressDialog(
+        showNewProgressDialog(
             context: context,
-            onPressed: () async {
-              ref.read(progressIndicatorProvider.notifier).state = true;
-              // await Future.delayed(const Duration(seconds: 3)).then((value) {
-              //   ref.read(progressIndicatorProvider.notifier).state = false;
-              //   ref.read(currentIndexProviderForCreate.notifier).state = 4;
-              //   //画面遷移
-              //   Navigator.of(context).pushNamedAndRemoveUntil(
-              //       '/message_bord_complete_message_bord_screen',
-              //       (route) => false);
-              // });
+            inProgressText: '作成中',
+            beforeTitle: '寄せ書きを作成しますか？',
+            beforeContent: '作成後でも、編集可能です。',
+            beforeCancelText: 'キャンセル',
+            beforeDoText: '作成',
+            beforeDoOnPress: () async {
               await ref
                   .read(createMessageBordProvider.notifier)
-                  .createMessageBordWithMessage()
-                  .then((value) {
-                ref
-                    .read(progressIndicatorProvider.notifier)
-                    .state = false;
-                //画面遷移
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/message_bord_complete_message_bord_screen',
-                    (route) => false);
-              }).catchError((err) {
-                print(err);
-              });
+                  .createMessageBordWithMessage();
             },
-            inProgressText: '作成中',
-            confirmText: '寄せ書きを作成しますか？',
-            buttonText: '作成');
+            beforeCancelOnPress: () {
+              Navigator.of(context).pop();
+            },
+            onSucceedMethod: () {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  '/message_bord_complete_message_bord_screen',
+                  (route) => false);
+            },
+            onFailedMethod: () {
+              //TODO: 失敗時
+              print("作成失敗");
+            });
+        // showProgressDialog(
+        //     context: context,
+        //     onPressed: () async {
+        //       ref.read(progressIndicatorProvider.notifier).state = true;
+        //       await ref
+        //           .read(createMessageBordProvider.notifier)
+        //           .createMessageBordWithMessage()
+        //           .then((value) {
+        //         ref
+        //             .read(progressIndicatorProvider.notifier)
+        //             .state = false;
+        //         //画面遷移
+        //         Navigator.of(context).pushNamedAndRemoveUntil(
+        //             '/message_bord_complete_message_bord_screen',
+        //             (route) => false);
+        //       }).catchError((err) {
+        //         print(err);
+        //       });
+        //     },
+        //     inProgressText: '作成中',
+        //     confirmText: '寄せ書きを作成しますか？',
+        //     buttonText: '作成');
       }),
       body: Column(
         children: [

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/provider/command/create_message_bord_provider.dart';
 import 'package:merubo/provider/command/edit_message_bord_provider.dart';
 import 'package:merubo/utility/show_progress_dialog.dart';
 import 'package:merubo/widgets/button.dart';
@@ -31,23 +30,22 @@ class MessageBordEditScreen extends ConsumerWidget {
             buttonColor: Colors.green,
             onPressed: () async {
               if (basicFormKey.currentState!.validate()) {
-                showProgressDialog(
+                showNewProgressDialog(
                     context: context,
-                    onPressed: () async {
-                      ref.read(progressIndicatorProvider.notifier).state = true;
+                    inProgressText: '更新中',
+                    beforeTitle: '寄せ書きを更新しますか？',
+                    beforeContent: '更新します。',
+                    beforeCancelText: 'キャンセル',
+                    beforeDoText: '更新',
+                    beforeDoOnPress: () async {
                       await ref
                           .read(editMessageBordProvider.notifier)
-                          .updateMessageBord()
-                          .then((value) {
-                        ref.read(progressIndicatorProvider.notifier).state =
-                            false;
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
-                      });
+                          .updateMessageBord();
                     },
-                    inProgressText: '更新中',
-                    confirmText: '更新しますか？',
-                    buttonText: '更新');
+                    onSucceedMethod: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    });
               }
             }),
       ),
