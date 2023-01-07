@@ -4,7 +4,7 @@ import 'package:merubo/model/entity/message.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/entity/message_bord_with_messages.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
-import 'package:merubo/provider/current_user_provider.dart';
+import 'package:merubo/provider/query/current_user_provider.dart';
 
 // データが追加されるたびに、このプロバイダーをリフレッシュする。
 final ownMessageBordListProvider =

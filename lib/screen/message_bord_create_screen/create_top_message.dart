@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/bottom_button.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
 import 'package:merubo/widgets/text_form.dart';
-import '../../provider/create_message_bord_provider.dart';
+import '../../provider/command/create_message_bord_provider.dart';
 
 class CreateTopMessageScreen extends ConsumerWidget {
   CreateTopMessageScreen({Key? key}) : super(key: key);

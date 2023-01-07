@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/repository/auth_repository.dart';
-import 'package:merubo/provider/current_user_provider.dart';
+import 'package:merubo/provider/query/current_user_provider.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_list_page.dart';
 import 'package:merubo/screen/top_screen/pages/receive_message_bord_list_page.dart';
 

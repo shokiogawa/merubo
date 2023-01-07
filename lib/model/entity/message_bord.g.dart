@@ -17,6 +17,7 @@ _$_MessageBord _$$_MessageBordFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String?,
       ownerUserName: json['ownerUserName'] as String?,
       category: json['category'] as String?,
+      onlineUrl: json['onlineUrl'] as String?,
       receivedAt: _$JsonConverterFromJson<Timestamp, DateTime>(
           json['receivedAt'], const DateTimeConverter().fromJson),
       status:
@@ -36,6 +37,7 @@ Map<String, dynamic> _$$_MessageBordToJson(_$_MessageBord instance) =>
       'title': instance.title,
       'ownerUserName': instance.ownerUserName,
       'category': instance.category,
+      'onlineUrl': instance.onlineUrl,
       'receivedAt': _$JsonConverterToJson<Timestamp, DateTime>(
           instance.receivedAt, const DateTimeConverter().toJson),
       'status': _$StatusEnumMap[instance.status]!,

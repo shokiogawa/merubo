@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../provider/create_message_bord_provider.dart';
+import '../../../provider/command/create_message_bord_provider.dart';
 
 class BottomButton extends ConsumerWidget {
   const BottomButton({Key? key, this.onPressed}) : super(key: key);

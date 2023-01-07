@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/provider/create_message_bord_provider.dart';
-import 'package:merubo/provider/edit_message_bord_provider.dart';
+import 'package:merubo/provider/command/create_message_bord_provider.dart';
+import 'package:merubo/provider/command/edit_message_bord_provider.dart';
 import 'package:merubo/utility/show_progress_dialog.dart';
 import 'package:merubo/widgets/button.dart';
 

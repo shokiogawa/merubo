@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/provider/create_message_bord_provider.dart';
+import 'package:merubo/provider/command/create_message_bord_provider.dart';
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
 
 class CompleteMessageBord extends ConsumerWidget {

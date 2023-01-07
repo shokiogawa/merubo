@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/provider/register_message_bord_provider.dart';
+import 'package:merubo/provider/command/register_message_bord_provider.dart';
 import 'package:merubo/widgets/button.dart';
 import 'package:merubo/widgets/date_form.dart';
 import 'package:merubo/widgets/text_form.dart';

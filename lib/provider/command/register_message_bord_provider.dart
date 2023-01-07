@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/model/repository/local_storage_repository.dart';
 import 'package:merubo/model/repository/message_bord_repository.dart';
+import 'package:merubo/provider/query/message_bord_provider.dart';
 import 'package:merubo/screen/top_screen/pages/receive_message_bord_list_page.dart';
 import 'package:merubo/widgets/date_form.dart';
 import 'package:merubo/widgets/image_form.dart';
@@ -34,12 +35,14 @@ class RegisterMessageBordProvider {
   }
 
   Future<void> registerOnlineOrPaper() async {
+    print("provider");
     String? image;
     final imagePath = ref.read(selectedImageProvider);
     final receivedAt = ref.read(selectedDateTimeProvider);
     final kinds = ref.read(selectedMessageBordType);
     final messageBordId = const Uuid().v4();
     if (imagePath.isNotEmpty) {
+      print("upload image");
       image = await ref
           .read(localStorageRepositoryProvider)
           .saveImage(File(imagePath), messageBordId);
@@ -51,9 +54,16 @@ class RegisterMessageBordProvider {
         category: categoryController.text,
         kinds: kinds,
         lastPicture: image,
+        onlineUrl: urlController.text,
         receivedAt: receivedAt);
     await ref
         .read(messageBordRepositoryProvider)
         .registerMessageBordOnlineOrPaper(messageBord);
+    // 自信をリフレッシュ
+    ref.invalidateSelf();
+    // 関連プロバイダーをリフレッシュ
+    ref.invalidate(receiveMessageBordListProvider);
+    ref.invalidate(selectedDateTimeProvider);
+    ref.invalidate(selectedMessageBordType);
   }
 }

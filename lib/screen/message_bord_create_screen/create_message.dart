@@ -6,7 +6,7 @@ import 'package:merubo/screen/message_bord_create_screen/widget/bottom_button.da
 import 'package:merubo/screen/message_bord_create_screen/widget/progress_app_bar.dart';
 import 'package:merubo/widgets/image_form.dart';
 import 'package:merubo/widgets/text_form.dart';
-import '../../provider/create_message_bord_provider.dart';
+import '../../provider/command/create_message_bord_provider.dart';
 
 class CreateMessageScreen extends ConsumerWidget {
   CreateMessageScreen({Key? key}) : super(key: key);

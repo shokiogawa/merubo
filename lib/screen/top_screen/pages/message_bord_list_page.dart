@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
-import 'package:merubo/provider/message_bord_provider.dart';
+import 'package:merubo/provider/query/message_bord_provider.dart';
 import 'package:merubo/widgets/menu_button.dart';
 import 'package:merubo/widgets/mesage_card_tile.dart';
 

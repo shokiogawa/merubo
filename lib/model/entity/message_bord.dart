@@ -29,6 +29,7 @@ class MessageBord with _$MessageBord {
     String? title,
     String? ownerUserName,
     String? category,
+    String? onlineUrl,
     @DateTimeConverter() DateTime? receivedAt,
     @Default(Status.edit) Status status,
     @Default(MessageBordKinds.merubo) MessageBordKinds kinds
