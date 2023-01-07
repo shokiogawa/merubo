@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/entity/message_bord.dart';
+import 'package:merubo/provider/command/delete_message_bord_provider.dart';
 import 'package:merubo/utility/show_progress_dialog.dart';
 
-class MessageBordMenuButton extends StatelessWidget {
+class MessageBordMenuButton extends ConsumerWidget {
   final MessageBord messageBord;
 
   const MessageBordMenuButton({Key? key, required this.messageBord})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final bool canShowEdit = messageBord.kinds == MessageBordKinds.online ||
         messageBord.kinds == MessageBordKinds.paper;
     return IconButton(
@@ -53,9 +55,13 @@ class MessageBordMenuButton extends StatelessWidget {
                                     Navigator.of(context).pop();
                                   },
                                   beforeDoOnPress: () async {
+                                    await ref
+                                        .read(deleteMessageBordProvider)
+                                        .delete(messageBord.id);
                                     //TODO:削除メソッド記述
                                   },
                                   onSucceedMethod: () {
+                                    Navigator.of(context).pop();
                                     //TODO: メソッド成功時発火
                                   });
                             },

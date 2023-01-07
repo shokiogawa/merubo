@@ -17,6 +17,17 @@ class MessageBordRepository {
 
   final Ref ref;
 
+  Future<void> delete(String messageBordId) async {
+    final userId = ref.watch(currentUserProvider).id;
+    final fireStore = ref.watch(firebaseFireStoreProvider);
+    final targetRef = fireStore
+        .collection("users")
+        .doc(userId)
+        .collection("own_message_bords")
+        .doc(messageBordId);
+    await targetRef.delete();
+  }
+
   //自分が管理また、メッセージしたメッセージボード一覧
   Future<List<MessageBord>> fetchOwnMessageBordList(
       String userId, Role role) async {

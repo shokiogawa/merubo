@@ -17,7 +17,8 @@ final ownMessageBordListProvider =
 });
 
 // 受け取ったメッセージボード一覧を取得
-final receiveMessageBordListProvider = FutureProvider((ref) async {
+final receiveMessageBordListProvider =
+    FutureProvider<Map<String, List<MessageBordWithMessages>>>((ref) async {
   final data = await ref
       .watch(messageBordRepositoryProvider)
       .fetchReceiveMessageBordList();
