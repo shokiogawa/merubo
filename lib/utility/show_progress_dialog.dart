@@ -30,7 +30,9 @@ void showNewProgressDialog(
                     content: beforeContent,
                     cancelText: beforeCancelText,
                     doText: beforeDoText,
-                    cancelOnPress: beforeCancelOnPress,
+                    cancelOnPress: (){
+                      Navigator.of(context).pop();
+                    },
                     doOnPress: () async {
                       ref
                           .read(progressIndicatorProvider.notifier)

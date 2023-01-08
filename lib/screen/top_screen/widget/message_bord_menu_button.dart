@@ -48,6 +48,7 @@ class MessageBordMenuButton extends ConsumerWidget {
                               style: TextStyle(fontSize: 18),
                             ),
                             onTap: () {
+                              Navigator.of(context).pop();
                               showNewProgressDialog(
                                   context: context,
                                   inProgressText: "削除中",
@@ -55,9 +56,7 @@ class MessageBordMenuButton extends ConsumerWidget {
                                   beforeContent: "寄せ書きを削除します。この操作は取り消せません。",
                                   beforeCancelText: "キャンセル",
                                   beforeDoText: "削除",
-                                  beforeCancelOnPress: () {
-                                    Navigator.of(context).pop();
-                                  },
+                                  beforeCancelOnPress: null,
                                   beforeDoOnPress: () async {
                                     await ref
                                         .read(deleteMessageBordProvider)
