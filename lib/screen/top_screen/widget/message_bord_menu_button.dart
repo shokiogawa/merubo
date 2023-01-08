@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/provider/command/delete_message_bord_provider.dart';
+import 'package:merubo/screen/receive_message_bord_edit_screen/main.dart';
 import 'package:merubo/utility/show_progress_dialog.dart';
 
 class MessageBordMenuButton extends ConsumerWidget {
@@ -14,6 +16,8 @@ class MessageBordMenuButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bool canShowEdit = messageBord.kinds == MessageBordKinds.online ||
         messageBord.kinds == MessageBordKinds.paper;
+    final displayFormat = DateFormat('yyyy年');
+    final receivedAt = displayFormat.format(messageBord.receivedAt!);
     return IconButton(
       onPressed: () {
         showModalBottomSheet(
@@ -74,7 +78,13 @@ class MessageBordMenuButton extends ConsumerWidget {
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   onTap: () {
-                                    // TODO: 編集画面に遷移する
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ReceiveMessageBordEditScreen(
+                                                    messageBordId:
+                                                        messageBord.id,
+                                                    year: receivedAt)));
                                   },
                                 )
                               : Container()

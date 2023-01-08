@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:merubo/provider/command/create_message_bord_provider.dart';
 import 'package:merubo/provider/command/edit_message_bord_provider.dart';
 import 'package:merubo/utility/show_progress_dialog.dart';
 import 'package:merubo/widgets/button.dart';
@@ -70,23 +69,6 @@ class MessageEditScreen extends ConsumerWidget {
                       // TODO: 失敗した時のメソッド
                   }
                 );
-                // showProgressDialog(
-                //     context: context,
-                //     onPressed: () async {
-                //       ref.read(progressIndicatorProvider.notifier).state = true;
-                //       await ref
-                //           .read(editMessageBordProvider.notifier)
-                //           .updateMessage(messageBordId)
-                //           .then((value) {
-                //         ref.read(progressIndicatorProvider.notifier).state =
-                //         false;
-                //         Navigator.of(context).pop();
-                //         Navigator.of(context).pop();
-                //       });
-                //     },
-                //     inProgressText: '更新中',
-                //     confirmText: '更新しますか？',
-                //     buttonText: '更新');
               }
             }),
       ),
