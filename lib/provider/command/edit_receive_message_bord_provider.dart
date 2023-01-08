@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/provider/query/message_bord_provider.dart';
 import 'package:merubo/widgets/date_form.dart';
+import 'package:merubo/widgets/image_form.dart';
 
 final editReceiveMessageBordProvider = Provider((ref) {
   final instance = EditReceiveMessageBordProvider(ref);
@@ -33,5 +34,10 @@ class EditReceiveMessageBordProvider {
     ref
         .read(selectedDateTimeProvider.notifier)
         .update((state) => messageBord.receivedAt);
+    if (messageBord.lastPicture != null) {
+      ref
+          .read(selectedImageProvider.notifier)
+          .update((state) => messageBord.lastPicture!);
+    }
   }
 }

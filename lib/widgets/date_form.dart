@@ -25,14 +25,13 @@ class DateForm extends ConsumerWidget {
             final DateTime? selectedValue = await showDatePicker(
                 locale: const Locale("ja"),
                 context: context,
-                initialDate: DateTime.now(),
+                initialDate: selectedDateTime ?? DateTime.now(),
                 firstDate: DateTime(2000),
                 lastDate: DateTime.now());
             if (selectedValue != null) {
               ref
                   .read(selectedDateTimeProvider.notifier)
                   .update((state) => selectedValue);
-              print("やあ");
               if (onSelected != null) {
                 onSelected!(selectedValue);
               }
