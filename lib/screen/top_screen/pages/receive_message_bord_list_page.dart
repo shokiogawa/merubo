@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:merubo/model/entity/message_bord.dart';
 import 'package:merubo/provider/query/message_bord_provider.dart';
 import 'package:merubo/screen/message_bord_register_screen/main.dart';
-import 'package:merubo/screen/message_bord_register_screen/widget/add_merubo_message_bord.dart';
-import 'package:merubo/screen/message_bord_register_screen/widget/add_online_message_bord.dart';
-import 'package:merubo/screen/message_bord_register_screen/widget/add_paper_message_bord.dart';
 import 'package:merubo/screen/top_screen/widget/receive_message_bord_list_area.dart';
 
 class ReceiveMessageBordList extends ConsumerWidget {
