@@ -55,17 +55,17 @@ class MessageEditScreen extends ConsumerWidget {
                     beforeContent: '該当のデータを編集します。',
                     beforeCancelText: "キャンセル",
                     beforeDoText: "編集",
-                  beforeCancelOnPress: (){
-                      Navigator.of(context).pop();
-                  },
+                  // beforeCancelOnPress: (){
+                  //     Navigator.of(context).pop();
+                  // },
                   beforeDoOnPress: ()async{
                       await ref.read(editMessageBordProvider.notifier).updateMessage(messageBordId);
                   },
-                  onSucceedMethod: (){
+                  onSucceedMethod: (BuildContext context){
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
                   },
-                  onFailedMethod: (){
+                  onFailedMethod: (BuildContext context){
                       // TODO: 失敗した時のメソッド
                   }
                 );

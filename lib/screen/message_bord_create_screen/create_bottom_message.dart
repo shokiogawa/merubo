@@ -27,15 +27,12 @@ class CreateBottomMessageScreen extends ConsumerWidget {
                   .read(createMessageBordProvider.notifier)
                   .createMessageBordWithMessage();
             },
-            beforeCancelOnPress: () {
-              Navigator.of(context).pop();
-            },
-            onSucceedMethod: () {
+            onSucceedMethod: (BuildContext context) {
               Navigator.of(context).pushNamedAndRemoveUntil(
                   '/message_bord_complete_message_bord_screen',
                   (route) => false);
             },
-            onFailedMethod: () {
+            onFailedMethod: (BuildContext context) {
               //TODO: 失敗時
               print("作成失敗");
             });

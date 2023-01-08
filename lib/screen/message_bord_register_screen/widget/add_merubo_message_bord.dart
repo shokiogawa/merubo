@@ -43,17 +43,18 @@ class AddMeruboMessageBord extends ConsumerWidget {
                   beforeDoOnPress: () async {
                     await ref.read(registerMessageBordProvider).register();
                   },
-                  onSucceedMethod: () {
+                  onSucceedMethod: (BuildContext context) {
                     print("成功");
                     Navigator.of(context).pop();
                   },
-                  onFailedMethod: () {
+                  onFailedMethod: (BuildContext context) {
                     print("失敗");
                     Navigator.of(context).pop();
                   },
-                  beforeCancelOnPress: () {
-                    Navigator.of(context).pop();
-                  });
+                  // beforeCancelOnPress: () {
+                  //   Navigator.of(context).pop();
+                  // }
+                  );
               // showDialog(
               //     context: context,
               //     builder: (_) {

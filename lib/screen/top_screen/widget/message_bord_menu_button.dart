@@ -56,14 +56,13 @@ class MessageBordMenuButton extends ConsumerWidget {
                                   beforeContent: "寄せ書きを削除します。この操作は取り消せません。",
                                   beforeCancelText: "キャンセル",
                                   beforeDoText: "削除",
-                                  beforeCancelOnPress: null,
                                   beforeDoOnPress: () async {
                                     await ref
                                         .read(deleteMessageBordProvider)
                                         .delete(messageBord.id);
                                     //TODO:削除メソッド記述
                                   },
-                                  onSucceedMethod: () {
+                                  onSucceedMethod: (BuildContext context) {
                                     Navigator.of(context).pop();
                                     //TODO: メソッド成功時発火
                                   });

@@ -10,9 +10,9 @@ void showNewProgressDialog(
     required String beforeContent,
     required String beforeCancelText,
     required String beforeDoText,
-    void Function()? beforeCancelOnPress,
-    void Function()? onSucceedMethod,
-    void Function()? onFailedMethod,
+    // void Function(BuildContext)? beforeCancelOnPress,
+    void Function(BuildContext)? onSucceedMethod,
+    void Function(BuildContext)? onFailedMethod,
     Future<void> Function()? beforeDoOnPress}) {
   showDialog(
       barrierDismissible: false,
@@ -43,14 +43,14 @@ void showNewProgressDialog(
                               .read(progressIndicatorProvider.notifier)
                               .update((state) => false);
                           if (onSucceedMethod != null) {
-                            onSucceedMethod();
+                            onSucceedMethod(context);
                           }
                         }).catchError((err) {
                           ref
                               .read(progressIndicatorProvider.notifier)
                               .update((state) => false);
                           if (onFailedMethod != null) {
-                            onFailedMethod();
+                            onFailedMethod(context);
                           }
                         });
                       }

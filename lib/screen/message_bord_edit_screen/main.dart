@@ -42,7 +42,7 @@ class MessageBordEditScreen extends ConsumerWidget {
                           .read(editMessageBordProvider.notifier)
                           .updateMessageBord();
                     },
-                    onSucceedMethod: () {
+                    onSucceedMethod: (BuildContext context) {
                       Navigator.of(context).pop();
                       Navigator.of(context).pop();
                     });
