@@ -10,7 +10,6 @@ void showNewProgressDialog(
     required String beforeContent,
     required String beforeCancelText,
     required String beforeDoText,
-    // void Function(BuildContext)? beforeCancelOnPress,
     void Function(BuildContext)? onSucceedMethod,
     void Function(BuildContext)? onFailedMethod,
     Future<void> Function()? beforeDoOnPress}) {
