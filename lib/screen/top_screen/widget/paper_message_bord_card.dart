@@ -52,9 +52,10 @@ class PaperMessageBordCard extends StatelessWidget {
                         const Expanded(
                             flex: 5,
                             child: Text(
-                              "紙の寄せ書き",
+                              "色紙で受け取り",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 12),
                             )),
                         Expanded(
                             flex: 1,

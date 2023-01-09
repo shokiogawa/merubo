@@ -51,15 +51,15 @@ class OnlineMessageBordCard extends ConsumerWidget {
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 15),
                       Row(
                         children: [
-                          Expanded(
+                          const Expanded(
                               flex: 5,
                               child: Text(
-                                '$hpTitle',
+                                'オンラインで受け取り',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
+                                style: TextStyle(fontSize: 12),
                               )),
                           Expanded(
                               flex: 1, child: MessageBordMenuButton(messageBord: messageBord,))

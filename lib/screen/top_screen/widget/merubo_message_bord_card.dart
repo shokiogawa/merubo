@@ -46,33 +46,36 @@ class MeruboMessageBordCard extends StatelessWidget {
                     overflow: TextOverflow.clip,
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        const Text("参加者:"),
+                        Row(
+                          children: messageThumbnails,
+                        )
+                      ]),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text('参加人数: $messageCount')
+                    ],
+                  ),
                   Row(
                     children: [
+                      const Expanded(
+                          flex: 5,
+                          child: Text(
+                            'Meruboで受け取り',
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 12),
+                          )),
                       Expanded(
-                        flex: 5,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(children: [
-                              const Text("参加者:"),
-                              Row(
-                                children: messageThumbnails,
-                              )
-                            ]),
-                            const SizedBox(
-                              height: 2,
-                            ),
-                            Text('参加人数: $messageCount')
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: MessageBordMenuButton(messageBord: data.messageBord),
-                      )
+                          flex: 1, child: MessageBordMenuButton(messageBord: data.messageBord))
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
