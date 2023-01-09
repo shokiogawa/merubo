@@ -37,11 +37,13 @@ class MyApp extends ConsumerWidget {
       title: "Merubo",
       theme: ThemeData(
         primarySwatch: Colors.orange,
+        textTheme: const TextTheme(
+        )
       ),
       home: const InitPage(),
       routes: {
         '/top': (context) => const TopScreen(),
-        '/login': (context) => LoginScreen(),
+        '/login': (context) => const LoginScreen(),
         // '/message_bord': (context) => const MessageBordScreen(),
         // '/message_bord_create': (context) => const MessageBordCreateScreen(),
         '/preview_message_bord': (context) => const PreviewMessageBordScreen(),

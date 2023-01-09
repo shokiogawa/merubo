@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:merubo/provider/auth_provider.dart';
 import 'package:merubo/provider/query/message_bord_provider.dart';
 import 'package:merubo/screen/message_bord_register_screen/main.dart';
 import 'package:merubo/screen/top_screen/widget/receive_message_bord_list_area.dart';
@@ -13,30 +14,65 @@ class ReceiveMessageBordList extends ConsumerWidget {
     final asyncValue = ref.watch(receiveMessageBordListProvider);
     return asyncValue.when(
         data: (data) => Scaffold(
+            drawer: Drawer(
+              child: ListView(
+                children: [
+                  const DrawerHeader(
+                      decoration: BoxDecoration(color: Colors.orangeAccent),
+                      child: Center(
+                          child: Text(
+                        "オンライン寄せ書きアプリ",
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      ))),
+                  ListTile(
+                    leading: const Icon(Icons.logout_outlined),
+                    title: const Text("ログアウト"),
+                    onTap: () async {
+                      await ref.watch(authProvider).logOut().then((value) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/login', (route) => false);
+                      });
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.reviews),
+                    title: const Text("アプリの評価"),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.send),
+                    title: const Text("フィードバック"),
+                    onTap: () {},
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.description),
+                    title: const Text("アプリの使い方🔰"),
+                    onTap: () {},
+                  ),
+                  const SizedBox(height: 20),
+                  const Center(child: Text("アプリケーションバージョン: 1.0.0"))
+                ],
+              ),
+            ),
             appBar: AppBar(
-                toolbarHeight: 140,
-                flexibleSpace: Stack(
-                  children: [
-                    const Center(
-                        child: Text(
-                      "Merubo",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
-                    )),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
-                        ),
-                        height: 70,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            const SizedBox(width: 58),
-                            CircleAvatar(
+              title: const Text(
+                "Merubo",
+                style: TextStyle(color: Colors.white),
+              ),
+              bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(50),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.2),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: CircleAvatar(
                                 child: IconButton(
                                     onPressed: () {
                                       showModalBottomSheet(
@@ -47,21 +83,23 @@ class ReceiveMessageBordList extends ConsumerWidget {
                                           });
                                     },
                                     icon: const Icon(Icons.add))),
-                            const SizedBox(width: 50),
-                            const Text(
-                              "タイムライン",
+                          ),
+                          const Expanded(
+                            flex: 5,
+                            child: Text(
+                              "Time Line",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                )),
-            body: data.isNotEmpty
+                  )),
+            ),
+            body: data.isEmpty
                 ? ReceiveMessageBordListArea(data: data)
-                : Container()),
+                : const ExplainArea()),
         error: (err, _) => Center(child: Text(err.toString())),
         loading: () => const Center(
               child: CircularProgressIndicator(),
@@ -69,6 +107,19 @@ class ReceiveMessageBordList extends ConsumerWidget {
   }
 }
 
+class ExplainArea extends StatelessWidget {
+  const ExplainArea({Key? key}) : super(key: key);
 
-
-
+  @override
+  Widget build(BuildContext context) {
+    return const Padding(
+      padding: EdgeInsets.all(20),
+      child: Text(
+        "上の＋ボタンから、これまでに受け取った寄せ書きを追加しましょう📨\n"
+        "Merubo、オンライン、色紙と3種類の寄せ書きを追加することができます💌\n"
+        "Meruboから寄せ書きを受け取った方は、＋ボタン押下後、「Merubo」を選択し、寄せ書きIDを入力してください📪",
+        style: TextStyle(fontSize: 15),
+      ),
+    );
+  }
+}
