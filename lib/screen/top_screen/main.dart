@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:merubo/model/repository/auth_repository.dart';
+import 'package:merubo/provider/auth_provider.dart';
 import 'package:merubo/provider/query/current_user_provider.dart';
+import 'package:merubo/screen/message_bord_register_screen/main.dart';
 import 'package:merubo/screen/top_screen/pages/message_bord_list_page.dart';
 import 'package:merubo/screen/top_screen/pages/receive_message_bord_list_page.dart';
 
@@ -34,17 +36,90 @@ class TopScreenState extends ConsumerState<TopScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        ref.read(authRepositoryProvider).logOut();
-      }),
-      // appBar: AppBar(
-      //   title: const Center(
-      //     child: Text(
-      //       "Merubo",
-      //       style: TextStyle(color: Colors.white),
-      //     ),
-      //   ),
-      // ),
+      appBar: AppBar(
+        title: const Text(
+          "Merubo",
+          style: TextStyle(color: Colors.white),
+        ),
+        bottom: _selectIndex == 0
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(60),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.2),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: CircleAvatar(
+                              child: IconButton(
+                                  onPressed: () {
+                                    showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const RegisterMessageBordScreen();
+                                        });
+                                  },
+                                  icon: const Icon(Icons.add))),
+                        ),
+                        const Expanded(
+                          flex: 5,
+                          child: Text(
+                            "Time Line",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ))
+            : null,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            const DrawerHeader(
+                decoration: BoxDecoration(color: Colors.orangeAccent),
+                child: Center(
+                    child: Text(
+                  "オンライン寄せ書きアプリ",
+                  style: TextStyle(fontSize: 15, color: Colors.white),
+                ))),
+            ListTile(
+              leading: const Icon(Icons.logout_outlined),
+              title: const Text("ログアウト"),
+              onTap: () async {
+                await ref.watch(authProvider).logOut().then((value) {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/login', (route) => false);
+                });
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.reviews),
+              title: const Text("アプリの評価"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.send),
+              title: const Text("フィードバック"),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.description),
+              title: const Text("アプリの使い方🔰"),
+              onTap: () {},
+            ),
+            const SizedBox(height: 20),
+            const Center(child: Text("アプリケーションバージョン: 1.0.0"))
+          ],
+        ),
+      ),
       //トップページ表示前に、ユーザー情報を取得する。
       body: FutureBuilder(
           future: _future,

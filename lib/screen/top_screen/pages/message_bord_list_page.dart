@@ -11,35 +11,26 @@ class MessageBordListPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     print("MessageBordListPage");
-    return Scaffold(
-      appBar: AppBar(
-          title: const Center(
-              child: Text(
-        "Merubo",
-        style: TextStyle(color: Colors.white),
-      ))),
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          child: Column(
-            children: [
-              const Text(
-                "寄せ書き一覧",
-                style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
-              ),
-              const SizedBox(height: 20),
-              MenuButton(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, '/message_bord_choose_template');
-                  },
-                  imagePath: 'assets/images/make_letter.jpg',
-                  text: "寄せ書きを作成する"),
-              const SizedBox(height: 20),
-              const OwnerMessageBordList()
-            ],
-          ),
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          children: [
+            const Text(
+              "寄せ書き一覧",
+              style: TextStyle(fontSize: 20, fontFamily: 'OpenSans'),
+            ),
+            const SizedBox(height: 20),
+            MenuButton(
+                onTap: () {
+                  Navigator.pushNamed(context, '/message_bord_choose_template');
+                },
+                imagePath: 'assets/images/make_letter.jpg',
+                text: "寄せ書きを作成する"),
+            const SizedBox(height: 20),
+            const OwnerMessageBordList()
+          ],
         ),
       ),
     );

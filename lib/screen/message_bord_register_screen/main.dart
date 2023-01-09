@@ -9,8 +9,8 @@ import 'widget/add_paper_message_bord.dart';
 final selectedMessageBordType =
     StateProvider.autoDispose((ref) => MessageBordKinds.merubo);
 
-class AddMessageBord extends StatelessWidget {
-  const AddMessageBord({Key? key}) : super(key: key);
+class RegisterMessageBordScreen extends StatelessWidget {
+  const RegisterMessageBordScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class AddMessageBord extends StatelessWidget {
                                 }),
                           ),
                           ListTile(
-                            title: const Text("オンライン寄せ書き"),
+                            title: const Text("オンライン"),
                             leading: Radio(
                                 value: MessageBordKinds.online,
                                 groupValue: messageBordType,
@@ -57,7 +57,7 @@ class AddMessageBord extends StatelessWidget {
                                 }),
                           ),
                           ListTile(
-                            title: const Text("紙の寄せ書き"),
+                            title: const Text("色紙"),
                             leading: Radio(
                                 value: MessageBordKinds.paper,
                                 groupValue: messageBordType,
