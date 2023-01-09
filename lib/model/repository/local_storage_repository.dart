@@ -14,9 +14,15 @@ class LocalStorageRepository {
     try {
       final directory = await getApplicationDocumentsDirectory();
       final path = directory.path;
+      final oldImagePath = image.path;
+      File imageFile = File(oldImagePath);
+      // 存在していればそのパスをリターン
+      if (await imageFile.exists()) {
+        return oldImagePath;
+      }
+      //存在していない場合は、idを付与してリターン
       final fileName = "${id}_${basename(image.path)}";
       final imagePath = '$path/$fileName';
-      File imageFile = File(imagePath);
       await imageFile.writeAsBytes(await image.readAsBytes());
       return imagePath;
     } catch (err) {

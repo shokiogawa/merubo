@@ -46,6 +46,7 @@ void showNewProgressDialog(
                             onSucceedMethod(context);
                           }
                         }).catchError((err) {
+                          print(err);
                           ref
                               .read(progressIndicatorProvider.notifier)
                               .update((state) => false);
